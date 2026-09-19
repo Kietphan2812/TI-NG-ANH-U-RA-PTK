@@ -817,7 +817,10 @@ function renderMCQList(questions, offsetIndex) {
         <div class="option-item ${statusClass}" onclick="selectOption('${q.id}', '${opt.key}')" data-qid="${q.id}" data-key="${opt.key}">
           <div class="option-key">${opt.key}</div>
           <div class="option-text">${escapeHtml(opt.text)}</div>
-          <button type="button" class="btn-opt-audio" onclick="event.stopPropagation(); speakSmart('${escapeHtml(opt.text).replace(/'/g, "\\'")}', 'en-US')" title="Nghe phát âm đáp án ${opt.key}">🔊</button>
+          <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
+            <button type="button" class="btn-opt-audio" onclick="event.stopPropagation(); speakSmart('${escapeHtml(opt.text).replace(/'/g, "\\'")}', 'en-US')" title="Nghe tiếng Anh: ${opt.key}">🔊</button>
+            <button type="button" class="btn-opt-audio btn-opt-vi" onclick="event.stopPropagation(); speakOptionVi('${escapeHtml(opt.text).replace(/'/g, "\\'")}')" title="Nghe tiếng Việt: ${opt.key}">🗣️</button>
+          </div>
         </div>
       `;
     }).join('');
@@ -1634,6 +1637,46 @@ function speakViWord(meaning) {
   if (clean) speakSmart(clean, 'vi-VN');
 }
 
+// Phát âm bản dịch Tiếng Việt của lựa chọn trắc nghiệm
+async function speakOptionVi(optText) {
+  if (!optText) return;
+  if (optText === '∅') {
+    speakSmart("Không điền từ", 'vi-VN');
+    return;
+  }
+
+  // 1. Tra cứu nhanh từ điển offline và 53 từ vựng
+  let meaning = getWordMeaning(optText);
+  if (meaning && meaning !== '(tên riêng)') {
+    const cleanVi = meaning.split('/')[0].replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '').trim();
+    if (cleanVi) {
+      speakSmart(cleanVi, 'vi-VN');
+      return;
+    }
+  }
+
+  // 2. Tra cứu online nếu là cụm từ chưa có trong từ điển
+  try {
+    const isOnline = window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    const apiBase = isOnline ? '' : (window.location.protocol.startsWith('http') ? '' : 'https://tieng-anh-dau-ra-ptk.onrender.com');
+    const res = await fetch(`${apiBase}/api/translate-word?word=${encodeURIComponent(optText)}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.translation) {
+        WORD_DICTIONARY[optText.toLowerCase()] = data.translation;
+        const cleanVi = data.translation.split('/')[0].replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '').trim();
+        speakSmart(cleanVi, 'vi-VN');
+        return;
+      }
+    }
+  } catch (e) {
+    console.warn("Lỗi tra dịch lựa chọn:", e);
+  }
+
+  // 3. Fallback đọc
+  speakSmart(optText, 'vi-VN');
+}
+
 function speakText(text, lang = 'en-US', rate = 0.88, onEndCallback = null) {
   speakSmart(text, lang, onEndCallback);
 }
@@ -1871,6 +1914,10 @@ function renderListeningSections() {
             <div class="option-item" onclick="this.classList.toggle('selected')">
               <div class="option-key">${opt.key}</div>
               <div class="option-text">${escapeHtml(opt.text)}</div>
+              <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
+                <button type="button" class="btn-opt-audio" onclick="event.stopPropagation(); speakSmart('${escapeHtml(opt.text).replace(/'/g, "\\'")}', 'en-US')" title="Nghe tiếng Anh: ${opt.key}">🔊</button>
+                <button type="button" class="btn-opt-audio btn-opt-vi" onclick="event.stopPropagation(); speakOptionVi('${escapeHtml(opt.text).replace(/'/g, "\\'")}')" title="Nghe tiếng Việt: ${opt.key}">🗣️</button>
+              </div>
             </div>
           `).join('')}
         </div>

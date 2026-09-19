@@ -784,6 +784,25 @@ body {
   transform: scale(1.12);
 }
 
+.btn-opt-vi {
+  background: #fdf4ff;
+  border-color: #f0abfc;
+  color: #c026d3;
+}
+
+.btn-opt-vi:hover {
+  background: #fae8ff;
+  border-color: #c026d3;
+  color: #a21caf;
+  transform: scale(1.12);
+}
+
+[data-theme="dark"] .btn-opt-vi {
+  background: #3b0764;
+  border-color: #a855f7;
+  color: #f3e8ff;
+}
+
 .q-sentence-text {
   cursor: pointer;
   transition: color 0.15s;
