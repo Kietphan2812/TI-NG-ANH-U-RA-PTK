@@ -961,7 +961,7 @@ function renderWordBreakdownHtml(sentenceText) {
   // Xóa các dấu gạch dưới, dấu câu và tách từ
   const words = sentenceText
     .replace(/_+/g, ' ')
-    .replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, ' ')
+    .replace(/[.,/#!$%^&*;:{}=\-_`~()?\"'“”’–—]/g, ' ')
     .split(/\s+/)
     .map(w => w.trim())
     .filter(w => w.length > 0 && !w.includes('blank'));
@@ -1101,12 +1101,16 @@ function renderTranslationBoxContent(q) {
     `;
   }
 
+  const isSign = Boolean(q.signText);
+  const textToBreakdown = isSign ? q.signText : (q.question + (selectedOpt && selectedOpt.text !== '∅' ? ' ' + selectedOpt.text : ''));
+  const headerTitle = isSign ? '🇻🇳 Dịch nội dung trong ô biển báo:' : '🇻🇳 Dịch cả câu:';
+
   return `
-    <div style="font-size: 0.98rem; font-weight: 600; margin-bottom: 6px; cursor: pointer;" onclick="speakQuestion('${q.id}', 'vi')" title="Bấm để nghe đọc câu dịch tiếng Việt kèm đáp án">
-      🇻🇳 Dịch cả câu: ${escapeHtml(q.vietnameseTranslation || '')}
+    <div style="font-size: 0.98rem; font-weight: 600; margin-bottom: 6px; cursor: pointer;" onclick="speakQuestion('${q.id}', 'vi')" title="Bấm để nghe đọc bản dịch tiếng Việt">
+      ${headerTitle} ${escapeHtml(q.vietnameseTranslation || '')}
     </div>
     ${chosenCallout}
-    ${renderWordBreakdownHtml(q.question + (selectedOpt && selectedOpt.text !== '∅' ? ' ' + selectedOpt.text : ''))}
+    ${renderWordBreakdownHtml(textToBreakdown)}
   `;
 }
 
@@ -1120,7 +1124,12 @@ function renderMCQList(questions, offsetIndex) {
 
     let signHtml = '';
     if (q.signText) {
-      signHtml = `<div class="sign-display ${q.signType || 'notice'}">${escapeHtml(q.signText)}</div>`;
+      signHtml = `
+        <div class="sign-display ${q.signType || 'notice'}" onclick="speakSmart('${escapeHtml(q.signText).replace(/'/g, "\\'")}', 'en-US')" style="cursor:pointer;" title="Bấm vào ô biển báo để nghe phát âm tiếng Anh">
+          ${escapeHtml(q.signText)}
+          <span style="display:block; font-size:0.75rem; font-weight:600; opacity:0.8; margin-top:4px;">🔊 Bấm vào ô biển báo để nghe phát âm tiếng Anh</span>
+        </div>
+      `;
     }
 
     const optionsHtml = q.options.map(opt => {
@@ -2189,6 +2198,16 @@ function speakQuestion(qId, lang = 'en') {
   const completed = getCompletedQuestionText(qData);
 
   if (lang === 'en') {
+    if (qData.signText) {
+      // Đối với câu hỏi biển báo: Đọc chính xác nội dung trong ô biển báo trước
+      let signSpeech = qData.signText;
+      if (completed.hasSelection) {
+        signSpeech += `. Selected answer: ${completed.selectedText}.`;
+      }
+      speakSmart(signSpeech, 'en-US');
+      return;
+    }
+
     if (completed.hasSelection) {
       // Đọc toàn bộ câu hoàn chỉnh đã điền từ kết quả, sau đó đọc lại từ kết quả đó để nhấn mạnh
       let speech = `${completed.sentence}. Selected answer: ${completed.selectedText}.`;

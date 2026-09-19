@@ -101,6 +101,131 @@ const WORD_PRONUNCIATION_DB = {
       { part: "-ro-line", desc: "đọc lướt 'rô-lin'" }
     ]
   },
+  "keep": {
+    ipa: "/kiːp/",
+    vi: "KÍP",
+    notes: "Kéo dài âm 'i' rồi bật nhẹ âm 'p'.",
+    syllables: [{ part: "keep", desc: "đọc là 'KÍP' dứt khoát" }]
+  },
+  "door": {
+    ipa: "/dɔːr/",
+    vi: "ĐO",
+    notes: "Đọc 'ĐO' tròn môi và uốn cong nhẹ đầu lưỡi.",
+    syllables: [{ part: "door", desc: "đọc là 'ĐO' tròn môi" }]
+  },
+  "locked": {
+    ipa: "/lɒkt/",
+    vi: "LÓC-t",
+    notes: "Đọc 'lóc' dứt khoát rồi bật nhẹ đuôi 't'.",
+    syllables: [{ part: "locked", desc: "đọc 'LÓC' bật đuôi 't'" }]
+  },
+  "lock": {
+    ipa: "/lɒk/",
+    vi: "LÓC",
+    notes: "Đọc 'lóc' dứt khoát bật âm 'k'.",
+    syllables: [{ part: "lock", desc: "đọc là 'LÓC'" }]
+  },
+  "clear": {
+    ipa: "/klɪər/",
+    vi: "C-LI-ơ",
+    notes: "Đọc 'c-li' rồi nối nhanh sang 'ơ'.",
+    syllables: [{ part: "clear", desc: "đọc lướt 'C-LI-ơ'" }]
+  },
+  "entrance": {
+    ipa: "/ˈen.trəns/",
+    vi: "EN-trừns",
+    notes: "Nhấn 'EN', 'trừns' xì nhẹ âm gió cuối.",
+    syllables: [
+      { part: "en-", desc: "nhấn mạnh 'EN'" },
+      { part: "-trance", desc: "đọc 'trừns' xì nhẹ" }
+    ]
+  },
+  "librarian": {
+    ipa: "/laɪˈbreə.ri.ən/",
+    vi: "lai-B-RE-ri-ừn",
+    notes: "Nhấn mạnh âm 'B-RE', các âm khác đọc lướt.",
+    syllables: [
+      { part: "li-", desc: "đọc 'lai'" },
+      { part: "-brar-", desc: "nhấn 'b-re'" },
+      { part: "-i-an", desc: "đọc 'ri-ừn'" }
+    ]
+  },
+  "library": {
+    ipa: "/ˈlaɪ.brər.i/",
+    vi: "LAI-brơ-ri",
+    notes: "Nhấn mạnh 'LAI', 'brơ-ri' đọc nhanh.",
+    syllables: [
+      { part: "li-", desc: "nhấn 'LAI'" },
+      { part: "-brar-y", desc: "đọc 'brơ-ri'" }
+    ]
+  },
+  "supersaver": {
+    ipa: "/ˈsuː.pəˌseɪ.vər/",
+    vi: "SU-pơ-sêy-vờ",
+    notes: "Nhấn 'SU', 'sêy-vờ' đọc rõ ràng.",
+    syllables: [
+      { part: "su-per-", desc: "đọc 'su-pơ'" },
+      { part: "-sa-ver", desc: "đọc 'sêy-vờ'" }
+    ]
+  },
+  "tickets": {
+    ipa: "/ˈtɪk.ɪts/",
+    vi: "TÍ-kịt-s",
+    notes: "Nhấn 'TÍ', đuôi 'kịt-s' bật nhẹ.",
+    syllables: [
+      { part: "tick-", desc: "nhấn 'TÍ'" },
+      { part: "-ets", desc: "đọc 'kịt-s'" }
+    ]
+  },
+  "fridays": {
+    ipa: "/ˈfraɪ.deɪz/",
+    vi: "P-RAI-đêy-z",
+    notes: "Nhấn 'P-RAI', đuôi rung 'z'.",
+    syllables: [
+      { part: "Fri-", desc: "nhấn 'p-rai'" },
+      { part: "-days", desc: "đọc 'đêy-z'" }
+    ]
+  },
+  "machine": {
+    ipa: "/məˈʃiːn/",
+    vi: "mơ-SIN",
+    notes: "Nhấn mạnh 'SIN' kéo dài âm i.",
+    syllables: [
+      { part: "ma-", desc: "đọc nhẹ 'mơ'" },
+      { part: "-chine", desc: "nhấn mạnh 'SIN'" }
+    ]
+  },
+  "drinks": {
+    ipa: "/drɪŋks/",
+    vi: "Đ-RINH-k-s",
+    notes: "Đọc 'đ-rinh' rồi bật đuôi 'k-s'.",
+    syllables: [{ part: "drinks", desc: "đọc 'đ-rinh' bật đuôi 'k-s'" }]
+  },
+  "available": {
+    ipa: "/əˈveɪ.lə.bəl/",
+    vi: "ơ-VÊY-lơ-bồ",
+    notes: "Nhấn mạnh âm thứ 2 'VÊY'.",
+    syllables: [
+      { part: "a-", desc: "đọc nhẹ 'ơ'" },
+      { part: "-vail-", desc: "nhấn 'VÊY'" },
+      { part: "-a-ble", desc: "đọc 'lơ-bồ'" }
+    ]
+  },
+  "bar": {
+    ipa: "/bɑːr/",
+    vi: "BA",
+    notes: "Kéo dài âm 'BA' uốn lưỡi nhẹ.",
+    syllables: [{ part: "bar", desc: "đọc là 'BA'" }]
+  },
+  "order": {
+    ipa: "/ˈɔː.dər/",
+    vi: "O-đờ",
+    notes: "Nhấn 'O', 'đờ' đọc nhẹ.",
+    syllables: [
+      { part: "or-", desc: "nhấn 'O'" },
+      { part: "-der", desc: "đọc 'đờ'" }
+    ]
+  },
   "is": {
     ipa: "/ɪz/",
     vi: "I-z",
@@ -504,10 +629,10 @@ const WORD_PRONUNCIATION_DB = {
   },
   "room": {
     ipa: "/ruːm/",
-    vi: "rum",
+    vi: "RUM",
     notes: "Kéo dài âm 'u' tròn môi, khép môi âm 'm'.",
     syllables: [
-      { part: "room", desc: "đọc 'rum' kéo dài âm u" }
+      { part: "room", desc: "đọc 'RUM' kéo dài âm u" }
     ]
   },
   "turn": {
@@ -544,11 +669,29 @@ const WORD_PRONUNCIATION_DB = {
   },
   "when": {
     ipa: "/wen/",
-    vi: "oen",
-    notes: "Môi chụm lại phát âm 'oen' nhanh gọn.",
+    vi: "OEN",
+    notes: "Môi chụm lại phát âm 'OEN' nhanh gọn.",
     syllables: [
-      { part: "when", desc: "đọc là 'oen'" }
+      { part: "when", desc: "đọc là 'OEN'" }
     ]
+  },
+  "this": {
+    ipa: "/ðɪs/",
+    vi: "ĐÍT-s",
+    notes: "Đặt đầu lưỡi giữa hai hàm răng phát âm 'đít' rồi xì nhẹ 's'.",
+    syllables: [{ part: "this", desc: "đặt lưỡi giữa hai răng phát âm 'ĐÍT-s'" }]
+  },
+  "not": {
+    ipa: "/nɒt/",
+    vi: "NÓT",
+    notes: "Đọc 'NÓT' dứt khoát bật đuôi 't'.",
+    syllables: [{ part: "not", desc: "đọc là 'NÓT' bật nhẹ 't'" }]
+  },
+  "use": {
+    ipa: "/juːz/",
+    vi: "DIU-z",
+    notes: "Kéo dài âm 'diu' rồi rung nhẹ âm gió 'z'.",
+    syllables: [{ part: "use", desc: "đọc là 'DIU' rồi rung đuôi 'z'" }]
   },
   "teacher": {
     ipa: "/ˈtiː.tʃər/",
