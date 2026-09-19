@@ -773,8 +773,8 @@ function renderWordBreakdownHtml(sentenceText) {
 
     return `
       <div class="word-chip" onclick="speakWord('${escapeHtml(w)}')" title="Bấm để nghe phát âm từ: ${escapeHtml(w)}">
-        <span class="chip-en">${escapeHtml(w)}</span>
-        <span class="chip-vi" id="${chipId}">${escapeHtml(viMeaning)}</span>
+        <span class="chip-en" onclick="event.stopPropagation(); speakWord('${escapeHtml(w)}')" title="Bấm nghe phát âm tiếng Anh: ${escapeHtml(w)}">🔊 ${escapeHtml(w)}</span>
+        <span class="chip-vi" id="${chipId}" onclick="event.stopPropagation(); speakViWord(this.innerText)" title="Bấm nghe nghĩa tiếng Việt">${escapeHtml(viMeaning)}</span>
       </div>
     `;
   }).join('');
@@ -817,6 +817,7 @@ function renderMCQList(questions, offsetIndex) {
         <div class="option-item ${statusClass}" onclick="selectOption('${q.id}', '${opt.key}')" data-qid="${q.id}" data-key="${opt.key}">
           <div class="option-key">${opt.key}</div>
           <div class="option-text">${escapeHtml(opt.text)}</div>
+          <button type="button" class="btn-opt-audio" onclick="event.stopPropagation(); speakSmart('${escapeHtml(opt.text).replace(/'/g, "\\'")}', 'en-US')" title="Nghe phát âm đáp án ${opt.key}">🔊</button>
         </div>
       `;
     }).join('');
@@ -828,7 +829,7 @@ function renderMCQList(questions, offsetIndex) {
         <div class="q-header">
           <div class="q-title">
             <span class="q-number-badge">Câu ${globalNumber}</span>
-            <div>${escapeHtml(q.question)}</div>
+            <div class="q-sentence-text" onclick="speakQuestion('${q.id}', 'en')" title="Bấm vào câu hỏi để nghe phát âm tiếng Anh">${escapeHtml(q.question)}</div>
           </div>
           <button class="btn-flag ${isFlagged ? 'flagged' : ''}" onclick="toggleFlag('${q.id}')" title="Đánh dấu xem lại">
             ${isFlagged ? '🚩 Đã đánh dấu' : '🏳️ Đánh dấu'}
@@ -838,19 +839,19 @@ function renderMCQList(questions, offsetIndex) {
         ${signHtml}
 
         <div class="q-actions-bar">
-          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'en')" title="Nghe đọc câu hỏi bằng Tiếng Anh">
+          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'en')" title="Nghe phát âm riêng câu hỏi này bằng Tiếng Anh">
             🔊 Đọc Tiếng Anh
           </button>
           <button class="btn-audio-action" onclick="toggleTranslation('${q.id}')" title="Dịch câu hỏi sang Tiếng Việt & tra từng từ">
             🌐 Dịch Tiếng Việt & Tra từ
           </button>
-          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'vi')" title="Nghe đọc câu dịch bằng Tiếng Việt">
+          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'vi')" title="Nghe đọc riêng câu dịch bằng Tiếng Việt">
             🗣️ Đọc Tiếng Việt
           </button>
         </div>
 
         <div class="translation-box" id="trans-${q.id}">
-          <div style="font-size: 0.98rem; font-weight: 600; margin-bottom: 4px;">
+          <div style="font-size: 0.98rem; font-weight: 600; margin-bottom: 4px; cursor: pointer;" onclick="speakQuestion('${q.id}', 'vi')" title="Bấm để nghe đọc câu dịch tiếng Việt">
             🇻🇳 Dịch cả câu: ${escapeHtml(q.vietnameseTranslation || '')}
           </div>
           ${renderWordBreakdownHtml(q.question)}
@@ -888,24 +889,28 @@ function renderWritingTransformList(questions, offsetIndex) {
         </div>
 
         <div class="original-sentence-badge">Câu gốc:</div>
-        <div class="original-sentence">${escapeHtml(q.originalSentence)}</div>
+        <div class="original-sentence" style="cursor: pointer;" onclick="speakWriting('${q.id}', 'en')" title="Bấm vào để nghe phát âm câu gốc tiếng Anh">${escapeHtml(q.originalSentence)}</div>
 
         <div class="q-actions-bar">
-          <button class="btn-audio-action" onclick="speakWriting('${q.id}', 'en')" title="Nghe đọc câu tiếng Anh">
+          <button class="btn-audio-action" onclick="speakWriting('${q.id}', 'en')" title="Nghe phát âm riêng câu tiếng Anh này">
             🔊 Đọc Tiếng Anh
           </button>
           <button class="btn-audio-action" onclick="toggleTranslation('${q.id}')" title="Dịch câu sang Tiếng Việt & tra từng từ">
             🌐 Dịch Tiếng Việt & Tra từ
           </button>
-          <button class="btn-audio-action" onclick="speakWriting('${q.id}', 'vi')" title="Nghe đọc bản dịch Tiếng Việt">
+          <button class="btn-audio-action" onclick="speakWriting('${q.id}', 'vi')" title="Nghe đọc riêng bản dịch Tiếng Việt của câu này">
             🗣️ Đọc Tiếng Việt
           </button>
         </div>
 
         <div class="translation-box" id="trans-${q.id}">
           <div style="margin-bottom: 6px;">
-            <strong>🇻🇳 Dịch câu gốc:</strong> ${escapeHtml(q.vietnameseTranslation || '')}<br>
-            <strong>🇻🇳 Dịch câu hoàn chỉnh:</strong> ${escapeHtml(q.vietnameseModelTranslation || '')}
+            <div style="cursor: pointer; margin-bottom: 3px;" onclick="speakWriting('${q.id}', 'vi')" title="Bấm để nghe đọc bản dịch câu gốc">
+              <strong>🇻🇳 Dịch câu gốc:</strong> ${escapeHtml(q.vietnameseTranslation || '')}
+            </div>
+            <div style="cursor: pointer;" onclick="speakSmart('${escapeHtml(q.vietnameseModelTranslation || '').replace(/'/g, "\\'")}', 'vi-VN')" title="Bấm để nghe đọc câu dịch hoàn chỉnh">
+              <strong>🇻🇳 Dịch câu hoàn chỉnh:</strong> ${escapeHtml(q.vietnameseModelTranslation || '')}
+            </div>
           </div>
           ${renderWordBreakdownHtml(q.originalSentence)}
         </div>
@@ -923,8 +928,13 @@ function renderWritingTransformList(questions, offsetIndex) {
         <div class="transform-feedback" id="feedback-${q.id}"></div>
 
         <div class="explanation-box ${AppState.isSubmitted ? 'show' : ''}" id="exp-${q.id}">
-          <strong>🔑 Đáp án chuẩn:</strong> <span class="model-answer-highlight">${escapeHtml(q.modelAnswer)}</span><br>
-          <strong>📖 Ngữ pháp:</strong> ${escapeHtml(q.grammarPoint)}
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <strong>🔑 Đáp án chuẩn:</strong> <span class="model-answer-highlight">${escapeHtml(q.modelAnswer)}</span>
+            <button type="button" class="btn-opt-audio" onclick="speakSmart('${escapeHtml(q.modelAnswer).replace(/'/g, "\\'")}', 'en-US')" title="Nghe phát âm câu đáp án chuẩn">🔊</button>
+          </div>
+          <div style="margin-top: 4px;">
+            <strong>📖 Ngữ pháp:</strong> ${escapeHtml(q.grammarPoint)}
+          </div>
         </div>
       </div>
     `;
@@ -1434,13 +1444,16 @@ function renderVocabularyStudy() {
     <div class="vocab-card" data-word="${v.word.toLowerCase()}" data-meaning="${v.meaning.toLowerCase()}">
       <div>
         <div class="vocab-word-row">
-          <span class="vocab-word">${escapeHtml(v.word)}</span>
-          <button class="btn-speak" onclick="speakWord('${escapeHtml(v.word)}')" title="Phát âm">🔊</button>
+          <span class="vocab-word" onclick="speakWord('${escapeHtml(v.word)}')" style="cursor:pointer;" title="Bấm nghe phát âm tiếng Anh: ${escapeHtml(v.word)}">${escapeHtml(v.word)}</span>
+          <div style="display: flex; gap: 4px;">
+            <button class="btn-speak" onclick="speakWord('${escapeHtml(v.word)}')" title="Phát âm tiếng Anh">🔊</button>
+            <button class="btn-speak" onclick="speakViWord('${escapeHtml(v.meaning)}')" title="Đọc nghĩa tiếng Việt" style="background: #fdf4ff; border-color: #d946ef; color: #a21caf;">🗣️</button>
+          </div>
         </div>
         <div class="vocab-ipa">${escapeHtml(v.ipa)} <span class="vocab-pos">(${escapeHtml(v.pos)})</span></div>
-        <div class="vocab-meaning">${escapeHtml(v.meaning)}</div>
+        <div class="vocab-meaning" onclick="speakViWord('${escapeHtml(v.meaning)}')" style="cursor:pointer;" title="Bấm nghe nghĩa tiếng Việt: ${escapeHtml(v.meaning)}">${escapeHtml(v.meaning)}</div>
       </div>
-      <div class="vocab-example">"${escapeHtml(v.example)}"</div>
+      <div class="vocab-example" onclick="speakSmart('${escapeHtml(v.example).replace(/'/g, "\\'")}', 'en-US')" style="cursor:pointer;" title="Bấm nghe câu ví dụ tiếng Anh">"${escapeHtml(v.example)}"</div>
     </div>
   `).join('');
 }
@@ -1610,7 +1623,15 @@ function speakSmart(text, lang = 'en-US', onEndCallback = null) {
 }
 
 function speakWord(word) {
-  speakSmart(word, 'en-US');
+  if (!word) return;
+  const clean = word.replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '').trim();
+  if (clean) speakSmart(clean, 'en-US');
+}
+
+function speakViWord(meaning) {
+  if (!meaning || meaning === '...' || meaning.includes('Đang tải')) return;
+  const clean = meaning.split('/')[0].replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '').trim();
+  if (clean) speakSmart(clean, 'vi-VN');
 }
 
 function speakText(text, lang = 'en-US', rate = 0.88, onEndCallback = null) {
@@ -1645,7 +1666,7 @@ function toggleAllTranslations() {
   boxes.forEach(b => b.classList.toggle('show', anyHidden));
 }
 
-// Đọc 1 câu trắc nghiệm (Tiếng Anh hoặc Tiếng Việt)
+// Đọc 1 câu trắc nghiệm (Tiếng Anh hoặc Tiếng Việt) - CHỈ ĐỌC ĐÚNG CÂU NÀY
 function speakQuestion(qId, lang = 'en') {
   const qData = QUESTION_LIST.find(q => q.id === qId);
   if (!qData) return;
@@ -1654,24 +1675,20 @@ function speakQuestion(qId, lang = 'en') {
   if (box) {
     document.querySelectorAll('.question-box').forEach(b => b.classList.remove('reading-highlight'));
     box.classList.add('reading-highlight');
-    setTimeout(() => box.classList.remove('reading-highlight'), 6000);
+    setTimeout(() => box.classList.remove('reading-highlight'), 5000);
   }
 
   if (lang === 'en') {
-    // Đọc tiếng Anh: đọc câu hỏi và các lựa chọn A, B, C, D
-    let speechContent = qData.question;
-    if (qData.options && qData.options.length) {
-      speechContent += ". Options: " + qData.options.map(o => `Option ${o.key}: ${o.text}`).join(". ");
-    }
-    speakSmart(speechContent, 'en-US');
+    // Đọc chính xác DUY NHẤT câu hỏi tiếng Anh (Không đọc dồn options A, B, C, D)
+    speakSmart(qData.question, 'en-US');
   } else {
-    // Đọc tiếng Việt: đọc bản dịch câu hỏi
+    // Đọc chính xác DUY NHẤT câu dịch tiếng Việt
     const viText = qData.vietnameseTranslation || "Chưa có bản dịch cho câu này.";
     speakSmart(viText, 'vi-VN');
   }
 }
 
-// Đọc câu tự luận viết lại (Tiếng Anh hoặc Tiếng Việt)
+// Đọc câu tự luận viết lại (Tiếng Anh hoặc Tiếng Việt) - CHỈ ĐỌC ĐÚNG CÂU ĐƯỢC CHỌN
 function speakWriting(qId, lang = 'en') {
   const qData = EXAM_DATA.sentenceTransformations.find(q => q.id === qId);
   if (!qData) return;
@@ -1680,14 +1697,15 @@ function speakWriting(qId, lang = 'en') {
   if (box) {
     document.querySelectorAll('.question-box').forEach(b => b.classList.remove('reading-highlight'));
     box.classList.add('reading-highlight');
-    setTimeout(() => box.classList.remove('reading-highlight'), 6000);
+    setTimeout(() => box.classList.remove('reading-highlight'), 5000);
   }
 
   if (lang === 'en') {
-    const speechContent = `Original sentence: ${qData.originalSentence}. Model sentence: ${qData.modelAnswer}`;
-    speakSmart(speechContent, 'en-US');
+    // Đọc chính xác duy nhất câu gốc tiếng Anh
+    speakSmart(qData.originalSentence, 'en-US');
   } else {
-    const viText = `Câu gốc: ${qData.vietnameseTranslation}. Câu hoàn chỉnh: ${qData.vietnameseModelTranslation}`;
+    // Đọc chính xác duy nhất câu dịch tiếng Việt
+    const viText = qData.vietnameseTranslation || "Chưa có bản dịch cho câu này.";
     speakSmart(viText, 'vi-VN');
   }
 }

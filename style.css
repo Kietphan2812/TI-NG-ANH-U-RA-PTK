@@ -760,6 +760,39 @@ body {
   color: var(--text-primary);
 }
 
+.btn-opt-audio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.btn-opt-audio:hover {
+  opacity: 1;
+  background: var(--primary-light);
+  border-color: var(--primary);
+  transform: scale(1.12);
+}
+
+.q-sentence-text {
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.q-sentence-text:hover {
+  color: var(--primary);
+}
+
 /* Explanation Box */
 .explanation-box {
   margin-top: 14px;
