@@ -1,5 +1,7 @@
+sửa phần đọc
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +9,10 @@
   <link rel="stylesheet" href="style.css?v=20260919_08">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
 
   <!-- Top App Header -->
@@ -33,7 +37,8 @@
         <div class="timer-widget" id="timer-display" title="Thời gian còn lại">
           <span>⏱️</span>
           <span id="timer-text">30:00</span>
-          <button class="btn-icon" id="timer-toggle-btn" onclick="toggleTimer()" style="width: 28px; height: 28px; font-size: 0.8rem;" title="Tạm dừng / Tiếp tục">⏸️</button>
+          <button class="btn-icon" id="timer-toggle-btn" onclick="toggleTimer()"
+            style="width: 28px; height: 28px; font-size: 0.8rem;" title="Tạm dừng / Tiếp tục">⏸️</button>
         </div>
 
         <!-- Chế độ Sáng / Tối -->
@@ -73,11 +78,12 @@
   <main class="main-wrapper">
     <!-- Left: Content Panels -->
     <div class="content-column">
-      
+
       <!-- Topic Banner -->
       <div class="topic-banner">
         <h2>TOPIC 1: DESCRIBE PEOPLE</h2>
-        <p>Hệ thống ôn thi toàn diện gồm: 53 từ vựng miêu tả ngoại hình & tính cách, 10 câu trắc nghiệm từ vựng, 20 câu đọc hiểu (biển báo, đoạn văn Tony, điền từ Anna), 5 câu viết lại tương đương và bài viết thư 120 từ.</p>
+        <p>Hệ thống ôn thi toàn diện gồm: 53 từ vựng miêu tả ngoại hình & tính cách, 10 câu trắc nghiệm từ vựng, 20 câu
+          đọc hiểu (biển báo, đoạn văn Tony, điền từ Anna), 5 câu viết lại tương đương và bài viết thư 120 từ.</p>
         <div class="banner-stats">
           <span class="stat-chip">✨ 35 câu hỏi trắc nghiệm & tự luận</span>
           <span class="stat-chip">⚡ Chấm điểm & Giải thích tự động</span>
@@ -88,10 +94,12 @@
       <!-- Thanh công cụ Đọc tiếng Anh & Dịch Tiếng Việt toàn diện -->
       <div class="global-audio-toolbar">
         <span style="font-weight: 700; font-size: 0.95rem; margin-right: 4px;">🎧 Trợ lý Âm thanh & Dịch thuật:</span>
-        <button class="btn-audio-action" onclick="toggleAllTranslations()" title="Hiện hoặc ẩn tất cả lời dịch tiếng Việt trên trang">
+        <button class="btn-audio-action" onclick="toggleAllTranslations()"
+          title="Hiện hoặc ẩn tất cả lời dịch tiếng Việt trên trang">
           🌐 Bật/Tắt toàn bộ bản dịch Tiếng Việt
         </button>
-        <button class="btn-audio-action" style="color: var(--danger); border-color: var(--danger-border);" onclick="stopSpeaking()" title="Dừng âm thanh ngay lập tức">
+        <button class="btn-audio-action" style="color: var(--danger); border-color: var(--danger-border);"
+          onclick="stopSpeaking()" title="Dừng âm thanh ngay lập tức">
           ⏹️ Dừng phát âm
         </button>
         <span style="font-size: 0.88rem; color: var(--text-muted); margin-left: auto;">
@@ -116,10 +124,12 @@
             <span class="section-tag">53 từ vựng & ví dụ</span>
           </div>
           <p style="color: var(--text-secondary); margin-bottom: 16px;">
-            Nhấp vào biểu tượng 🔊 bên cạnh mỗi từ để nghe phát âm tiếng Anh chuẩn. Sử dụng thanh tìm kiếm để tra cứu nhanh từ vựng hoặc nghĩa tiếng Việt.
+            Nhấp vào biểu tượng 🔊 bên cạnh mỗi từ để nghe phát âm tiếng Anh chuẩn. Sử dụng thanh tìm kiếm để tra cứu
+            nhanh từ vựng hoặc nghĩa tiếng Việt.
           </p>
           <div class="vocab-toolbar">
-            <input type="text" id="vocab-search" class="search-input" placeholder="🔍 Tìm kiếm từ vựng, phiên âm hoặc nghĩa..." oninput="filterVocabulary()">
+            <input type="text" id="vocab-search" class="search-input"
+              placeholder="🔍 Tìm kiếm từ vựng, phiên âm hoặc nghĩa..." oninput="filterVocabulary()">
           </div>
           <div class="vocab-grid" id="vocab-grid-container">
             <!-- Rendered by JS -->
@@ -146,7 +156,8 @@
             <h3 class="section-card-title">📰 Phần II.a: Đọc hiểu biển báo (Notices & Signs)</h3>
             <span class="section-tag">5 câu</span>
           </div>
-          <p style="color: var(--text-secondary); margin-bottom: 14px;">Look at the text in each question (1-5). What does it say? Circle the letter next to the correct explanation.</p>
+          <p style="color: var(--text-secondary); margin-bottom: 14px;">Look at the text in each question (1-5). What
+            does it say? Circle the letter next to the correct explanation.</p>
           <div id="reading-signs-container"></div>
         </div>
 
@@ -184,7 +195,8 @@
             <span class="section-tag">5 câu tự luận làm trực tiếp</span>
           </div>
           <p style="color: var(--text-secondary); margin-bottom: 16px;">
-            Complete the second sentence in order that it means the same as the first. Nhập phần viết tiếp vào ô trống và bấm <strong>"Kiểm tra"</strong> để so sánh với đáp án chuẩn.
+            Complete the second sentence in order that it means the same as the first. Nhập phần viết tiếp vào ô trống
+            và bấm <strong>"Kiểm tra"</strong> để so sánh với đáp án chuẩn.
           </p>
           <div id="writing-transform-container"></div>
         </div>
@@ -198,7 +210,8 @@
           <div class="essay-container">
             <div class="prompt-guidelines">
               <h4>Đề bài:</h4>
-              <p><strong>Write a letter (about 120 words) to your friend/colleague/parents/relatives about a new friend that you met in your English class.</strong></p>
+              <p><strong>Write a letter (about 120 words) to your friend/colleague/parents/relatives about a new friend
+                  that you met in your English class.</strong></p>
               <br>
               <p>Your letter should include:</p>
               <ul>
@@ -206,10 +219,13 @@
                 <li>What is his/her personality? (Qualities & character)</li>
                 <li>What things does he/she impress you with? (Talents, skills, actions)</li>
               </ul>
-              <p><em>⚠️ LƯU Ý: Write the body of the letter only. Do NOT write your name, your address and your signature in the letter!</em></p>
+              <p><em>⚠️ LƯU Ý: Write the body of the letter only. Do NOT write your name, your address and your
+                  signature in the letter!</em></p>
             </div>
 
-            <textarea id="essay-input" class="essay-textarea" placeholder="Nhập bài viết thư của bạn tại đây (ví dụ: Hello Jessica,...)..." oninput="updateWordCount()"></textarea>
+            <textarea id="essay-input" class="essay-textarea"
+              placeholder="Nhập bài viết thư của bạn tại đây (ví dụ: Hello Jessica,...)..."
+              oninput="updateWordCount()"></textarea>
 
             <div class="word-count-bar">
               <div>
@@ -237,7 +253,9 @@
             <span class="section-tag">Part 1 & Part 2</span>
           </div>
           <div class="listening-notice-banner">
-            ℹ️ <strong>Lưu ý:</strong> Theo tài liệu Word, phần nghe câu 1-7 và bài điền thông tin Plymouth Sea Life Centre phụ thuộc vào băng audio của đề thi. Hệ thống cung cấp bảng câu hỏi mô tả hình ảnh và ô nhập dữ liệu tương tác để bạn luyện tập trước kỹ năng nhận diện đề thi!
+            ℹ️ <strong>Lưu ý:</strong> Theo tài liệu Word, phần nghe câu 1-7 và bài điền thông tin Plymouth Sea Life
+            Centre phụ thuộc vào băng audio của đề thi. Hệ thống cung cấp bảng câu hỏi mô tả hình ảnh và ô nhập dữ liệu
+            tương tác để bạn luyện tập trước kỹ năng nhận diện đề thi!
           </div>
 
           <!-- Part A -->
@@ -275,7 +293,8 @@
               <!-- Rendered by JS -->
             </div>
             <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
-              <button class="btn-check-sentence" onclick="speakText(document.getElementById('speaking-sample-text').innerText)">
+              <button class="btn-check-sentence"
+                onclick="speakText(document.getElementById('speaking-sample-text').innerText)">
                 🔊 Nghe máy đọc bài mẫu (Voice AI)
               </button>
               <button class="btn-secondary-action" style="width: auto;" onclick="stopSpeaking()">
@@ -288,7 +307,8 @@
           <div class="speaking-tool-box">
             <h4>🎙️ Luyện nói & Tự ghi âm bài thi của bạn</h4>
             <p style="color: var(--text-secondary); text-align: center; font-size: 0.92rem;">
-              Bấm nút Ghi âm để luyện nói theo đề bài trên, sau đó nghe lại giọng phát âm của mình để cải thiện phản xạ và ngữ điệu.
+              Bấm nút Ghi âm để luyện nói theo đề bài trên, sau đó nghe lại giọng phát âm của mình để cải thiện phản xạ
+              và ngữ điệu.
             </p>
             <div class="record-btn-group">
               <button id="record-btn" class="btn-record" onclick="toggleAudioRecording()">
@@ -298,7 +318,8 @@
             <div id="recording-status" style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted);">
               Micro sẵn sàng...
             </div>
-            <audio id="audio-playback" controls style="display: none; margin-top: 10px; width: 100%; max-width: 400px;"></audio>
+            <audio id="audio-playback" controls
+              style="display: none; margin-top: 10px; width: 100%; max-width: 400px;"></audio>
           </div>
         </div>
       </div>
@@ -313,13 +334,19 @@
       </div>
 
       <!-- Thông tin thí sinh để lưu vào SQL -->
-      <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-card-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-        <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+      <div
+        style="margin-bottom: 16px; padding: 12px; background: var(--bg-card-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <div
+          style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
           <span>👤 THÔNG TIN THÍ SINH</span>
-          <span id="db-status-badge" style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: #ecfdf5; color: #059669; font-weight: 600;">⚡ Neon SQL Ready</span>
+          <span id="db-status-badge"
+            style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: #ecfdf5; color: #059669; font-weight: 600;">⚡
+            Neon SQL Ready</span>
         </div>
-        <input type="text" id="student-name-input" placeholder="Họ và tên của bạn..." style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; margin-bottom: 6px; background: var(--bg-card); color: var(--text-primary);">
-        <input type="text" id="student-code-input" placeholder="Mã số sinh viên (MSV)..." style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; background: var(--bg-card); color: var(--text-primary);">
+        <input type="text" id="student-name-input" placeholder="Họ và tên của bạn..."
+          style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; margin-bottom: 6px; background: var(--bg-card); color: var(--text-primary);">
+        <input type="text" id="student-code-input" placeholder="Mã số sinh viên (MSV)..."
+          style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; background: var(--bg-card); color: var(--text-primary);">
       </div>
 
       <div class="legend-row">
@@ -356,7 +383,8 @@
   <div class="modal-overlay" id="result-modal">
     <div class="modal-content">
       <h2 style="font-size: 1.5rem; margin-bottom: 6px;">Kết Quả Bài Luyện Thi</h2>
-      <p style="color: var(--text-secondary); font-size: 0.95rem;" id="modal-subtitle">Chi tiết kết quả Topic 1: Describe People</p>
+      <p style="color: var(--text-secondary); font-size: 0.95rem;" id="modal-subtitle">Chi tiết kết quả Topic 1:
+        Describe People</p>
 
       <div class="score-circle">
         <div class="score-number" id="modal-score-number">0/35</div>
@@ -410,13 +438,16 @@
             </tr>
           </thead>
           <tbody id="sql-submissions-body">
-            <tr><td colspan="6" style="text-align:center;">Đang tải dữ liệu từ Neon SQL...</td></tr>
+            <tr>
+              <td colspan="6" style="text-align:center;">Đang tải dữ liệu từ Neon SQL...</td>
+            </tr>
           </tbody>
         </table>
       </div>
 
       <div style="margin-top: 20px;">
-        <button class="btn-secondary-action" onclick="document.getElementById('sql-submissions-modal').classList.remove('show');">
+        <button class="btn-secondary-action"
+          onclick="document.getElementById('sql-submissions-modal').classList.remove('show');">
           Đóng
         </button>
       </div>
@@ -429,10 +460,14 @@
       <span class="selection-badge">🔤 Đã chọn:</span>
       <span class="selection-text-preview" id="sel-text-preview"></span>
       <div class="selection-actions">
-        <button type="button" class="sel-btn sel-btn-trans" id="sel-btn-trans" title="Dịch đoạn văn / câu này sang Tiếng Việt">🌐 Dịch</button>
-        <button type="button" class="sel-btn sel-btn-en" id="sel-btn-en" title="Nghe phát âm Tiếng Anh">🔊 Đọc TA</button>
-        <button type="button" class="sel-btn sel-btn-vi" id="sel-btn-vi" title="Nghe đọc bản dịch Tiếng Việt">🗣️ Đọc TV</button>
-        <button type="button" class="sel-btn sel-btn-copy" id="sel-btn-copy" title="Sao chép văn bản này">📋 Copy</button>
+        <button type="button" class="sel-btn sel-btn-trans" id="sel-btn-trans"
+          title="Dịch đoạn văn / câu này sang Tiếng Việt">🌐 Dịch</button>
+        <button type="button" class="sel-btn sel-btn-en" id="sel-btn-en" title="Nghe phát âm Tiếng Anh">🔊 Đọc
+          TA</button>
+        <button type="button" class="sel-btn sel-btn-vi" id="sel-btn-vi" title="Nghe đọc bản dịch Tiếng Việt">🗣️ Đọc
+          TV</button>
+        <button type="button" class="sel-btn sel-btn-copy" id="sel-btn-copy" title="Sao chép văn bản này">📋
+          Copy</button>
         <button type="button" class="sel-btn sel-btn-close" id="sel-btn-close" title="Đóng thanh công cụ">✖</button>
       </div>
     </div>
@@ -448,7 +483,8 @@
     <div class="toast-snippet" id="toast-text-snippet"></div>
     <div class="toast-trans" id="toast-trans-snippet" style="display: none;"></div>
     <div class="toast-actions">
-      <button type="button" class="toast-btn toast-btn-trans" onclick="handleToastTranslate()">🌐 Dịch Tiếng Việt</button>
+      <button type="button" class="toast-btn toast-btn-trans" onclick="handleToastTranslate()">🌐 Dịch Tiếng
+        Việt</button>
       <button type="button" class="toast-btn toast-btn-en" onclick="handleToastSpeakEn()">🔊 Đọc Tiếng Anh</button>
       <button type="button" class="toast-btn toast-btn-vi" onclick="handleToastSpeakVi()">🗣️ Đọc Tiếng Việt</button>
     </div>
@@ -457,13 +493,16 @@
   <!-- Modal Hướng Dẫn Cách Đọc Chi Tiết Từng Từ (Giống ảnh mẫu học viên) -->
   <div class="modal-overlay" id="pronounce-detail-modal">
     <div class="modal-content" style="max-width: 580px; text-align: left;">
-      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;">
         <h3 style="margin: 0; color: var(--primary); font-size: 1.25rem;">📖 Hướng Dẫn Cách Đọc Chi Tiết</h3>
-        <button type="button" onclick="closePronounceModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted);">✖</button>
+        <button type="button" onclick="closePronounceModal()"
+          style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted);">✖</button>
       </div>
       <div id="pronounce-modal-body"></div>
       <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
-        <button type="button" class="btn-secondary-action" style="width: auto; padding: 8px 16px;" onclick="closePronounceModal()">Đóng</button>
+        <button type="button" class="btn-secondary-action" style="width: auto; padding: 8px 16px;"
+          onclick="closePronounceModal()">Đóng</button>
       </div>
     </div>
   </div>
@@ -472,4 +511,5 @@
   <script src="pronunciation.js?v=20260919_08"></script>
   <script src="app.js?v=20260919_08"></script>
 </body>
+
 </html>

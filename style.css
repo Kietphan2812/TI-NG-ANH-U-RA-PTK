@@ -1655,10 +1655,41 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .btn-check-sentence:hover {
   background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-reveal-sentence {
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid #f59e0b;
+  background: #fffbeb;
+  color: #92400e;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-reveal-sentence:hover {
+  background: #fde68a;
+  border-color: #d97706;
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .btn-reveal-sentence {
+  background: #451a03;
+  border-color: #f59e0b;
+  color: #fde68a;
+}
+
+[data-theme="dark"] .btn-reveal-sentence:hover {
+  background: #78350f;
 }
 
 .transform-feedback {
@@ -1683,6 +1714,19 @@ body {
   background: var(--danger-light);
   border: 1px solid var(--danger-border);
   color: #991b1b;
+}
+
+.transform-feedback.reveal {
+  background: #eff6ff;
+  border: 1px solid #93c5fd;
+  color: #1e40af;
+  line-height: 1.6;
+}
+
+[data-theme="dark"] .transform-feedback.reveal {
+  background: #1e3a5f;
+  border-color: #3b82f6;
+  color: #bfdbfe;
 }
 
 .model-answer-highlight {

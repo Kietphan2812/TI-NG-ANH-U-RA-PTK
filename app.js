@@ -1273,7 +1273,6 @@ function renderMCQList(questions, offsetIndex) {
           <div class="option-key">${opt.key}</div>
           <div class="option-content">
             <div class="option-text">${escapeHtml(opt.text)}</div>
-            ${optVi ? `<div class="option-vi-subtext">🇻🇳 ${escapeHtml(optVi)}</div>` : ''}
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
             <button type="button" class="btn-opt-audio" onclick="event.stopPropagation(); speakSmart('${escapeHtml(opt.text).replace(/'/g, "\\'")}', 'en-US')" title="Nghe tiếng Anh: ${opt.key}">🔊</button>
@@ -1396,7 +1395,8 @@ function renderWritingTransformList(questions, offsetIndex) {
             placeholder="Nhập phần câu viết tiếp..." 
             oninput="handleWritingInput('${q.id}', this.value)"
             onkeydown="if(event.key==='Enter') checkSentence('${q.id}')">
-          <button class="btn-check-sentence" onclick="checkSentence('${q.id}')">Kiểm tra</button>
+          <button class="btn-check-sentence" onclick="checkSentence('${q.id}')" title="Kiểm tra câu trả lời của bạn">✔ Kiểm tra</button>
+          <button class="btn-reveal-sentence" onclick="revealSentenceAnswer('${q.id}')" title="Xem đáp án chuẩn ngay">👁 Xem đáp án</button>
         </div>
 
         <div class="transform-feedback" id="feedback-${q.id}"></div>
@@ -1541,10 +1541,16 @@ function checkSentence(qId) {
   if (!qData) return;
 
   const inputEl = document.getElementById(`input-${qId}`);
-  const userText = (inputEl ? inputEl.value : (AppState.userAnswers[qId] || '')).trim();
+  // Đọc từ DOM trước, nếu rỗng thì đọc từ state đã lưu
+  const userText = ((inputEl ? inputEl.value : '') || AppState.userAnswers[qId] || '').trim();
 
   if (!userText) {
-    alert("Vui lòng nhập câu trả lời trước khi kiểm tra!");
+    // Hiện lỗi inline thay vì alert popup
+    const feedbackEls = document.querySelectorAll(`#feedback-${qId}`);
+    feedbackEls.forEach(fb => {
+      fb.className = 'transform-feedback show error';
+      fb.innerHTML = '⚠️ <strong>Vui lòng nhập câu trả lời trước!</strong> Hãy gõ vào ô bên trên rồi bấm Kiểm tra.';
+    });
     if (inputEl) inputEl.focus();
     return;
   }
@@ -1606,6 +1612,29 @@ function checkSentence(qId) {
   // Đánh dấu đúng/sai trong state nếu thi thử
   AppState.userAnswers[qId] = userText;
   updateQuestionNav();
+}
+
+// Xem đáp án trực tiếp (không cần nhập)
+function revealSentenceAnswer(qId) {
+  const qData = EXAM_DATA.sentenceTransformations.find(q => q.id === qId);
+  if (!qData) return;
+
+  // Hiện box đáp án chuẩn
+  document.querySelectorAll(`#exp-${qId}`).forEach(exp => exp.classList.add('show'));
+
+  // Hiện feedback thông báo đã xem đáp án
+  document.querySelectorAll(`#feedback-${qId}`).forEach(fb => {
+    fb.className = 'transform-feedback show reveal';
+    fb.innerHTML = `👁 <strong>Đáp án chuẩn:</strong> <em>${escapeHtml(qData.prefix)} ${escapeHtml(qData.modelAnswer)}</em>
+      <button type="button" class="btn-opt-audio" style="margin-left:8px;" onclick="speakSmart('${escapeHtml(qData.modelAnswer).replace(/'/g, "\\'")}','en-US')" title="Nghe đọc đáp án">🔊</button>
+      <br><small style="color:var(--text-muted);">📖 Ngữ pháp: ${escapeHtml(qData.grammarPoint)}</small>`;
+  });
+
+  // Đặt cursor vào input nếu chưa điền
+  const inputEl = document.getElementById(`input-${qId}`);
+  if (inputEl && !inputEl.value.trim()) {
+    inputEl.focus();
+  }
 }
 
 // Bật / tắt cờ đánh dấu câu hỏi
@@ -2941,13 +2970,11 @@ function renderListeningSections() {
         </div>
         <div class="options-list">
           ${q.options.map(opt => {
-            const optVi = getOptionTranslation(opt.text);
             return `
               <div class="option-item" onclick="this.classList.toggle('selected')">
                 <div class="option-key">${opt.key}</div>
                 <div class="option-content">
                   <div class="option-text">${escapeHtml(opt.text)}</div>
-                  ${optVi ? `<div class="option-vi-subtext">🇻🇳 ${escapeHtml(optVi)}</div>` : ''}
                 </div>
                 <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
                   <button type="button" class="btn-opt-audio" onclick="event.stopPropagation(); speakSmart('${escapeHtml(opt.text).replace(/'/g, "\\'")}', 'en-US')" title="Nghe tiếng Anh: ${opt.key}">🔊</button>
