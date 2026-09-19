@@ -1,21 +1,17 @@
 @echo off
 chcp 65001 >nul
-echo ==============================================
-echo   ĐANG ĐẨY CODE LÊN GITHUB REPOSITORY
-echo   Repo: https://github.com/Kietphan2812/TI-NG-ANH-U-RA-PTK.git
-echo ==============================================
+echo ========================================================
+echo   ĐANG ĐẨY CẬP NHẬT TÍNH NĂNG MỚI LÊN GITHUB & RENDER
+echo   (Tính năng đọc Tiếng Anh, Dịch Tiếng Việt & Đọc Tiếng Việt)
+echo ========================================================
 
-git init
-git config --local core.autocrlf true
-git remote remove origin 2>nul
-git remote add origin https://github.com/Kietphan2812/TI-NG-ANH-U-RA-PTK.git
-git branch -M main
 git add .
-git commit -m "Deploy Tieng Anh Dau Ra web app with Neon PostgreSQL integration"
-git push -u origin main --force
+git commit -m "feat: add English audio speech, Vietnamese translation toggle and Vietnamese voice reader"
+git push origin main
 
 echo.
-echo ==============================================
-echo   HOÀN TẤT ĐẨY CODE!
-echo ==============================================
+echo ========================================================
+echo   CẬP NHẬT THÀNH CÔNG!
+echo   Render sẽ tự động đồng bộ lên: https://tieng-anh-dau-ra-ptk.onrender.com
+echo ========================================================
 pause

@@ -466,6 +466,105 @@ body {
   font-weight: 600;
 }
 
+/* Translation and Speech Controls */
+.q-actions-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.btn-audio-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-audio-action:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+.btn-audio-action.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.translation-box {
+  margin-top: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: #fdf4ff;
+  border: 1px solid #f0abfc;
+  border-left: 4px solid #c026d3;
+  color: #701a75;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  display: none;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+[data-theme="dark"] .translation-box {
+  background: #2e1065;
+  border-color: #a855f7;
+  color: #f3e8ff;
+}
+
+.translation-box.show {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Global Audio Floating / Banner Controls */
+.global-audio-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: var(--bg-card);
+  padding: 12px 20px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.audio-reading-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.reading-highlight {
+  animation: pulseGlow 1.5s infinite;
+  border-color: var(--primary) !important;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4); }
+  50% { box-shadow: 0 0 0 7px rgba(99, 102, 241, 0.1); }
+}
+
 /* Sign Display Box (Biển báo) */
 .sign-display {
   display: inline-block;

@@ -314,6 +314,22 @@ function renderMCQList(questions, offsetIndex) {
 
         ${signHtml}
 
+        <div class="q-actions-bar">
+          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'en')" title="Nghe đọc câu hỏi bằng Tiếng Anh">
+            🔊 Đọc Tiếng Anh
+          </button>
+          <button class="btn-audio-action" onclick="toggleTranslation('${q.id}')" title="Dịch câu hỏi sang Tiếng Việt">
+            🌐 Dịch Tiếng Việt
+          </button>
+          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'vi')" title="Nghe đọc câu dịch bằng Tiếng Việt">
+            🗣️ Đọc Tiếng Việt
+          </button>
+        </div>
+
+        <div class="translation-box" id="trans-${q.id}">
+          <strong>🇻🇳 Dịch Tiếng Việt:</strong> ${escapeHtml(q.vietnameseTranslation || '')}
+        </div>
+
         <div class="options-list">
           ${optionsHtml}
         </div>
@@ -348,7 +364,24 @@ function renderWritingTransformList(questions, offsetIndex) {
         <div class="original-sentence-badge">Câu gốc:</div>
         <div class="original-sentence">${escapeHtml(q.originalSentence)}</div>
 
-        <div class="input-row-container">
+        <div class="q-actions-bar">
+          <button class="btn-audio-action" onclick="speakWriting('${q.id}', 'en')" title="Nghe đọc câu tiếng Anh">
+            🔊 Đọc Tiếng Anh
+          </button>
+          <button class="btn-audio-action" onclick="toggleTranslation('${q.id}')" title="Dịch câu sang Tiếng Việt">
+            🌐 Dịch Tiếng Việt
+          </button>
+          <button class="btn-audio-action" onclick="speakWriting('${q.id}', 'vi')" title="Nghe đọc bản dịch Tiếng Việt">
+            🗣️ Đọc Tiếng Việt
+          </button>
+        </div>
+
+        <div class="translation-box" id="trans-${q.id}">
+          <strong>🇻🇳 Dịch câu gốc:</strong> ${escapeHtml(q.vietnameseTranslation || '')}<br>
+          <strong>🇻🇳 Dịch câu hoàn chỉnh:</strong> ${escapeHtml(q.vietnameseModelTranslation || '')}
+        </div>
+
+        <div class="input-row-container" style="margin-top: 14px;">
           <span class="sentence-prefix">${escapeHtml(q.prefix)}</span>
           <input type="text" class="sentence-input" id="input-${q.id}" 
             value="${escapeHtml(userVal)}" 
@@ -892,35 +925,216 @@ function filterVocabulary() {
   });
 }
 
-// PHÁT ÂM VĂN BẢN (Text-To-Speech)
-function speakWord(word) {
-  if (!('speechSynthesis' in window)) {
-    alert("Trình duyệt không hỗ trợ Web Speech API!");
-    return;
+// PHÁT ÂM VĂN BẢN & DỊCH THUẬT NÂNG CAO (Text-To-Speech & Translation)
+let speechQueue = [];
+let isReadingSequence = false;
+
+function getVoiceByLang(lang) {
+  if (!('speechSynthesis' in window)) return null;
+  const voices = window.speechSynthesis.getVoices();
+  if (lang.startsWith('vi')) {
+    return voices.find(v => v.lang.includes('vi') || v.name.includes('Vietnamese')) || null;
+  } else {
+    return voices.find(v => v.lang.includes('en') || v.name.includes('English') || v.name.includes('Natural')) || null;
   }
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(word);
-  utterance.lang = 'en-US';
-  utterance.rate = 0.9;
-  window.speechSynthesis.speak(utterance);
 }
 
-function speakText(text) {
+function speakWord(word) {
+  speakText(word, 'en-US', 0.9);
+}
+
+function speakText(text, lang = 'en-US', rate = 0.88, onEndCallback = null) {
   if (!('speechSynthesis' in window)) {
     alert("Trình duyệt không hỗ trợ Web Speech API!");
     return;
   }
   window.speechSynthesis.cancel();
+
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'en-US';
-  utterance.rate = 0.85;
+  utterance.lang = lang;
+  utterance.rate = rate;
+
+  const matchedVoice = getVoiceByLang(lang);
+  if (matchedVoice) utterance.voice = matchedVoice;
+
+  if (onEndCallback) {
+    utterance.onend = onEndCallback;
+    utterance.onerror = onEndCallback;
+  }
+
   window.speechSynthesis.speak(utterance);
 }
 
 function stopSpeaking() {
+  isReadingSequence = false;
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
   }
+  document.querySelectorAll('.question-box').forEach(b => b.classList.remove('reading-highlight'));
+  const statusEl = document.getElementById('global-speech-status');
+  if (statusEl) statusEl.style.display = 'none';
+}
+
+// Bật / tắt hiển thị bản dịch của 1 câu
+function toggleTranslation(qId) {
+  document.querySelectorAll(`#trans-${qId}`).forEach(box => {
+    box.classList.toggle('show');
+  });
+}
+
+// Bật / tắt hiển thị tất cả bản dịch trên toàn trang
+function toggleAllTranslations() {
+  const boxes = document.querySelectorAll('.translation-box');
+  const anyHidden = Array.from(boxes).some(b => !b.classList.contains('show'));
+  boxes.forEach(b => b.classList.toggle('show', anyHidden));
+}
+
+// Đọc 1 câu trắc nghiệm (Tiếng Anh hoặc Tiếng Việt)
+function speakQuestion(qId, lang = 'en') {
+  const qData = QUESTION_LIST.find(q => q.id === qId);
+  if (!qData) return;
+
+  const box = document.getElementById(`qbox-${qId}`);
+  if (box) {
+    document.querySelectorAll('.question-box').forEach(b => b.classList.remove('reading-highlight'));
+    box.classList.add('reading-highlight');
+    setTimeout(() => box.classList.remove('reading-highlight'), 5000);
+  }
+
+  if (lang === 'en') {
+    // Đọc tiếng Anh: đọc câu hỏi và các lựa chọn A, B, C, D
+    let speechContent = qData.question;
+    if (qData.options && qData.options.length) {
+      speechContent += ". Options: " + qData.options.map(o => `Option ${o.key}: ${o.text}`).join(". ");
+    }
+    speakText(speechContent, 'en-US', 0.9);
+  } else {
+    // Đọc tiếng Việt: đọc bản dịch câu hỏi
+    const viText = qData.vietnameseTranslation || "Chưa có bản dịch cho câu này.";
+    speakText(viText, 'vi-VN', 0.92);
+  }
+}
+
+// Đọc câu tự luận viết lại (Tiếng Anh hoặc Tiếng Việt)
+function speakWriting(qId, lang = 'en') {
+  const qData = EXAM_DATA.sentenceTransformations.find(q => q.id === qId);
+  if (!qData) return;
+
+  const box = document.getElementById(`qbox-${qId}`);
+  if (box) {
+    document.querySelectorAll('.question-box').forEach(b => b.classList.remove('reading-highlight'));
+    box.classList.add('reading-highlight');
+    setTimeout(() => box.classList.remove('reading-highlight'), 5000);
+  }
+
+  if (lang === 'en') {
+    const speechContent = `Original sentence: ${qData.originalSentence}. Model sentence: ${qData.modelAnswer}`;
+    speakText(speechContent, 'en-US', 0.88);
+  } else {
+    const viText = `Câu gốc: ${qData.vietnameseTranslation}. Câu hoàn chỉnh: ${qData.vietnameseModelTranslation}`;
+    speakText(viText, 'vi-VN', 0.92);
+  }
+}
+
+// TÍNH NĂNG ĐỌC TUẦN TỰ TOÀN BỘ BÀI THI BẰNG TIẾNG ANH
+function readAllQuestionsEnglish() {
+  if (!('speechSynthesis' in window)) {
+    alert("Trình duyệt không hỗ trợ Web Speech API!");
+    return;
+  }
+
+  stopSpeaking();
+  isReadingSequence = true;
+  switchTab('tab-all');
+
+  const statusEl = document.getElementById('global-speech-status');
+  if (statusEl) {
+    statusEl.style.display = 'inline-flex';
+    statusEl.innerHTML = '🔊 Đang đọc toàn bộ bằng Tiếng Anh...';
+  }
+
+  let index = 0;
+  function readNext() {
+    if (!isReadingSequence || index >= QUESTION_LIST.length) {
+      stopSpeaking();
+      alert("Đã hoàn thành đọc tất cả câu hỏi trong bài thi!");
+      return;
+    }
+
+    const q = QUESTION_LIST[index];
+    index++;
+
+    // Cuộn tới câu đang đọc
+    const box = document.getElementById(`qbox-${q.id}`);
+    if (box) {
+      document.querySelectorAll('.question-box').forEach(b => b.classList.remove('reading-highlight'));
+      box.classList.add('reading-highlight');
+      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    let speechText = `Question ${q.globalIndex}. ${q.question || q.originalSentence || ''}`;
+    if (q.options) {
+      speechText += ". " + q.options.map(o => `${o.key}: ${o.text}`).join(". ");
+    }
+
+    speakText(speechText, 'en-US', 0.92, () => {
+      // Nghỉ 1 giây giữa các câu rồi đọc câu kế tiếp
+      setTimeout(readNext, 1000);
+    });
+  }
+
+  readNext();
+}
+
+// TÍNH NĂNG ĐỌC TUẦN TỰ TOÀN BỘ BÀI THI BẰNG TIẾNG VIỆT
+function readAllQuestionsVietnamese() {
+  if (!('speechSynthesis' in window)) {
+    alert("Trình duyệt không hỗ trợ Web Speech API!");
+    return;
+  }
+
+  stopSpeaking();
+  isReadingSequence = true;
+  switchTab('tab-all');
+  // Mở tất cả bản dịch để người học vừa nghe vừa nhìn
+  document.querySelectorAll('.translation-box').forEach(b => b.classList.add('show'));
+
+  const statusEl = document.getElementById('global-speech-status');
+  if (statusEl) {
+    statusEl.style.display = 'inline-flex';
+    statusEl.innerHTML = '🗣️ Đang đọc toàn bộ bằng Tiếng Việt...';
+  }
+
+  let index = 0;
+  function readNextVi() {
+    if (!isReadingSequence || index >= QUESTION_LIST.length) {
+      stopSpeaking();
+      alert("Đã hoàn thành đọc toàn bộ bản dịch tiếng Việt!");
+      return;
+    }
+
+    const q = QUESTION_LIST[index];
+    index++;
+
+    // Cuộn tới câu đang đọc
+    const box = document.getElementById(`qbox-${q.id}`);
+    if (box) {
+      document.querySelectorAll('.question-box').forEach(b => b.classList.remove('reading-highlight'));
+      box.classList.add('reading-highlight');
+      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    let viSpeechText = `Câu số ${q.globalIndex}. ${q.vietnameseTranslation || ''}`;
+    if (q.vietnameseModelTranslation) {
+      viSpeechText += ". Đáp án dịch hoàn chỉnh: " + q.vietnameseModelTranslation;
+    }
+
+    speakText(viSpeechText, 'vi-VN', 0.95, () => {
+      setTimeout(readNextVi, 1000);
+    });
+  }
+
+  readNextVi();
 }
 
 // SPEAKING SAMPLE & RECORDING
