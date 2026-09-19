@@ -638,6 +638,7 @@ const WORD_DICTIONARY = {
   "theirs": "của họ",
   "this": "này / cái này",
   "that": "đó / mà (đại từ quan hệ)",
+  "the": "cái / người đó (mạo từ)",
   "these": "những cái này",
   "those": "những cái kia",
   "in": "trong",
@@ -771,12 +772,10 @@ function renderWordBreakdownHtml(sentenceText) {
     }
 
     return `
-      <div class="word-chip" onclick="showWordPronounceDetail('${escapeHtml(w)}')" title="Bấm để xem hướng dẫn cách đọc chi tiết của từ: ${escapeHtml(w)}">
-        <div class="chip-top-row">
-          <span class="chip-en" onclick="event.stopPropagation(); speakWord('${escapeHtml(w)}')" title="Bấm nghe phát âm tiếng Anh: ${escapeHtml(w)}">🔊 ${escapeHtml(w)}</span>
-          ${pronData.readingVi ? `<span class="chip-pronounce-tag" onclick="event.stopPropagation(); showWordPronounceDetail('${escapeHtml(w)}')" title="Bấm để xem cách đọc chi tiết">🗣️ [${escapeHtml(pronData.readingVi)}]</span>` : ''}
-        </div>
-        ${pronData.ipa ? `<div class="chip-ipa-row" title="Phiên âm quốc tế IPA">${escapeHtml(pronData.ipa)}</div>` : ''}
+      <div class="word-chip" onclick="showWordPronounceDetail('${escapeHtml(w)}')" title="Bấm xem cách đọc chi tiết của từ: ${escapeHtml(w)}">
+        <div class="chip-en" onclick="event.stopPropagation(); speakWord('${escapeHtml(w)}')" title="Bấm nghe phát âm tiếng Anh: ${escapeHtml(w)}">🔊 ${escapeHtml(w)}</div>
+        <div class="chip-vi-reading" title="Cách đọc phiên âm tiếng Việt: ${escapeHtml(pronData.readingVi)}">"${escapeHtml(pronData.readingVi)}"</div>
+        ${pronData.ipa ? `<div class="chip-ipa" title="Phiên âm quốc tế IPA">${escapeHtml(pronData.ipa)}</div>` : ''}
         <span class="chip-vi" id="${chipId}" onclick="event.stopPropagation(); speakViWord(this.innerText)" title="Bấm nghe nghĩa tiếng Việt">${escapeHtml(viMeaning)}</span>
       </div>
     `;

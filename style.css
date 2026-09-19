@@ -686,6 +686,30 @@ body {
   border-color: #a855f7;
 }
 
+.chip-vi-reading {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #c026d3;
+  margin: 3px 0 2px;
+  line-height: 1.2;
+  letter-spacing: 0.2px;
+}
+
+[data-theme="dark"] .chip-vi-reading {
+  color: #f0abfc;
+}
+
+.chip-ipa {
+  font-size: 0.73rem;
+  font-family: monospace;
+  color: var(--text-muted);
+  margin-bottom: 3px;
+}
+
+[data-theme="dark"] .chip-ipa {
+  color: #94a3b8;
+}
+
 .chip-ipa-row {
   font-size: 0.72rem;
   font-family: monospace;

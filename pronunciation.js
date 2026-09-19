@@ -25,10 +25,10 @@ const WORD_PRONUNCIATION_DB = {
   },
   "some": {
     ipa: "/sʌm/",
-    vi: "săm",
+    vi: "SĂM",
     notes: "Đọc dứt khoát, âm 'ă' ngậm môi thành âm 'm'.",
     syllables: [
-      { part: "some", desc: "đọc gần giống 'săm' trong tiếng Việt nhưng trầm và nhẹ hơn" }
+      { part: "some", desc: "đọc gần giống 'SĂM' trong tiếng Việt nhưng trầm và nhẹ hơn" }
     ]
   },
   "water": {
@@ -42,15 +42,15 @@ const WORD_PRONUNCIATION_DB = {
   },
   "in": {
     ipa: "/ɪn/",
-    vi: "in",
+    vi: "IN",
     notes: "Đọc nhanh gọn, không kéo dài.",
     syllables: [
-      { part: "in", desc: "giống 'in' trong tiếng Việt" }
+      { part: "in", desc: "giống 'IN' trong tiếng Việt" }
     ]
   },
   "the": {
     ipa: "/ðə/",
-    vi: "đơ / thơ",
+    vi: "ĐƠ",
     notes: "Đặt đầu lưỡi giữa hai hàm răng và thổi nhẹ âm 'đơ'.",
     syllables: [
       { part: "the", desc: "đặt lưỡi giữa 2 răng, phát âm lai giữa 'đơ' và 'thơ'" }
@@ -58,18 +58,18 @@ const WORD_PRONUNCIATION_DB = {
   },
   "lake": {
     ipa: "/leɪk/",
-    vi: "lâyk",
+    vi: "LÂYK",
     notes: "Kéo dài âm 'lây' và bật nhẹ âm gió 'k' ở cuống họng.",
     syllables: [
-      { part: "lake", desc: "đọc là 'lây' rồi bật đuôi 'k'" }
+      { part: "lake", desc: "đọc là 'LÂYK' rồi bật đuôi 'k'" }
     ]
   },
   "near": {
     ipa: "/nɪər/",
-    vi: "ni-ơ",
+    vi: "NI-Ơ",
     notes: "Âm 'ni' nối liền với âm 'ơ', uốn lưỡi nhẹ.",
     syllables: [
-      { part: "near", desc: "đọc lướt nhanh từ 'ni' sang 'ơ'" }
+      { part: "near", desc: "đọc lướt nhanh từ 'NI' sang 'Ơ'" }
     ]
   },
   "elephants": {
@@ -77,7 +77,7 @@ const WORD_PRONUNCIATION_DB = {
     vi: "É-lơ-phừnts",
     notes: "Nhấn mạnh âm 'É', đuôi 'nts' bật xì gió nhẹ.",
     syllables: [
-      { part: "e-", desc: "đọc dứt khoát 'é'" },
+      { part: "e-", desc: "đọc dứt khoát 'É'" },
       { part: "-le-", desc: "đọc nhẹ 'lơ' hoặc 'li'" },
       { part: "-phants", desc: "đọc 'phừnt' rồi xì nhẹ 's'" }
     ]
@@ -664,7 +664,12 @@ function generateVietnamesePhonetics(rawWord) {
 
   // 1. Kiểm tra từ điển có sẵn
   if (WORD_PRONUNCIATION_DB[lower]) {
-    return { ...WORD_PRONUNCIATION_DB[lower], word: rawWord };
+    const item = WORD_PRONUNCIATION_DB[lower];
+    return {
+      ...item,
+      word: rawWord,
+      readingVi: item.readingVi || item.vi || ''
+    };
   }
 
   // 2. Xử lý các từ biến thể: số nhiều (-s, -es), quá khứ (-ed), tiếp diễn (-ing)
@@ -787,7 +792,11 @@ function generateVietnamesePhonetics(rawWord) {
 function getWordPronounceData(word) {
   if (!word) return { ipa: '', readingVi: '', notes: '', syllables: [] };
   const clean = word.toLowerCase().replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '').trim();
-  return generateVietnamesePhonetics(clean);
+  const res = generateVietnamesePhonetics(clean);
+  if (res && !res.readingVi && res.vi) {
+    res.readingVi = res.vi;
+  }
+  return res;
 }
 
 // Hiển thị modal hướng dẫn cách đọc chi tiết theo chuẩn ảnh người dùng yêu cầu
