@@ -105,15 +105,11 @@ function setExamMode(mode) {
   document.getElementById('mode-practice-btn').classList.toggle('active', mode === 'practice');
   document.getElementById('mode-exam-btn').classList.toggle('active', mode === 'exam');
 
-  // Cập nhật giao diện giải thích
-  document.querySelectorAll('.explanation-box').forEach(box => {
-    if (mode === 'exam' && !AppState.isSubmitted) {
-      box.classList.remove('show');
-    }
-  });
+  renderAllSections();
+  renderQuestionNav();
 
   alert(mode === 'practice' 
-    ? "Chế độ LUYỆN TẬP: Bạn có thể xem giải thích ngay khi chọn đáp án!" 
+    ? "Chế độ LUYỆN TẬP: Đáp án đúng sẽ đổi sang MÀU XANH, đáp án sai đổi sang MÀU ĐỎ và hiển thị giải thích ngay lập tức!" 
     : "Chế độ THI THỬ: Đáp án và lời giải sẽ được ẩn cho đến khi bạn bấm 'Nộp bài'!");
 }
 
@@ -829,13 +825,19 @@ function renderQuestionContentHtml(q) {
   const rawQuestion = q.question;
 
   if (selectedOpt) {
+    const shouldShowResult = (AppState.mode === 'practice' && selectedKey) || AppState.isSubmitted;
+    let badgeClass = 'filled-blank-badge';
+    if (shouldShowResult) {
+      badgeClass += (selectedKey === q.correctAnswer) ? ' correct' : ' wrong';
+    }
+
     const wordText = selectedOpt.text === '∅' ? '(để trống)' : selectedOpt.text;
-    const badgeHtml = `<span class="filled-blank-badge" title="Từ bạn đã chọn: ${escapeHtml(selectedOpt.text)}">${escapeHtml(wordText)}</span>`;
+    const badgeHtml = `<span class="${badgeClass}" title="Từ bạn đã chọn: ${escapeHtml(selectedOpt.text)}">${escapeHtml(wordText)}</span>`;
 
     if (/(_{2,}|…+|\.{3,}|\(\d+\)[….]*)/.test(rawQuestion)) {
       return escapeHtml(rawQuestion).replace(/(_{2,}|…+|\.{3,}|\(\d+\)[….]*)/, badgeHtml);
     } else {
-      return `${escapeHtml(rawQuestion)} <span class="filled-blank-badge" style="margin-left: 8px;">[Đã chọn: ${selectedOpt.key}. ${escapeHtml(selectedOpt.text)}]</span>`;
+      return `${escapeHtml(rawQuestion)} <span class="${badgeClass}" style="margin-left: 8px;">[Đã chọn: ${selectedOpt.key}. ${escapeHtml(selectedOpt.text)}]</span>`;
     }
   }
 
@@ -848,11 +850,28 @@ function renderTranslationBoxContent(q) {
   const selectedOpt = (q.options && selectedKey) ? q.options.find(o => o.key === selectedKey) : null;
   let chosenCallout = '';
   if (selectedOpt) {
+    const isCorrect = selectedKey === q.correctAnswer;
+    const shouldShowResult = (AppState.mode === 'practice' && selectedKey) || AppState.isSubmitted;
     const meaning = getWordMeaning(selectedOpt.text);
     const meaningStr = (meaning && meaning !== '(tên riêng)') ? ` (Nghĩa: ${meaning.split('/')[0].trim()})` : '';
+
+    let calloutClass = 'selected-ans-callout';
+    let statusPrefix = '';
+    if (shouldShowResult) {
+      calloutClass += isCorrect ? ' correct-callout' : ' wrong-callout';
+      statusPrefix = isCorrect ? '✅ <strong>CHÍNH XÁC!</strong> ' : '❌ <strong>CHƯA ĐÚNG!</strong> ';
+    }
+
+    let correctHint = '';
+    if (shouldShowResult && !isCorrect) {
+      const correctOpt = q.options.find(o => o.key === q.correctAnswer);
+      const correctText = correctOpt ? ` (${correctOpt.text})` : '';
+      correctHint = ` — Đáp án đúng là <strong>${q.correctAnswer}${escapeHtml(correctText)}</strong>`;
+    }
+
     chosenCallout = `
-      <div class="selected-ans-callout">
-        <span>🎯 <strong>Đáp án bạn chọn:</strong> <strong>${selectedOpt.key}. ${escapeHtml(selectedOpt.text)}</strong>${escapeHtml(meaningStr)}</span>
+      <div class="${calloutClass}">
+        <span>${statusPrefix}🎯 <strong>Đáp án bạn chọn:</strong> <strong>${selectedOpt.key}. ${escapeHtml(selectedOpt.text)}</strong>${escapeHtml(meaningStr)}${correctHint}</span>
       </div>
     `;
   }
@@ -872,6 +891,7 @@ function renderMCQList(questions, offsetIndex) {
     const globalNumber = offsetIndex + idx + 1;
     const isFlagged = AppState.flagged.has(q.id);
     const selectedChoice = AppState.userAnswers[q.id];
+    const shouldShowResult = (AppState.mode === 'practice' && selectedChoice) || AppState.isSubmitted;
 
     let signHtml = '';
     if (q.signText) {
@@ -883,9 +903,12 @@ function renderMCQList(questions, offsetIndex) {
       let statusClass = '';
       if (isSelected) statusClass = 'selected';
 
-      if (AppState.isSubmitted) {
-        if (opt.key === q.correctAnswer) statusClass += ' correct-choice';
-        else if (isSelected) statusClass += ' wrong-choice';
+      if (shouldShowResult) {
+        if (opt.key === q.correctAnswer) {
+          statusClass += ' correct-choice';
+        } else if (isSelected) {
+          statusClass += ' wrong-choice';
+        }
       }
 
       return `
@@ -900,10 +923,15 @@ function renderMCQList(questions, offsetIndex) {
       `;
     }).join('');
 
-    const showExp = (AppState.mode === 'practice' && selectedChoice) || AppState.isSubmitted;
+    const showExp = shouldShowResult;
+
+    let boxStatusClass = selectedChoice ? 'answered' : '';
+    if (shouldShowResult) {
+      boxStatusClass += (selectedChoice === q.correctAnswer) ? ' correct' : ' incorrect';
+    }
 
     return `
-      <div class="question-box ${selectedChoice ? 'answered' : ''}" id="qbox-${q.id}" data-global-idx="${globalNumber}">
+      <div class="question-box ${boxStatusClass}" id="qbox-${q.id}" data-global-idx="${globalNumber}">
         <div class="q-header">
           <div class="q-title">
             <span class="q-number-badge">Câu ${globalNumber}</span>
@@ -1023,13 +1051,28 @@ function selectOption(qId, key) {
   AppState.userAnswers[qId] = key;
   saveState();
 
-  // Cập nhật giao diện của tất cả các câu có id này (do render ở tab All và tab riêng)
+  const qData = QUESTION_LIST.find(q => q.id === qId);
+  const shouldShowResult = (AppState.mode === 'practice') || AppState.isSubmitted;
+  const isCorrect = qData && key === qData.correctAnswer;
+
+  // Cập nhật màu sắc các lựa chọn: đúng chuyển xanh, sai chuyển đỏ
   document.querySelectorAll(`[data-qid="${qId}"]`).forEach(opt => {
-    opt.classList.toggle('selected', opt.getAttribute('data-key') === key);
+    const optKey = opt.getAttribute('data-key');
+    opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
+
+    if (optKey === key) {
+      opt.classList.add('selected');
+      if (shouldShowResult) {
+        opt.classList.add(isCorrect ? 'correct-choice' : 'wrong-choice');
+      }
+    }
+    // Nếu chọn sai, hiển thị luôn đáp án đúng màu xanh để người học đối chiếu
+    if (shouldShowResult && !isCorrect && qData && optKey === qData.correctAnswer) {
+      opt.classList.add('correct-choice');
+    }
   });
 
   // Cập nhật câu hỏi hiển thị điền từ vào chỗ trống và khung dịch
-  const qData = QUESTION_LIST.find(q => q.id === qId);
   if (qData) {
     const formattedHtml = renderQuestionContentHtml(qData);
     document.querySelectorAll(`[id="qtext-${qId}"]`).forEach(el => {
@@ -1041,9 +1084,13 @@ function selectOption(qId, key) {
     });
   }
 
-  // Đánh dấu câu đã trả lời
+  // Đánh dấu câu đã trả lời và đổi màu viền ô câu hỏi (xanh nếu đúng, đỏ nếu sai)
   document.querySelectorAll(`#qbox-${qId}`).forEach(box => {
     box.classList.add('answered');
+    box.classList.remove('correct', 'incorrect');
+    if (shouldShowResult && qData) {
+      box.classList.add(isCorrect ? 'correct' : 'incorrect');
+    }
   });
 
   // Nếu ở chế độ Luyện tập, hiện ngay giải thích
