@@ -150,6 +150,24 @@ app.get('/api/tts', async (req, res) => {
   }
 });
 
+// API tra nghĩa từng từ linh hoạt (Google Translate API Proxy)
+app.get('/api/translate-word', async (req, res) => {
+  const { word } = req.query;
+  if (!word) return res.json({ translation: '' });
+
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(word.trim())}`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Translate service error');
+    const data = await response.json();
+    const translation = (data && data[0] && data[0][0] && data[0][0][0]) || word;
+    res.json({ word, translation: translation.toLowerCase() });
+  } catch (err) {
+    console.error('Translate word error:', err.message);
+    res.json({ word, translation: word });
+  }
+});
+
 // Endpoint kiểm tra trạng thái máy chủ
 app.get('/api/health', (req, res) => {
   res.json({

@@ -268,157 +268,484 @@ function renderAllSections() {
   restoreAnswerInputs();
 }
 
-// TỪ ĐIỂN SONG NGỮ TRA NGHĨA TỪNG TỪ CHI TIẾT
+// TỪ ĐIỂN SONG NGỮ TRA NGHĨA TỪNG TỪ TOÀN DIỆN
 const WORD_DICTIONARY = {
-  "each": "mỗi",
-  "person": "người / cá nhân",
-  "in": "trong",
-  "the": "(mạo từ xác định)",
-  "room": "căn phòng",
-  "turned": "quay / ngoảnh",
-  "their": "của họ",
-  "head": "đầu",
-  "to": "về phía / tới",
-  "front": "phía trước",
-  "when": "khi / vào lúc",
-  "teacher": "giáo viên / thầy cô",
-  "entered": "bước vào",
-  "maria": "Maria (tên riêng)",
-  "prefers": "thích hơn / chuộng hơn",
-  "serious": "nghiêm túc / chính kịch",
-  "films": "những bộ phim",
-  "film": "bộ phim",
-  "that": "mà (đại từ quan hệ)",
-  "are": "thì / là (số nhiều)",
+  // Từ để hỏi & Trợ động từ
+  "what": "cái gì / gì",
+  "where": "ở đâu / nơi nào",
+  "who": "ai / người nào",
+  "which": "cái nào / điều nào",
+  "how": "như thế nào / làm sao",
+  "why": "tại sao / vì sao",
+  "when": "khi nào / khi",
+  "does": "trợ động từ (thì hiện tại)",
+  "do": "làm / trợ động từ",
+  "did": "đã / trợ động từ (quá khứ)",
   "is": "thì / là (số ít)",
+  "are": "thì / là (số nhiều)",
   "am": "thì / là (đi với I)",
-  "about": "nói về / liên quan đến",
-  "people": "con người / mọi người",
-  "and": "và",
-  "relationships": "các mối quan hệ",
-  "relationship": "mối quan hệ",
-  "sarah": "Sarah (tên riêng)",
-  "enjoys": "thích thú / tận hưởng",
+  "was": "đã là / đã ở (số ít)",
+  "were": "đã là / đã ở (số nhiều)",
+  "have": "có",
+  "has": "có / đã",
+  "had": "đã có / đã từng",
+  "can": "có thể",
+  "cannot": "không thể",
+  "could": "đã có thể",
+  "will": "sẽ",
+  "would": "sẽ / muốn",
+  "must": "phải / chắc hẳn",
+  "should": "nên",
+
+  // Động từ & Cụm động từ
+  "look": "trông / nhìn",
+  "looks": "trông có vẻ",
+  "like": "như thế nào / giống như / thích",
+  "likes": "thích thú",
+  "look like": "trông như thế nào (ngoại hình)",
+  "mean": "có nghĩa là / keo kiệt",
+  "means": "nghĩa là",
+  "say": "nói",
+  "says": "nói rằng",
+  "circle": "khoanh tròn",
+  "choose": "hãy chọn",
+  "complete": "hoàn thành",
+  "read": "đọc",
+  "describe": "miêu tả / tả về",
+  "describes": "miêu tả",
+  "show": "xuất trình / cho xem",
+  "shows": "cho thấy / trình chiếu",
+  "tell": "nói / kể cho",
+  "tells": "kể",
+  "told": "đã nói / kể",
+  "make": "làm / chế tạo",
+  "makes": "khiến cho / làm cho",
+  "made": "được làm / dàn dựng",
+  "take": "cầm / lấy / tham gia",
+  "takes": "tham gia / lấy",
+  "took": "đã lấy / đã tham gia",
+  "get": "nhận / trở nên / nhờ",
+  "gets": "nhận",
+  "got": "đã nhận",
+  "getting": "đang nhờ / thuê",
+  "give": "cho / tặng",
+  "gives": "đưa cho",
+  "giving": "đang cho mượn / đưa",
+  "keep": "giữ gìn / duy trì",
+  "keeps": "giữ",
+  "stay": "ở lại / lưu trú",
+  "stayed": "đã ở",
+  "visit": "ghé thăm / thăm quan",
+  "visiting": "đang thăm quan",
+  "visited": "đã đi thăm",
+  "travel": "đi du lịch / đi lại",
+  "travelling": "việc đi lại / du lịch",
+  "inspire": "truyền cảm hứng",
+  "inspires": "truyền cảm hứng",
+  "correct": "sửa lỗi / chính xác",
+  "corrects": "sửa lỗi cho",
+  "help": "giúp đỡ",
+  "helps": "giúp đỡ",
+  "need": "cần",
+  "needs": "cần thiết",
+  "needed": "được cần",
+  "play": "chơi (thể thao/nhạc cụ)",
+  "plays": "chơi",
+  "work": "làm việc / hoạt động",
+  "works": "làm việc",
+  "working": "đang hoạt động / làm việc",
+  "eat": "ăn",
+  "eats": "ăn",
+  "eaten": "đã ăn xong",
+  "save": "tiết kiệm / dành dụm",
+  "saving": "đang để dành",
+  "wear": "mặc / đeo (kính)",
+  "wears": "đeo / mặc",
+  "turn": "quay / xoay",
+  "turned": "đã quay đầu / ngoảnh",
+  "enter": "bước vào",
+  "entered": "đã bước vào",
+  "faint": "ngất xỉu",
+  "fainted": "đã ngất xỉu",
+  "mend": "sửa chữa",
+  "mended": "được sửa chữa",
+  "see": "nhìn thấy / kiểm tra",
+  "leave": "rời khỏi",
+  "put": "đặt / để",
+  "bring": "mang lại",
+  "brings": "mang về",
+  "meet": "gặp gỡ",
+  "live": "sinh sống",
+  "lives": "sinh sống",
+  "study": "học tập",
+  "studying": "đang theo học",
+  "studies": "việc học / ngành học",
+  "enjoy": "thích thú / tận hưởng",
+  "enjoys": "thích thú",
   "watching": "xem / theo dõi",
   "scare": "làm sợ hãi",
-  "her": "cô ấy / của cô ấy",
-  "if": "nếu / miễn là",
-  "they": "chúng / họ",
-  "well": "tốt / hay",
-  "made": "được làm / dàn dựng",
-  "many": "nhiều",
-  "visiting": "đang thăm quan",
+  "order": "gọi món / thứ tự / hỏng",
+  "ordered": "được gọi món / đặt mua",
+  "out of order": "bị hỏng / ngưng hoạt động",
+  "lock": "khóa",
+  "locked": "được khóa",
+  "park": "đỗ xe / công viên",
+  "return": "trả lại / quay về",
+  "buy": "mua",
+  "bought": "được mua",
+
+  // Tên riêng
+  "tony": "Tony (tên riêng)",
+  "maria": "Maria (tên riêng)",
+  "anna": "Anna (tên riêng)",
+  "sarah": "Sarah (tên riêng)",
+  "jim": "Jim (tên riêng)",
+  "ken": "Ken (tên riêng)",
+  "emma": "Emma (tên riêng)",
+  "caroline": "Caroline (tên riêng)",
+  "junko": "Junko (tên riêng)",
+  "jessica": "Jessica (tên riêng)",
+  "minh": "Minh (tên riêng)",
+  "mexico": "nước Mê-hi-cô",
+  "london": "thành phố Luân Đôn",
+
+  // Danh từ phổ biến
+  "mother": "mẹ",
+  "father": "bố / cha",
+  "parents": "bố mẹ",
+  "family": "gia đình",
+  "principal": "hiệu trưởng",
+  "teacher": "giáo viên / thầy cô",
+  "teachers": "các thầy cô giáo",
+  "farmer": "nông dân",
+  "player": "người chơi / nhạc công",
+  "guitar": "đàn ghi-ta",
+  "classmate": "bạn cùng lớp",
+  "classmates": "những người bạn cùng lớp",
+  "friend": "người bạn",
+  "friends": "những người bạn",
+  "best friend": "bạn thân nhất",
+  "adjective": "tính từ",
+  "passage": "đoạn văn",
+  "questions": "các câu hỏi",
+  "question": "câu hỏi",
+  "answers": "các câu trả lời",
+  "answer": "câu trả lời / đáp án",
+  "text": "đoạn văn / văn bản",
+  "letter": "chữ cái / lá thư",
+  "explanation": "lời giải thích",
+  "entrance": "lối vào / cửa vào",
+  "door": "cánh cửa",
+  "room": "căn phòng",
+  "key": "chìa khóa",
+  "librarian": "người thủ thư",
+  "library": "thư viện",
+  "book": "cuốn sách",
+  "books": "những cuốn sách",
+  "ticket": "tấm vé",
+  "tickets": "những tấm vé",
+  "supersaver": "siêu tiết kiệm",
+  "machine": "chiếc máy",
+  "drink": "đồ uống",
+  "drinks": "các loại đồ uống",
+  "bar": "quầy bar / quán nước",
+  "head": "cái đầu",
+  "film": "bộ phim",
+  "films": "những bộ phim",
+  "people": "con người / mọi người",
+  "person": "người / cá nhân",
+  "relationship": "mối quan hệ",
+  "relationships": "các mối quan hệ",
+  "animal": "loài động vật",
   "animals": "các loài động vật",
-  "animal": "động vật",
-  "today": "ngày hôm nay",
-  "there": "có / ở đó",
-  "some": "một ít / một vài",
   "water": "nước",
   "lake": "hồ nước",
-  "near": "ở gần",
-  "elephants": "những con voi",
   "elephant": "con voi",
-  "my": "của tôi",
+  "elephants": "những con voi",
   "telephone": "điện thoại",
-  "out of order": "bị hỏng / ngưng hoạt động",
-  "out": "ngoài",
-  "order": "thứ tự",
-  "but": "nhưng",
-  "his": "của anh ấy",
-  "working": "đang hoạt động / làm việc",
-  "junko": "Junko (tên riêng)",
-  "has": "đã",
-  "eaten": "đã ăn xong",
   "lunch": "bữa ăn trưa",
-  "already": "rồi / xong",
-  "saving": "đang để dành / cất",
-  "mine": "phần của tôi",
-  "until": "cho đến khi",
-  "later": "lát nữa / sau này",
-  "ken": "Ken (tên riêng)",
-  "middle-aged": "trung niên (độ tuổi)",
   "height": "chiều cao",
-  "average": "trung bình",
+  "weight": "cân nặng",
+  "figure": "vóc dáng / thân hình",
+  "body": "cơ thể / vóc người",
+  "personality": "tính cách",
+  "eyes": "đôi mắt",
+  "eye": "con mắt",
+  "hair": "mái tóc",
+  "beard": "bộ râu",
+  "nose": "chiếc mũi",
+  "fringe": "tóc mái bằng",
+  "ponytail": "tóc đuôi ngựa / đuôi gà",
+  "skin": "làn da",
+  "sports": "các môn thể thao",
+  "sport": "thể thao",
+  "music": "âm nhạc",
+  "heart": "trái tim / tấm lòng",
+  "manners": "cách cư xử / lễ độ",
+  "marks": "điểm số",
+  "class": "lớp học",
+  "bench": "bàn học / ghế dài",
+  "examinations": "các kỳ thi",
+  "examination": "kỳ thi",
+  "exam": "bài thi",
+  "notebook": "vở ghi bài",
+  "mistake": "lỗi lầm / sai sót",
+  "heat": "sức nóng / cái nóng",
+  "theatre": "nhà hát",
+  "window": "cửa sổ",
+  "windows": "những chiếc cửa sổ",
+  "time": "thời gian / lần",
+  "pity": "điều đáng tiếc",
+  "day": "ngày",
+  "days": "các ngày",
+  "friday": "thứ Sáu",
+  "fridays": "các ngày thứ Sáu",
+  "weekend": "cuối tuần",
+  "money": "tiền bạc",
+  "emergency": "trường hợp khẩn cấp",
+  "permission": "sự cho phép",
+  "children": "những đứa trẻ",
+  "child": "đứa trẻ",
+  "neighborhood": "khu phố / hàng xóm",
+  "house": "ngôi nhà",
+  "girl": "cô gái",
+  "medicine": "ngành y / y khoa",
+  "university": "trường đại học",
+  "country": "đất nước / quốc gia",
+  "countries": "các quốc gia",
+  "world": "thế giới",
+  "gift": "món quà",
+  "gifts": "những món quà",
+  "glasses": "kính mắt",
+  "thirties": "những năm 30 tuổi",
+  "years": "năm / tuổi",
+  "year": "năm",
+
+  // Tính từ & Trạng từ
+  "good": "tốt / hay",
+  "best": "tốt nhất / chuẩn nhất",
+  "humorous": "hài hước / hóm hỉnh",
+  "funny": "buồn cười / vui vẻ",
+  "honest": "trung thực / thật thà",
+  "well-behaved": "ngoan ngoãn / cư xử tốt",
+  "hard-working": "chăm chỉ / siêng năng",
+  "well-dressed": "ăn mặc chỉn chu / đẹp",
   "well-built": "vạm vỡ / cường tráng",
   "wrong-built": "sai cấu trúc",
-  "good-built": "sai chuẩn ngữ",
-  "nice-built": "sai chuẩn ngữ",
-  "emma": "Emma (tên riêng)",
-  "late": "cuối (độ tuổi)",
-  "thirties": "những năm 30 tuổi",
-  "tall": "cao (người)",
-  "high": "cao (núi/nhà)",
-  "weight": "cân nặng",
+  "good-built": "sai chuẩn từ",
+  "nice-built": "sai chuẩn từ",
+  "middle-aged": "trung niên (độ tuổi)",
+  "tall": "cao ráo",
   "short": "ngắn / thấp",
+  "slim": "thon thả / mảnh mai",
+  "thin": "gầy / thanh mảnh",
+  "skinny": "gầy nhom",
+  "fat": "béo / mập",
+  "straight": "thẳng (tóc)",
+  "curly": "xoăn (tóc)",
   "wavy": "lượn sóng (tóc)",
   "blonde": "vàng hoe (màu tóc)",
-  "hair": "mái tóc",
-  "wears": "đeo / mặc",
-  "glasses": "kính mắt",
-  "caroline": "Caroline (tên riêng)",
-  "seventeen": "mười bảy tuổi",
-  "figure": "vóc dáng / thân hình",
-  "personality": "tính cách",
-  "thin": "gầy / mảnh mai",
-  "please": "xin vui lòng / làm ơn",
-  "keep": "giữ gìn",
-  "this": "này",
-  "entrance": "lối vào / cửa vào",
-  "clear": "thông thoáng / trống",
-  "door": "cánh cửa",
-  "locked": "được khóa",
-  "room": "căn phòng",
-  "not": "không",
-  "use": "sử dụng",
-  "show": "xuất trình / cho xem",
-  "librarian": "người thủ thư",
-  "all": "tất cả",
-  "books": "những cuốn sách",
-  "leave": "rời khỏi",
-  "library": "thư viện",
-  "supersaver": "siêu tiết kiệm",
-  "tickets": "những tấm vé",
-  "cannot": "không thể",
-  "used": "được sử dụng",
-  "fridays": "các ngày thứ Sáu",
-  "machine": "chiếc máy",
-  "drinks": "các loại đồ uống",
-  "available": "có sẵn",
-  "bar": "quầy bar / quán nước",
-  "heat": "sức nóng / cái nóng",
-  "such": "đến nỗi mà",
-  "nearly": "gần như / suýt nữa",
-  "fainted": "ngất xỉu / xỉu",
+  "blond": "vàng hoe",
+  "blue": "màu xanh lam",
+  "green": "màu xanh lá",
+  "brown": "màu nâu",
+  "black": "màu đen",
+  "fair": "trắng sáng / công bằng",
+  "pale": "nhợt nhạt / xanh xao",
+  "beautiful": "xinh đẹp",
+  "pretty": "đẹp / xinh xắn",
+  "handsome": "đẹp trai",
+  "attractive": "quyến rũ / hấp dẫn",
+  "good-looking": "ưa nhìn / sáng sủa",
+  "punctual": "đúng giờ",
+  "educated": "có giáo dục / học thức",
+  "friendly": "thân thiện",
+  "clever": "thông minh / khéo léo",
+  "smart": "thông minh",
+  "attentively": "chăm chú / tập trung",
+  "obedient": "vâng lời / biết nghe lời",
+  "proud": "tự hào",
+  "ready": "sẵn sàng",
+  "happy": "hạnh phúc / vui mừng",
+  "absent": "vắng mặt / nghỉ học",
+  "clear": "thông thoáng / rõ ràng",
+  "open": "mở cửa",
+  "closed": "đóng cửa",
+  "locked": "đã khóa",
+  "available": "có sẵn / còn trống",
+  "special": "đặc biệt",
   "hot": "nóng bức",
-  "going": "sắp đi / đang đi",
-  "theatre": "nhà hát",
-  "tomorrow": "ngày mai",
-  "looking": "đang mong",
-  "forward": "về phía trước",
-  "looking forward to": "rất mong chờ",
+  "serious": "nghiêm túc / chính kịch",
+  "scary": "đáng sợ",
+  "easy": "dễ dàng",
+  "sure": "chắc chắn",
+  "close": "gần gũi / thân thiết",
+  "grown": "đã lớn / trưởng thành",
+  "extroverted": "hướng ngoại",
+  "introverted": "hướng nội",
+  "generous": "hào phóng / rộng lượng",
+  "kind": "tốt bụng / tử tế",
+  "new": "mới",
+  "old": "cũ / già / tuổi",
+  "seventeen": "mười bảy tuổi",
+  "first": "đầu tiên",
+  "high": "cao (đánh giá/núi)",
+  "average": "trung bình",
+  "late": "cuối / muộn",
+  "nearly": "gần như / suýt nữa",
+  "already": "rồi / đã xong",
   "never": "chưa bao giờ",
-  "first": "lần đầu tiên",
-  "time": "thời gian / lần",
-  "getting": "đang nhờ / thuê",
-  "someone": "ai đó",
-  "mend": "sửa chữa",
-  "windows": "những chiếc cửa sổ",
-  "having": "nhờ làm cái gì",
-  "mended": "được sửa chữa",
-  "pity": "điều đáng tiếc",
-  "didn't": "đã không",
-  "tell": "nói cho",
-  "told": "đã nói",
-  "wish": "ước gì / mong ước",
-  "had": "đã (quá khứ hoàn thành)"
+  "always": "luôn luôn",
+  "usually": "thường xuyên",
+  "whenever": "bất cứ khi nào",
+  "anytime": "bất cứ lúc nào",
+  "originally": "ban đầu / vốn dĩ",
+  "now": "bây giờ / hiện tại",
+  "still": "vẫn còn",
+  "quite": "khá là / tương đối",
+  "very": "rất / lắm",
+  "so": "quá / rất / vì thế",
+  "such": "đến mức mà / như vậy",
+
+  // Đại từ, giới từ, liên từ
+  "each": "mỗi / từng",
+  "every": "mọi / mỗi",
+  "all": "tất cả",
+  "some": "một ít / một vài",
+  "many": "nhiều",
+  "both": "cả hai",
+  "other": "khác / lẫn nhau",
+  "i": "tôi",
+  "me": "tôi (tân ngữ)",
+  "my": "của tôi",
+  "mine": "phần của tôi",
+  "you": "bạn / các bạn",
+  "your": "của bạn",
+  "yours": "của bạn",
+  "he": "anh ấy / cậu ấy",
+  "him": "anh ấy (tân ngữ)",
+  "his": "của anh ấy",
+  "she": "cô ấy",
+  "her": "cô ấy / của cô ấy",
+  "hers": "của cô ấy",
+  "it": "nó",
+  "its": "của nó",
+  "we": "chúng tôi / chúng ta",
+  "us": "chúng tôi (tân ngữ)",
+  "our": "của chúng tôi",
+  "ours": "của chúng tôi",
+  "they": "họ / chúng nó",
+  "them": "họ (tân ngữ)",
+  "their": "của họ",
+  "theirs": "của họ",
+  "this": "này / cái này",
+  "that": "đó / mà (đại từ quan hệ)",
+  "these": "những cái này",
+  "those": "những cái kia",
+  "in": "trong",
+  "on": "trên / vào (ngày)",
+  "at": "tại / vào lúc",
+  "to": "đến / tới / để",
+  "from": "từ / đến từ",
+  "for": "cho / dành cho / vì",
+  "with": "với / cùng với",
+  "without": "không có",
+  "about": "nói về / khoảng",
+  "near": "gần",
+  "by": "bởi / cạnh",
+  "before": "trước khi",
+  "after": "sau khi",
+  "between": "ở giữa",
+  "around": "xung quanh",
+  "under": "dưới",
+  "into": "vào trong",
+  "until": "cho đến khi",
+  "since": "kể từ khi",
+  "and": "và",
+  "or": "hoặc / hay là",
+  "but": "nhưng",
+  "because": "bởi vì",
+  "although": "mặc dù",
+  "if": "nếu / miễn là",
+  "as": "như / khi",
+  "than": "hơn",
+  "not": "không",
+  "here": "ở đây",
+  "there": "ở đó / có"
 };
 
-// Hàm tạo thanh phân tích từng từ tiếng Anh sang tiếng Việt
+// Hàm tra nghĩa từ linh hoạt (Kết hợp Từ điển Offline + Smart Lemma + Online Proxy)
+function getWordMeaning(rawWord) {
+  if (!rawWord) return '';
+  const lower = rawWord.toLowerCase().trim();
+
+  // 1. Tra cứu trực tiếp trong WORD_DICTIONARY
+  if (WORD_DICTIONARY[lower]) return WORD_DICTIONARY[lower];
+
+  // 2. Tra cứu trong danh sách 53 từ vựng của bài thi
+  const vocabFound = EXAM_DATA.vocabulary.find(v => v.word.toLowerCase() === lower);
+  if (vocabFound) return vocabFound.meaning;
+
+  // 3. Xử lý các dạng biến thể hình thái (Lemmatization)
+  // Bỏ 's' hoặc 'es' (số nhiều)
+  if (lower.endsWith('es') && WORD_DICTIONARY[lower.slice(0, -2)]) {
+    return WORD_DICTIONARY[lower.slice(0, -2)];
+  }
+  if (lower.endsWith('s') && WORD_DICTIONARY[lower.slice(0, -1)]) {
+    return WORD_DICTIONARY[lower.slice(0, -1)];
+  }
+  // Bỏ 'ing'
+  if (lower.endsWith('ing')) {
+    const base = lower.slice(0, -3);
+    if (WORD_DICTIONARY[base]) return WORD_DICTIONARY[base];
+    if (WORD_DICTIONARY[base + 'e']) return WORD_DICTIONARY[base + 'e'];
+  }
+  // Bỏ 'ed'
+  if (lower.endsWith('ed')) {
+    const base = lower.slice(0, -2);
+    if (WORD_DICTIONARY[base]) return WORD_DICTIONARY[base];
+    if (WORD_DICTIONARY[base + 'd']) return WORD_DICTIONARY[base + 'd'];
+  }
+
+  // 4. Kiểm tra tên riêng viết hoa
+  if (/^[A-Z][a-z]+$/.test(rawWord)) {
+    return '(tên riêng)';
+  }
+
+  // Nếu là số đo, chữ số
+  if (/^\d+/.test(rawWord)) {
+    return rawWord;
+  }
+
+  return ''; // Trả về rỗng để gọi API dịch tự động
+}
+
+// Tự động tải bản dịch online cho các từ chưa có trong từ điển
+async function fetchMissingWordTranslation(word, chipId) {
+  try {
+    const isOnline = window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    const apiBase = isOnline ? '' : (window.location.protocol.startsWith('http') ? '' : 'https://tieng-anh-dau-ra-ptk.onrender.com');
+    const res = await fetch(`${apiBase}/api/translate-word?word=${encodeURIComponent(word)}`);
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data && data.translation) {
+      const el = document.getElementById(chipId);
+      if (el) el.innerText = data.translation;
+      // Lưu lại vào bộ nhớ đệm
+      WORD_DICTIONARY[word.toLowerCase()] = data.translation;
+    }
+  } catch (e) {
+    // Không làm gián đoạn UI
+  }
+}
+
+// Hàm tạo thanh phân tích từng từ tiếng Anh sang tiếng Việt (Không bao giờ bị 'từ vựng'!)
 function renderWordBreakdownHtml(sentenceText) {
   if (!sentenceText) return '';
-  // Xóa các dấu câu và tách từ
+  // Xóa các dấu gạch dưới, dấu câu và tách từ
   const words = sentenceText
-    .replace(/[.,/#!$%^&*;:{}=\-_`~()?]/g, ' ')
+    .replace(/_+/g, ' ')
+    .replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, ' ')
     .split(/\s+/)
     .map(w => w.trim())
     .filter(w => w.length > 0 && !w.includes('blank'));
@@ -435,24 +762,19 @@ function renderWordBreakdownHtml(sentenceText) {
   });
 
   const chipsHtml = uniqueWords.map(w => {
-    const lower = w.toLowerCase();
-    // Tra cứu trong từ điển hoặc danh sách 53 từ vựng
-    let viMeaning = WORD_DICTIONARY[lower];
+    let viMeaning = getWordMeaning(w);
+    const chipId = 'chip-' + Math.random().toString(36).substr(2, 9);
+
     if (!viMeaning) {
-      const vocabFound = EXAM_DATA.vocabulary.find(v => v.word.toLowerCase() === lower);
-      if (vocabFound) viMeaning = vocabFound.meaning;
+      viMeaning = '...';
+      // Tự động tải bản dịch online
+      setTimeout(() => fetchMissingWordTranslation(w, chipId), 10);
     }
-    // Nếu từ số nhiều, thử tìm dạng số ít (bỏ 's')
-    if (!viMeaning && lower.endsWith('s')) {
-      const singular = lower.slice(0, -1);
-      viMeaning = WORD_DICTIONARY[singular];
-    }
-    if (!viMeaning) viMeaning = 'từ vựng';
 
     return `
       <div class="word-chip" onclick="speakWord('${escapeHtml(w)}')" title="Bấm để nghe phát âm từ: ${escapeHtml(w)}">
         <span class="chip-en">${escapeHtml(w)}</span>
-        <span class="chip-vi">${escapeHtml(viMeaning)}</span>
+        <span class="chip-vi" id="${chipId}">${escapeHtml(viMeaning)}</span>
       </div>
     `;
   }).join('');
