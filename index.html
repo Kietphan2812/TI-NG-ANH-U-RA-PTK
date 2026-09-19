@@ -454,7 +454,22 @@
     </div>
   </div>
 
+  <!-- Modal Hướng Dẫn Cách Đọc Chi Tiết Từng Từ (Giống ảnh mẫu học viên) -->
+  <div class="modal-overlay" id="pronounce-detail-modal">
+    <div class="modal-content" style="max-width: 580px; text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 16px;">
+        <h3 style="margin: 0; color: var(--primary); font-size: 1.25rem;">📖 Hướng Dẫn Cách Đọc Chi Tiết</h3>
+        <button type="button" onclick="closePronounceModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted);">✖</button>
+      </div>
+      <div id="pronounce-modal-body"></div>
+      <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+        <button type="button" class="btn-secondary-action" style="width: auto; padding: 8px 16px;" onclick="closePronounceModal()">Đóng</button>
+      </div>
+    </div>
+  </div>
+
   <script src="data.js"></script>
+  <script src="pronunciation.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

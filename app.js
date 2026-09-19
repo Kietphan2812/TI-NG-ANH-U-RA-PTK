@@ -762,6 +762,7 @@ function renderWordBreakdownHtml(sentenceText) {
   const chipsHtml = uniqueWords.map(w => {
     let viMeaning = getWordMeaning(w);
     const chipId = 'chip-' + Math.random().toString(36).substr(2, 9);
+    const pronData = typeof getWordPronounceData === 'function' ? getWordPronounceData(w) : { ipa: '', readingVi: '' };
 
     if (!viMeaning) {
       viMeaning = '...';
@@ -770,8 +771,12 @@ function renderWordBreakdownHtml(sentenceText) {
     }
 
     return `
-      <div class="word-chip" onclick="speakWord('${escapeHtml(w)}')" title="Bấm để nghe phát âm từ: ${escapeHtml(w)}">
-        <span class="chip-en" onclick="event.stopPropagation(); speakWord('${escapeHtml(w)}')" title="Bấm nghe phát âm tiếng Anh: ${escapeHtml(w)}">🔊 ${escapeHtml(w)}</span>
+      <div class="word-chip" onclick="showWordPronounceDetail('${escapeHtml(w)}')" title="Bấm để xem hướng dẫn cách đọc chi tiết của từ: ${escapeHtml(w)}">
+        <div class="chip-top-row">
+          <span class="chip-en" onclick="event.stopPropagation(); speakWord('${escapeHtml(w)}')" title="Bấm nghe phát âm tiếng Anh: ${escapeHtml(w)}">🔊 ${escapeHtml(w)}</span>
+          ${pronData.readingVi ? `<span class="chip-pronounce-tag" onclick="event.stopPropagation(); showWordPronounceDetail('${escapeHtml(w)}')" title="Bấm để xem cách đọc chi tiết">🗣️ [${escapeHtml(pronData.readingVi)}]</span>` : ''}
+        </div>
+        ${pronData.ipa ? `<div class="chip-ipa-row" title="Phiên âm quốc tế IPA">${escapeHtml(pronData.ipa)}</div>` : ''}
         <span class="chip-vi" id="${chipId}" onclick="event.stopPropagation(); speakViWord(this.innerText)" title="Bấm nghe nghĩa tiếng Việt">${escapeHtml(viMeaning)}</span>
       </div>
     `;
@@ -780,7 +785,7 @@ function renderWordBreakdownHtml(sentenceText) {
   return `
     <div class="word-by-word-container">
       <div class="word-by-word-header">
-        <span>🔍 Bảng đối chiếu nghĩa từng từ (Nhấp vào từ để nghe phát âm riêng):</span>
+        <span>🔍 Bảng đối chiếu nghĩa & cách đọc từng từ (Bấm vào từ để xem hướng dẫn phát âm chi tiết):</span>
       </div>
       <div class="word-chips-grid">
         ${chipsHtml}
@@ -1677,22 +1682,33 @@ function renderVocabularyStudy() {
   const container = document.getElementById('vocab-grid-container');
   if (!container) return;
 
-  container.innerHTML = EXAM_DATA.vocabulary.map(v => `
-    <div class="vocab-card" data-word="${v.word.toLowerCase()}" data-meaning="${v.meaning.toLowerCase()}">
-      <div>
-        <div class="vocab-word-row">
-          <span class="vocab-word" onclick="speakWord('${escapeHtml(v.word)}')" style="cursor:pointer;" title="Bấm nghe phát âm tiếng Anh: ${escapeHtml(v.word)}">${escapeHtml(v.word)}</span>
-          <div style="display: flex; gap: 4px;">
-            <button class="btn-speak" onclick="speakWord('${escapeHtml(v.word)}')" title="Phát âm tiếng Anh">🔊</button>
-            <button class="btn-speak" onclick="speakViWord('${escapeHtml(v.meaning)}')" title="Đọc nghĩa tiếng Việt" style="background: #fdf4ff; border-color: #d946ef; color: #a21caf;">🗣️</button>
+  container.innerHTML = EXAM_DATA.vocabulary.map(v => {
+    const pronData = typeof getWordPronounceData === 'function' ? getWordPronounceData(v.word) : { ipa: v.ipa, readingVi: '' };
+    return `
+      <div class="vocab-card" data-word="${v.word.toLowerCase()}" data-meaning="${v.meaning.toLowerCase()}">
+        <div>
+          <div class="vocab-word-row">
+            <span class="vocab-word" onclick="speakWord('${escapeHtml(v.word)}')" style="cursor:pointer;" title="Bấm nghe phát âm tiếng Anh: ${escapeHtml(v.word)}">${escapeHtml(v.word)}</span>
+            <div style="display: flex; gap: 4px;">
+              <button class="btn-speak" onclick="speakWord('${escapeHtml(v.word)}')" title="Phát âm tiếng Anh">🔊</button>
+              <button class="btn-speak" onclick="speakViWord('${escapeHtml(v.meaning)}')" title="Đọc nghĩa tiếng Việt" style="background: #fdf4ff; border-color: #d946ef; color: #a21caf;">🗣️</button>
+            </div>
           </div>
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+            <span class="vocab-ipa">${escapeHtml(v.ipa)}</span>
+            <span class="vocab-pos">(${escapeHtml(v.pos)})</span>
+          </div>
+          ${pronData.readingVi ? `
+            <div class="vocab-vi-pronounce" onclick="showWordPronounceDetail('${escapeHtml(v.word)}')" title="Bấm để xem hướng dẫn cách đọc chi tiết">
+              🗣️ Đọc tiếng Việt: <strong>[${escapeHtml(pronData.readingVi)}]</strong> 🔍
+            </div>
+          ` : ''}
+          <div class="vocab-meaning" onclick="speakViWord('${escapeHtml(v.meaning)}')" style="cursor:pointer;" title="Bấm nghe nghĩa tiếng Việt: ${escapeHtml(v.meaning)}">${escapeHtml(v.meaning)}</div>
         </div>
-        <div class="vocab-ipa">${escapeHtml(v.ipa)} <span class="vocab-pos">(${escapeHtml(v.pos)})</span></div>
-        <div class="vocab-meaning" onclick="speakViWord('${escapeHtml(v.meaning)}')" style="cursor:pointer;" title="Bấm nghe nghĩa tiếng Việt: ${escapeHtml(v.meaning)}">${escapeHtml(v.meaning)}</div>
+        <div class="vocab-example" onclick="speakSmart('${escapeHtml(v.example).replace(/'/g, "\\'")}', 'en-US')" style="cursor:pointer;" title="Bấm nghe câu ví dụ tiếng Anh">"${escapeHtml(v.example)}"</div>
       </div>
-      <div class="vocab-example" onclick="speakSmart('${escapeHtml(v.example).replace(/'/g, "\\'")}', 'en-US')" style="cursor:pointer;" title="Bấm nghe câu ví dụ tiếng Anh">"${escapeHtml(v.example)}"</div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 function filterVocabulary() {
