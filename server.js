@@ -115,6 +115,41 @@ app.get('/api/submissions', async (req, res) => {
   }
 });
 
+// API phát âm tự nhiên (Proxy Google Cloud TTS - Không bao giờ lỗi CORS hay 403)
+app.get('/api/tts', async (req, res) => {
+  const { text, lang } = req.query;
+  if (!text) return res.status(400).send('Text is required');
+
+  try {
+    const safeText = encodeURIComponent(text.substring(0, 200));
+    const targetLang = lang || 'vi';
+    const googleUrl = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${targetLang}&q=${safeText}`;
+
+    const response = await fetch(googleUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Referer': 'https://translate.google.com/'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`TTS service status: ${response.status}`);
+    }
+
+    res.set({
+      'Content-Type': 'audio/mpeg',
+      'Cache-Control': 'public, max-age=86400',
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    const arrayBuffer = await response.arrayBuffer();
+    res.send(Buffer.from(arrayBuffer));
+  } catch (err) {
+    console.error('Lỗi khi lấy TTS audio:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Endpoint kiểm tra trạng thái máy chủ
 app.get('/api/health', (req, res) => {
   res.json({

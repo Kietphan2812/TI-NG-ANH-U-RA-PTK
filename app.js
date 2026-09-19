@@ -983,7 +983,7 @@ function getBestVoice(lang) {
   }
 }
 
-// Trình phát âm thanh đám mây (Google Natural Voice) chuẩn xác 100% tiếng Việt
+// Trình phát âm thanh đám mây (Cloud TTS Proxy qua Render) chuẩn xác 100% giọng tiếng Việt tự nhiên
 function playCloudTTS(text, langCode, onEndCallback = null) {
   if (!cloudAudioPlayer) {
     cloudAudioPlayer = new Audio();
@@ -993,21 +993,64 @@ function playCloudTTS(text, langCode, onEndCallback = null) {
 
   // Cắt ngắn nếu quá dài để tránh lỗi URL
   const safeText = text.length > 200 ? text.substring(0, 195) + '...' : text;
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${langCode}&q=${encodeURIComponent(safeText)}`;
+  
+  // Xác định domain backend để gọi API proxy không bao giờ bị CORS hay 403
+  const isOnline = window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+  const apiBase = isOnline ? '' : (window.location.protocol.startsWith('http') ? '' : 'https://tieng-anh-dau-ra-ptk.onrender.com');
+  const url = `${apiBase}/api/tts?lang=${langCode}&text=${encodeURIComponent(safeText)}`;
 
   cloudAudioPlayer.src = url;
   cloudAudioPlayer.onended = () => {
     if (onEndCallback) onEndCallback();
   };
   cloudAudioPlayer.onerror = (e) => {
-    console.warn("Cloud TTS error:", e);
-    if (onEndCallback) onEndCallback();
+    console.warn("Cloud proxy error, trying native SpeechSynthesis fallback:", e);
+    speakViaWebSpeech(text, langCode === 'vi' ? 'vi-VN' : 'en-US', onEndCallback);
   };
 
-  cloudAudioPlayer.play().catch(err => {
-    console.warn("Autoplay blocked:", err);
+  const playPromise = cloudAudioPlayer.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(err => {
+      console.warn("Autoplay blocked or network error, fallback to Web Speech:", err);
+      speakViaWebSpeech(text, langCode === 'vi' ? 'vi-VN' : 'en-US', onEndCallback);
+    });
+  }
+}
+
+// Phát âm thanh qua Web Speech API của trình duyệt
+function speakViaWebSpeech(text, lang, onEndCallback = null) {
+  if (!('speechSynthesis' in window)) {
     if (onEndCallback) onEndCallback();
-  });
+    return;
+  }
+  try {
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.resume();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang;
+    utterance.rate = lang.startsWith('vi') ? 0.95 : 0.88;
+
+    const voice = getBestVoice(lang);
+    if (voice) utterance.voice = voice;
+
+    window._activeSpeechUtterance = utterance;
+
+    utterance.onend = () => {
+      window._activeSpeechUtterance = null;
+      if (onEndCallback) onEndCallback();
+    };
+    utterance.onerror = (e) => {
+      console.warn("WebSpeech error:", e);
+      window._activeSpeechUtterance = null;
+      if (onEndCallback) onEndCallback();
+    };
+
+    window.speechSynthesis.speak(utterance);
+  } catch (e) {
+    console.error("speakViaWebSpeech exception:", e);
+    if (onEndCallback) onEndCallback();
+  }
 }
 
 // Hàm phát âm thông minh kết hợp Dual-Engine
@@ -1020,45 +1063,21 @@ function speakSmart(text, lang = 'en-US', onEndCallback = null) {
     return;
   }
 
-  // Nếu là Tiếng Việt và hệ điều hành không có voice Tiếng Việt:
-  // Tự động dùng Cloud TTS (chị Google) để đọc giọng chuẩn, đúng ngữ điệu và dấu thanh
-  if (isVi && !hasTrueVietnameseVoice()) {
+  // Nếu là Tiếng Việt: Luôn ưu tiên dùng Cloud TTS chất lượng cao (giọng chị Google chuẩn 100% tiếng Việt)
+  // Nếu Cloud gặp sự cố mạng thì tự động rơi về Web Speech API
+  if (isVi) {
     playCloudTTS(clean, 'vi', onEndCallback);
     return;
   }
 
-  // Dùng Web Speech API
+  // Nếu là Tiếng Anh: Dùng Web Speech API giọng chuẩn máy tính
   if ('speechSynthesis' in window) {
-    try {
-      window.speechSynthesis.resume();
-      const utterance = new SpeechSynthesisUtterance(clean);
-      utterance.lang = lang;
-      utterance.rate = isVi ? 0.95 : 0.88;
-
-      const voice = getBestVoice(lang);
-      if (voice) utterance.voice = voice;
-
-      // Giữ biến toàn cục chống Garbage Collection
-      window._activeSpeechUtterance = utterance;
-
-      utterance.onend = () => {
-        window._activeSpeechUtterance = null;
-        if (onEndCallback) onEndCallback();
-      };
-      utterance.onerror = () => {
-        window._activeSpeechUtterance = null;
-        playCloudTTS(clean, isVi ? 'vi' : 'en', onEndCallback);
-      };
-
-      window.speechSynthesis.speak(utterance);
-      return;
-    } catch (e) {
-      console.warn("SpeechSynthesis error:", e);
-    }
+    speakViaWebSpeech(clean, 'en-US', onEndCallback);
+    return;
   }
 
-  // Fallback
-  playCloudTTS(clean, isVi ? 'vi' : 'en', onEndCallback);
+  // Fallback tiếng Anh sang Cloud TTS
+  playCloudTTS(clean, 'en', onEndCallback);
 }
 
 function speakWord(word) {
