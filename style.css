@@ -527,6 +527,82 @@ body {
   display: block;
 }
 
+/* Word-by-Word Translation Breakdown */
+.word-by-word-container {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(192, 38, 211, 0.3);
+}
+
+.word-by-word-header {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #701a75;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+[data-theme="dark"] .word-by-word-header {
+  color: #d8b4fe;
+}
+
+.word-chips-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.word-chip {
+  display: inline-flex;
+  flex-direction: column;
+  padding: 5px 10px;
+  background: var(--bg-card);
+  border: 1.5px solid #f0abfc;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.word-chip:hover {
+  border-color: #c026d3;
+  background: #fae8ff;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .word-chip {
+  background: #1e1b4b;
+  border-color: #7e22ce;
+}
+
+[data-theme="dark"] .word-chip:hover {
+  background: #3b0764;
+  border-color: #c084fc;
+}
+
+.chip-en {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--primary);
+}
+
+[data-theme="dark"] .chip-en {
+  color: #a5b4fc;
+}
+
+.chip-vi {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
+
+[data-theme="dark"] .chip-vi {
+  color: #cbd5e1;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }

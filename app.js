@@ -268,6 +268,207 @@ function renderAllSections() {
   restoreAnswerInputs();
 }
 
+// TỪ ĐIỂN SONG NGỮ TRA NGHĨA TỪNG TỪ CHI TIẾT
+const WORD_DICTIONARY = {
+  "each": "mỗi",
+  "person": "người / cá nhân",
+  "in": "trong",
+  "the": "(mạo từ xác định)",
+  "room": "căn phòng",
+  "turned": "quay / ngoảnh",
+  "their": "của họ",
+  "head": "đầu",
+  "to": "về phía / tới",
+  "front": "phía trước",
+  "when": "khi / vào lúc",
+  "teacher": "giáo viên / thầy cô",
+  "entered": "bước vào",
+  "maria": "Maria (tên riêng)",
+  "prefers": "thích hơn / chuộng hơn",
+  "serious": "nghiêm túc / chính kịch",
+  "films": "những bộ phim",
+  "film": "bộ phim",
+  "that": "mà (đại từ quan hệ)",
+  "are": "thì / là (số nhiều)",
+  "is": "thì / là (số ít)",
+  "am": "thì / là (đi với I)",
+  "about": "nói về / liên quan đến",
+  "people": "con người / mọi người",
+  "and": "và",
+  "relationships": "các mối quan hệ",
+  "relationship": "mối quan hệ",
+  "sarah": "Sarah (tên riêng)",
+  "enjoys": "thích thú / tận hưởng",
+  "watching": "xem / theo dõi",
+  "scare": "làm sợ hãi",
+  "her": "cô ấy / của cô ấy",
+  "if": "nếu / miễn là",
+  "they": "chúng / họ",
+  "well": "tốt / hay",
+  "made": "được làm / dàn dựng",
+  "many": "nhiều",
+  "visiting": "đang thăm quan",
+  "animals": "các loài động vật",
+  "animal": "động vật",
+  "today": "ngày hôm nay",
+  "there": "có / ở đó",
+  "some": "một ít / một vài",
+  "water": "nước",
+  "lake": "hồ nước",
+  "near": "ở gần",
+  "elephants": "những con voi",
+  "elephant": "con voi",
+  "my": "của tôi",
+  "telephone": "điện thoại",
+  "out of order": "bị hỏng / ngưng hoạt động",
+  "out": "ngoài",
+  "order": "thứ tự",
+  "but": "nhưng",
+  "his": "của anh ấy",
+  "working": "đang hoạt động / làm việc",
+  "junko": "Junko (tên riêng)",
+  "has": "đã",
+  "eaten": "đã ăn xong",
+  "lunch": "bữa ăn trưa",
+  "already": "rồi / xong",
+  "saving": "đang để dành / cất",
+  "mine": "phần của tôi",
+  "until": "cho đến khi",
+  "later": "lát nữa / sau này",
+  "ken": "Ken (tên riêng)",
+  "middle-aged": "trung niên (độ tuổi)",
+  "height": "chiều cao",
+  "average": "trung bình",
+  "well-built": "vạm vỡ / cường tráng",
+  "wrong-built": "sai cấu trúc",
+  "good-built": "sai chuẩn ngữ",
+  "nice-built": "sai chuẩn ngữ",
+  "emma": "Emma (tên riêng)",
+  "late": "cuối (độ tuổi)",
+  "thirties": "những năm 30 tuổi",
+  "tall": "cao (người)",
+  "high": "cao (núi/nhà)",
+  "weight": "cân nặng",
+  "short": "ngắn / thấp",
+  "wavy": "lượn sóng (tóc)",
+  "blonde": "vàng hoe (màu tóc)",
+  "hair": "mái tóc",
+  "wears": "đeo / mặc",
+  "glasses": "kính mắt",
+  "caroline": "Caroline (tên riêng)",
+  "seventeen": "mười bảy tuổi",
+  "figure": "vóc dáng / thân hình",
+  "personality": "tính cách",
+  "thin": "gầy / mảnh mai",
+  "please": "xin vui lòng / làm ơn",
+  "keep": "giữ gìn",
+  "this": "này",
+  "entrance": "lối vào / cửa vào",
+  "clear": "thông thoáng / trống",
+  "door": "cánh cửa",
+  "locked": "được khóa",
+  "room": "căn phòng",
+  "not": "không",
+  "use": "sử dụng",
+  "show": "xuất trình / cho xem",
+  "librarian": "người thủ thư",
+  "all": "tất cả",
+  "books": "những cuốn sách",
+  "leave": "rời khỏi",
+  "library": "thư viện",
+  "supersaver": "siêu tiết kiệm",
+  "tickets": "những tấm vé",
+  "cannot": "không thể",
+  "used": "được sử dụng",
+  "fridays": "các ngày thứ Sáu",
+  "machine": "chiếc máy",
+  "drinks": "các loại đồ uống",
+  "available": "có sẵn",
+  "bar": "quầy bar / quán nước",
+  "heat": "sức nóng / cái nóng",
+  "such": "đến nỗi mà",
+  "nearly": "gần như / suýt nữa",
+  "fainted": "ngất xỉu / xỉu",
+  "hot": "nóng bức",
+  "going": "sắp đi / đang đi",
+  "theatre": "nhà hát",
+  "tomorrow": "ngày mai",
+  "looking": "đang mong",
+  "forward": "về phía trước",
+  "looking forward to": "rất mong chờ",
+  "never": "chưa bao giờ",
+  "first": "lần đầu tiên",
+  "time": "thời gian / lần",
+  "getting": "đang nhờ / thuê",
+  "someone": "ai đó",
+  "mend": "sửa chữa",
+  "windows": "những chiếc cửa sổ",
+  "having": "nhờ làm cái gì",
+  "mended": "được sửa chữa",
+  "pity": "điều đáng tiếc",
+  "didn't": "đã không",
+  "tell": "nói cho",
+  "told": "đã nói",
+  "wish": "ước gì / mong ước",
+  "had": "đã (quá khứ hoàn thành)"
+};
+
+// Hàm tạo thanh phân tích từng từ tiếng Anh sang tiếng Việt
+function renderWordBreakdownHtml(sentenceText) {
+  if (!sentenceText) return '';
+  // Xóa các dấu câu và tách từ
+  const words = sentenceText
+    .replace(/[.,/#!$%^&*;:{}=\-_`~()?]/g, ' ')
+    .split(/\s+/)
+    .map(w => w.trim())
+    .filter(w => w.length > 0 && !w.includes('blank'));
+
+  // Lọc trùng lặp từ nhưng giữ nguyên thứ tự
+  const seen = new Set();
+  const uniqueWords = [];
+  words.forEach(w => {
+    const lower = w.toLowerCase();
+    if (!seen.has(lower)) {
+      seen.add(lower);
+      uniqueWords.push(w);
+    }
+  });
+
+  const chipsHtml = uniqueWords.map(w => {
+    const lower = w.toLowerCase();
+    // Tra cứu trong từ điển hoặc danh sách 53 từ vựng
+    let viMeaning = WORD_DICTIONARY[lower];
+    if (!viMeaning) {
+      const vocabFound = EXAM_DATA.vocabulary.find(v => v.word.toLowerCase() === lower);
+      if (vocabFound) viMeaning = vocabFound.meaning;
+    }
+    // Nếu từ số nhiều, thử tìm dạng số ít (bỏ 's')
+    if (!viMeaning && lower.endsWith('s')) {
+      const singular = lower.slice(0, -1);
+      viMeaning = WORD_DICTIONARY[singular];
+    }
+    if (!viMeaning) viMeaning = 'từ vựng';
+
+    return `
+      <div class="word-chip" onclick="speakWord('${escapeHtml(w)}')" title="Bấm để nghe phát âm từ: ${escapeHtml(w)}">
+        <span class="chip-en">${escapeHtml(w)}</span>
+        <span class="chip-vi">${escapeHtml(viMeaning)}</span>
+      </div>
+    `;
+  }).join('');
+
+  return `
+    <div class="word-by-word-container">
+      <div class="word-by-word-header">
+        <span>🔍 Bảng đối chiếu nghĩa từng từ (Nhấp vào từ để nghe phát âm riêng):</span>
+      </div>
+      <div class="word-chips-grid">
+        ${chipsHtml}
+      </div>
+    </div>
+  `;
+}
+
 // Render danh sách câu hỏi trắc nghiệm
 function renderMCQList(questions, offsetIndex) {
   return questions.map((q, idx) => {
@@ -318,8 +519,8 @@ function renderMCQList(questions, offsetIndex) {
           <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'en')" title="Nghe đọc câu hỏi bằng Tiếng Anh">
             🔊 Đọc Tiếng Anh
           </button>
-          <button class="btn-audio-action" onclick="toggleTranslation('${q.id}')" title="Dịch câu hỏi sang Tiếng Việt">
-            🌐 Dịch Tiếng Việt
+          <button class="btn-audio-action" onclick="toggleTranslation('${q.id}')" title="Dịch câu hỏi sang Tiếng Việt & tra từng từ">
+            🌐 Dịch Tiếng Việt & Tra từ
           </button>
           <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'vi')" title="Nghe đọc câu dịch bằng Tiếng Việt">
             🗣️ Đọc Tiếng Việt
@@ -327,7 +528,10 @@ function renderMCQList(questions, offsetIndex) {
         </div>
 
         <div class="translation-box" id="trans-${q.id}">
-          <strong>🇻🇳 Dịch Tiếng Việt:</strong> ${escapeHtml(q.vietnameseTranslation || '')}
+          <div style="font-size: 0.98rem; font-weight: 600; margin-bottom: 4px;">
+            🇻🇳 Dịch cả câu: ${escapeHtml(q.vietnameseTranslation || '')}
+          </div>
+          ${renderWordBreakdownHtml(q.question)}
         </div>
 
         <div class="options-list">
@@ -368,8 +572,8 @@ function renderWritingTransformList(questions, offsetIndex) {
           <button class="btn-audio-action" onclick="speakWriting('${q.id}', 'en')" title="Nghe đọc câu tiếng Anh">
             🔊 Đọc Tiếng Anh
           </button>
-          <button class="btn-audio-action" onclick="toggleTranslation('${q.id}')" title="Dịch câu sang Tiếng Việt">
-            🌐 Dịch Tiếng Việt
+          <button class="btn-audio-action" onclick="toggleTranslation('${q.id}')" title="Dịch câu sang Tiếng Việt & tra từng từ">
+            🌐 Dịch Tiếng Việt & Tra từ
           </button>
           <button class="btn-audio-action" onclick="speakWriting('${q.id}', 'vi')" title="Nghe đọc bản dịch Tiếng Việt">
             🗣️ Đọc Tiếng Việt
@@ -377,8 +581,11 @@ function renderWritingTransformList(questions, offsetIndex) {
         </div>
 
         <div class="translation-box" id="trans-${q.id}">
-          <strong>🇻🇳 Dịch câu gốc:</strong> ${escapeHtml(q.vietnameseTranslation || '')}<br>
-          <strong>🇻🇳 Dịch câu hoàn chỉnh:</strong> ${escapeHtml(q.vietnameseModelTranslation || '')}
+          <div style="margin-bottom: 6px;">
+            <strong>🇻🇳 Dịch câu gốc:</strong> ${escapeHtml(q.vietnameseTranslation || '')}<br>
+            <strong>🇻🇳 Dịch câu hoàn chỉnh:</strong> ${escapeHtml(q.vietnameseModelTranslation || '')}
+          </div>
+          ${renderWordBreakdownHtml(q.originalSentence)}
         </div>
 
         <div class="input-row-container" style="margin-top: 14px;">
