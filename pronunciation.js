@@ -92,6 +92,397 @@ const WORD_PRONUNCIATION_DB = {
       { part: "-phant", desc: "đọc 'phừnt' bật đuôi 't'" }
     ]
   },
+  "caroline": {
+    ipa: "/ˈkær.ə.laɪn/",
+    vi: "CA-rô-lin",
+    notes: "Nhấn mạnh âm 'CA', 'rô-lin' đọc lướt nhanh.",
+    syllables: [
+      { part: "Ca-", desc: "nhấn mạnh 'CA'" },
+      { part: "-ro-line", desc: "đọc lướt 'rô-lin'" }
+    ]
+  },
+  "is": {
+    ipa: "/ɪz/",
+    vi: "I-z",
+    notes: "Đọc âm 'i' rồi rung nhẹ âm gió 'z'.",
+    syllables: [{ part: "is", desc: "đọc 'i' rồi rung đuôi 'z'" }]
+  },
+  "about": {
+    ipa: "/əˈbaʊt/",
+    vi: "Ơ-BAO-t",
+    notes: "Nhấn mạnh âm 'BAO', đuôi bật nhẹ 't'.",
+    syllables: [
+      { part: "a-", desc: "đọc nhẹ 'ơ'" },
+      { part: "-bout", desc: "nhấn mạnh 'bao' bật đuôi 't'" }
+    ]
+  },
+  "seventeen": {
+    ipa: "/ˌsev.ənˈtiːn/",
+    vi: "Xe-vừn-TIN",
+    notes: "Nhấn trọng âm vào 'TIN', 'xe-vừn' đọc nhanh.",
+    syllables: [
+      { part: "se-ven-", desc: "đọc là 'xe-vừn'" },
+      { part: "-teen", desc: "kéo dài và nhấn mạnh 'tin'" }
+    ]
+  },
+  "with": {
+    ipa: "/wɪð/",
+    vi: "UÝ-th",
+    notes: "Tròn môi đọc 'uý', đặt đầu lưỡi giữa hai răng thổi âm 'th'.",
+    syllables: [{ part: "with", desc: "đọc 'uý' rồi kẹp lưỡi giữa hai răng thổi 'th'" }]
+  },
+  "hair": {
+    ipa: "/heər/",
+    vi: "HÊ-ơ",
+    notes: "Đọc lướt nhanh từ 'hê' sang 'ơ' uốn cong đầu lưỡi.",
+    syllables: [{ part: "hair", desc: "đọc liền mạch 'HÊ-ơ'" }]
+  },
+  "figure": {
+    ipa: "/ˈfɪɡ.ər/",
+    vi: "PHI-gơ",
+    notes: "Nhấn mạnh âm 'PHI', âm 'gơ' đọc nhẹ lướt.",
+    syllables: [
+      { part: "fig-", desc: "nhấn mạnh 'phi'" },
+      { part: "-ure", desc: "đọc nhẹ 'gơ'" }
+    ]
+  },
+  "height": {
+    ipa: "/haɪt/",
+    vi: "HAI-t",
+    notes: "Đọc 'hai' rồi bật nhẹ âm gió 't' dứt khoát.",
+    syllables: [{ part: "height", desc: "đọc 'hai' bật đuôi 't'" }]
+  },
+  "face": {
+    ipa: "/feɪs/",
+    vi: "PHÂY-s",
+    notes: "Đọc 'phây' rồi xì nhẹ âm gió 's' ở kẽ răng.",
+    syllables: [{ part: "face", desc: "đọc 'phây' rồi xì gió 's'" }]
+  },
+  "and": {
+    ipa: "/ænd/",
+    vi: "EN-đ",
+    notes: "Đọc 'en' rồi bật nhẹ âm 'đ' ở vòm họng.",
+    syllables: [{ part: "and", desc: "đọc 'en' bật đuôi 'đ'" }]
+  },
+  "brother": {
+    ipa: "/ˈbrʌð.ər/",
+    vi: "B-RÁ-đờ",
+    notes: "Nhấn mạnh 'B-RÁ', 'đờ' đặt lưỡi giữa hai hàm răng.",
+    syllables: [
+      { part: "bro-", desc: "nhấn 'b-rá'" },
+      { part: "-ther", desc: "đọc nhẹ 'đờ'" }
+    ]
+  },
+  "feet": {
+    ipa: "/fiːt/",
+    vi: "PHÍT",
+    notes: "Kéo dài âm 'i' rồi bật đuôi 't' dứt khoát.",
+    syllables: [{ part: "feet", desc: "đọc kéo dài 'phít' bật 't'" }]
+  },
+  "school": {
+    ipa: "/skuːl/",
+    vi: "X-CU-ồ",
+    notes: "Đọc 'x-cu' kéo dài rồi uốn lưỡi âm 'l'.",
+    syllables: [{ part: "school", desc: "đọc 'x-cu-ồ' uốn nhẹ lưỡi" }]
+  },
+  "future": {
+    ipa: "/ˈfjuː.tʃər/",
+    vi: "PHIÚ-chờ",
+    notes: "Nhấn mạnh 'PHIÚ', âm 'chờ' đọc nhẹ lướt.",
+    syllables: [
+      { part: "fu-", desc: "nhấn 'phiú'" },
+      { part: "-ture", desc: "đọc nhẹ 'chờ'" }
+    ]
+  },
+  "popular": {
+    ipa: "/ˈpɒp.jə.lər/",
+    vi: "PÓ-piu-lờ",
+    notes: "Nhấn âm 'PÓ', 'piu-lờ' đọc nhanh.",
+    syllables: [
+      { part: "pop-", desc: "nhấn mạnh 'pó'" },
+      { part: "-u-lar", desc: "đọc lướt 'piu-lờ'" }
+    ]
+  },
+  "street": {
+    ipa: "/striːt/",
+    vi: "X-T-RÍT",
+    notes: "Bắt đầu xì nhẹ, đọc 't-rít' bật đuôi 't'.",
+    syllables: [{ part: "street", desc: "đọc 'x-t-rít' dứt khoát" }]
+  },
+  "medium": {
+    ipa: "/ˈmiː.di.əm/",
+    vi: "MÍ-đi-ừm",
+    notes: "Nhấn mạnh 'MÍ', 'đi-ừm' đọc nhẹ.",
+    syllables: [
+      { part: "me-", desc: "nhấn 'mí'" },
+      { part: "-di-um", desc: "đọc 'đi-ừm'" }
+    ]
+  },
+  "build": {
+    ipa: "/bɪld/",
+    vi: "BIU-ồ-đ",
+    notes: "Đọc 'biu' uốn lưỡi rồi bật nhẹ đuôi 'đ'.",
+    syllables: [{ part: "build", desc: "đọc 'biu-ồ-đ'" }]
+  },
+  "middle": {
+    ipa: "/ˈmɪd.əl/",
+    vi: "MÍT-đồ",
+    notes: "Nhấn 'MÍT', 'đồ' đọc gọn.",
+    syllables: [
+      { part: "mid-", desc: "nhấn 'mít'" },
+      { part: "-dle", desc: "đọc 'đồ'" }
+    ]
+  },
+  "really": {
+    ipa: "/ˈrɪə.li/",
+    vi: "RI-li",
+    notes: "Đọc 'ri-li' liền mạch nhẹ nhàng.",
+    syllables: [{ part: "really", desc: "đọc là 'RI-li'" }]
+  },
+  "prefer": {
+    ipa: "/prɪˈfɜːr/",
+    vi: "pri-PHƠ",
+    notes: "Nhấn vào 'PHƠ', uốn lưỡi nhẹ.",
+    syllables: [
+      { part: "pre-", desc: "đọc nhẹ 'pri'" },
+      { part: "-fer", desc: "nhấn mạnh 'phơ'" }
+    ]
+  },
+  "calm": {
+    ipa: "/kɑːm/",
+    vi: "CAM",
+    notes: "Âm l câm, đọc 'cam' ngân dài nhẹ.",
+    syllables: [{ part: "calm", desc: "đọc là 'CAM' (chữ l câm)" }]
+  },
+  "decided": {
+    ipa: "/dɪˈsaɪ.dɪd/",
+    vi: "đi-XAI-địt",
+    notes: "Nhấn vào 'XAI', đuôi 'địt' rõ ràng.",
+    syllables: [
+      { part: "de-", desc: "đọc 'đi'" },
+      { part: "-ci-", desc: "nhấn 'xai'" },
+      { part: "-ded", desc: "đọc 'địt'" }
+    ]
+  },
+  "polite": {
+    ipa: "/pəˈlaɪt/",
+    vi: "pơ-LAI-t",
+    notes: "Nhấn 'LAI', bật nhẹ đuôi 't'.",
+    syllables: [
+      { part: "po-", desc: "đọc 'pơ'" },
+      { part: "-lite", desc: "nhấn 'lai' bật 't'" }
+    ]
+  },
+  "charity": {
+    ipa: "/ˈtʃær.ə.ti/",
+    vi: "CHE-ri-ti",
+    notes: "Nhấn mạnh 'CHE', 'ri-ti' đọc nhanh.",
+    syllables: [
+      { part: "cha-", desc: "nhấn 'che'" },
+      { part: "-ri-ty", desc: "đọc 'ri-ti'" }
+    ]
+  },
+  "advice": {
+    ipa: "/ədˈvaɪs/",
+    vi: "ơt-VAI-s",
+    notes: "Nhấn 'VAI', xì nhẹ gió 's'.",
+    syllables: [
+      { part: "ad-", desc: "đọc 'ơt'" },
+      { part: "-vice", desc: "nhấn 'vai' xì 's'" }
+    ]
+  },
+  "despite": {
+    ipa: "/dɪˈspaɪt/",
+    vi: "đi-SPAI-t",
+    notes: "Nhấn 'SPAI', đuôi bật 't'.",
+    syllables: [
+      { part: "de-", desc: "đọc 'đi'" },
+      { part: "-spite", desc: "nhấn 'spai' bật 't'" }
+    ]
+  },
+  "success": {
+    ipa: "/səkˈses/",
+    vi: "sực-SÉT-s",
+    notes: "Nhấn 'SÉT', đuôi xì 's'.",
+    syllables: [
+      { part: "suc-", desc: "đọc 'sực'" },
+      { part: "-cess", desc: "nhấn 'sét' xì 's'" }
+    ]
+  },
+  "woman": {
+    ipa: "/ˈwʊm.ən/",
+    vi: "U-mừn",
+    notes: "Nhấn mạnh 'U', 'mừn' đọc nhẹ.",
+    syllables: [
+      { part: "wo-", desc: "nhấn 'u'" },
+      { part: "-man", desc: "đọc 'mừn'" }
+    ]
+  },
+  "today": {
+    ipa: "/təˈdeɪ/",
+    vi: "tơ-ĐÊY",
+    notes: "Nhấn mạnh 'ĐÊY'.",
+    syllables: [
+      { part: "to-", desc: "đọc 'tơ'" },
+      { part: "-day", desc: "nhấn 'đêy'" }
+    ]
+  },
+  "please": {
+    ipa: "/pliːz/",
+    vi: "P-LI-z",
+    notes: "Bật 'p', kéo dài 'li', đuôi rung 'z'.",
+    syllables: [{ part: "please", desc: "đọc 'p-li' rồi rung 'z'" }]
+  },
+  "called": {
+    ipa: "/kɔːld/",
+    vi: "COL-đ",
+    notes: "Đọc 'col' rồi bật nhẹ 'đ'.",
+    syllables: [{ part: "called", desc: "đọc 'col' bật đuôi 'đ'" }]
+  },
+  "same": {
+    ipa: "/seɪm/",
+    vi: "SÊM",
+    notes: "Đọc 'sêm' khép môi.",
+    syllables: [{ part: "same", desc: "đọc là 'sêm'" }]
+  },
+  "things": {
+    ipa: "/θɪŋz/",
+    vi: "THINH-z",
+    notes: "Đặt lưỡi giữa 2 răng âm 'th', rung 'z'.",
+    syllables: [{ part: "things", desc: "đọc 'thinh' rồi rung 'z'" }]
+  },
+  "opinion": {
+    ipa: "/əˈpɪn.jən/",
+    vi: "ơ-PIN-i-ừn",
+    notes: "Nhấn 'PIN', các âm khác đọc lướt.",
+    syllables: [
+      { part: "o-", desc: "đọc 'ơ'" },
+      { part: "-pin-ion", desc: "đọc 'pin-i-ừn'" }
+    ]
+  },
+  "tonight": {
+    ipa: "/təˈnaɪt/",
+    vi: "tơ-NAI-t",
+    notes: "Nhấn 'NAI', bật nhẹ 't'.",
+    syllables: [
+      { part: "to-", desc: "đọc 'tơ'" },
+      { part: "-night", desc: "nhấn 'nai' bật 't'" }
+    ]
+  },
+  "centre": {
+    ipa: "/ˈsen.tər/",
+    vi: "SEN-tờ",
+    notes: "Nhấn 'SEN', 'tờ' đọc nhẹ.",
+    syllables: [
+      { part: "cen-", desc: "đọc 'sen'" },
+      { part: "-tre", desc: "đọc 'tờ'" }
+    ]
+  },
+  "information": {
+    ipa: "/ˌɪn.fəˈmeɪ.ʃən/",
+    vi: "in-phơ-MÊY-sừn",
+    notes: "Nhấn trọng âm vào 'MÊY'.",
+    syllables: [
+      { part: "in-for-", desc: "đọc 'in-phơ'" },
+      { part: "-ma-tion", desc: "nhấn 'mêy-sừn'" }
+    ]
+  },
+  "guided": {
+    ipa: "/ˈɡaɪ.dɪd/",
+    vi: "GAI-địt",
+    notes: "Nhấn 'GAI', đuôi 'địt' rõ ràng.",
+    syllables: [
+      { part: "gui-", desc: "đọc 'gai'" },
+      { part: "-ded", desc: "đọc 'địt'" }
+    ]
+  },
+  "through": {
+    ipa: "/θruː/",
+    vi: "TH-RU",
+    notes: "Đặt lưỡi giữa 2 răng rồi đọc 'ru'.",
+    syllables: [{ part: "through", desc: "đọc 'th-ru'" }]
+  },
+  "tomorrow": {
+    ipa: "/təˈmɒr.əʊ/",
+    vi: "tơ-MO-rôu",
+    notes: "Nhấn 'MO', 'tơ' và 'rôu' nhẹ.",
+    syllables: [
+      { part: "to-", desc: "đọc 'tơ'" },
+      { part: "-mor-row", desc: "đọc 'mo-rôu'" }
+    ]
+  },
+  "someone": {
+    ipa: "/ˈsʌm.wʌn/",
+    vi: "SĂM-oăn",
+    notes: "Nhấn 'SĂM', 'oăn' đọc liền.",
+    syllables: [
+      { part: "some-", desc: "đọc 'săm'" },
+      { part: "-one", desc: "đọc 'oăn'" }
+    ]
+  },
+  "hello": {
+    ipa: "/heˈləʊ/",
+    vi: "he-LÔU",
+    notes: "Nhấn 'LÔU', 'he' đọc nhẹ.",
+    syllables: [
+      { part: "hel-", desc: "đọc 'he'" },
+      { part: "-lo", desc: "nhấn 'lôu'" }
+    ]
+  },
+  "interesting": {
+    ipa: "/ˈɪn.trə.stɪŋ/",
+    vi: "IN-trơ-sting",
+    notes: "Nhấn mạnh âm đầu 'IN'.",
+    syllables: [
+      { part: "in-", desc: "đọc 'in'" },
+      { part: "-tre-sting", desc: "đọc 'trơ-sting'" }
+    ]
+  },
+  "english": {
+    ipa: "/ˈɪŋ.ɡlɪʃ/",
+    vi: "ING-g-lịt-s",
+    notes: "Nhấn 'ING', 'lịt-s' tròn môi xì gió.",
+    syllables: [
+      { part: "eng-", desc: "đọc 'ing'" },
+      { part: "-lish", desc: "đọc 'g-lịt-s'" }
+    ]
+  },
+  "energetic": {
+    ipa: "/ˌen.əˈdʒet.ɪk/",
+    vi: "e-nơ-DZHÉ-tíc",
+    notes: "Nhấn vào 'DZHÉ'.",
+    syllables: [
+      { part: "en-er-", desc: "đọc 'e-nơ'" },
+      { part: "-get-ic", desc: "đọc 'dzhé-tíc'" }
+    ]
+  },
+  "appearance": {
+    ipa: "/əˈpɪə.rəns/",
+    vi: "ơ-PI-ơ-rừns",
+    notes: "Nhấn mạnh âm 'PI'.",
+    syllables: [
+      { part: "ap-", desc: "đọc 'ơ'" },
+      { part: "-pear-ance", desc: "đọc 'pi-ơ-rừns'" }
+    ]
+  },
+  "believe": {
+    ipa: "/bɪˈliːv/",
+    vi: "bi-LI-v",
+    notes: "Nhấn 'LI' kéo dài, đuôi rung nhẹ 'v'.",
+    syllables: [
+      { part: "be-", desc: "đọc 'bi'" },
+      { part: "-lieve", desc: "nhấn 'li' chạm răng âm 'v'" }
+    ]
+  },
+  "become": {
+    ipa: "/bɪˈkʌm/",
+    vi: "bi-CẮM",
+    notes: "Nhấn 'CẮM' dứt khoát.",
+    syllables: [
+      { part: "be-", desc: "đọc 'bi'" },
+      { part: "-come", desc: "nhấn 'cắm'" }
+    ]
+  },
 
   // --- Từ vựng các câu trắc nghiệm (Questions 1 - 10) ---
   "each": {
@@ -191,19 +582,19 @@ const WORD_PRONUNCIATION_DB = {
   },
   "his": {
     ipa: "/hɪz/",
-    vi: "hít-z",
+    vi: "HÍT-z",
     notes: "Đọc 'hít' nhưng đuôi rung âm 'z'.",
     syllables: [{ part: "his", desc: "đọc 'hi' rồi xì rung âm 'z'" }]
   },
   "her": {
     ipa: "/hɜːr/",
-    vi: "hơ",
-    notes: "Kéo dài âm 'hơ' và uốn cong đầu lưỡi.",
-    syllables: [{ part: "her", desc: "đọc là 'hơ' uốn lưỡi" }]
+    vi: "HƠ",
+    notes: "Kéo dài âm 'HƠ' và uốn cong nhẹ đầu lưỡi.",
+    syllables: [{ part: "her", desc: "đọc là 'HƠ' uốn lưỡi" }]
   },
   "our": {
     ipa: "/aʊər/",
-    vi: "ao-ơ",
+    vi: "AO-ơ",
     notes: "Đọc lướt nhanh từ 'ao' sang 'ơ'.",
     syllables: [{ part: "our", desc: "đọc là 'ao-ơ'" }]
   },
@@ -500,51 +891,57 @@ const WORD_PRONUNCIATION_DB = {
   },
   "straight": {
     ipa: "/streɪt/",
-    vi: "xtrêyt",
-    notes: "Đọc 'xtrêy' rồi bật đuôi 't' dứt khoát.",
-    syllables: [{ part: "straight", desc: "đọc 'xtrêyt' bật âm 't'" }]
+    vi: "XT-RÂYT",
+    notes: "Đọc 'xt-rây' rồi bật đuôi 't' dứt khoát.",
+    syllables: [{ part: "straight", desc: "đọc 'XT-RÂYT' bật đuôi 't'" }]
   },
   "tall": {
     ipa: "/tɔːl/",
-    vi: "tho-ồ",
-    notes: "Đọc 'tho' kéo dài rồi uốn lưỡi chạm hàm trên âm 'l'.",
-    syllables: [{ part: "tall", desc: "đọc 'tho' uốn lưỡi 'l'" }]
+    vi: "TO-ồ",
+    notes: "Đọc 'TO' tròn môi rồi uốn lưỡi chạm hàm trên âm 'l'.",
+    syllables: [{ part: "tall", desc: "đọc 'TO-ồ' (uốn nhẹ đuôi 'l')" }]
   },
   "short": {
     ipa: "/ʃɔːt/",
-    vi: "soát-t",
-    notes: "Tròn môi âm 'sh' rồi đọc 'soát' bật đuôi 't'.",
-    syllables: [{ part: "short", desc: "đọc 'soát' bật âm 't'" }]
+    vi: "SOÁT",
+    notes: "Tròn môi bật âm 'sh' rồi đọc 'SOÁT' gọn gàng.",
+    syllables: [{ part: "short", desc: "đọc là 'SOÁT' dứt khoát" }]
   },
   "slim": {
     ipa: "/slɪm/",
-    vi: "xlim",
+    vi: "X-LIM",
     notes: "Đọc lướt 'x-lim' ngậm nhẹ môi.",
-    syllables: [{ part: "slim", desc: "đọc là 'xlim'" }]
+    syllables: [{ part: "slim", desc: "đọc là 'X-LIM'" }]
   },
   "fat": {
     ipa: "/fæt/",
-    vi: "phét-t",
-    notes: "Đặt răng hàm trên chạm môi dưới thổi âm 'ph', đọc 'phét' bật 't'.",
-    syllables: [{ part: "fat", desc: "đọc 'phét' bật âm 't'" }]
+    vi: "PHÉT",
+    notes: "Đặt răng hàm trên chạm môi dưới đọc 'phét' bật đuôi 't'.",
+    syllables: [{ part: "fat", desc: "đọc 'PHÉT' bật âm 't'" }]
   },
   "thin": {
     ipa: "/θɪn/",
-    vi: "thin",
-    notes: "Đặt đầu lưỡi giữa 2 răng rồi thổi nhẹ 'thin'.",
-    syllables: [{ part: "thin", desc: "đặt lưỡi giữa 2 răng thổi 'thin'" }]
+    vi: "THIN",
+    notes: "Đặt đầu lưỡi giữa 2 hàm răng rồi thổi nhẹ 'THIN'.",
+    syllables: [{ part: "thin", desc: "đặt lưỡi giữa 2 răng thổi 'THIN'" }]
+  },
+  "blond": {
+    ipa: "/blɒnd/",
+    vi: "BƠ-LON-đ",
+    notes: "Đọc 'bơ-lon' rồi bật nhẹ âm đuôi 'đ'.",
+    syllables: [{ part: "blond", desc: "đọc 'bơ-lon' bật nhẹ đuôi 'đ'" }]
   },
   "blonde": {
     ipa: "/blɒnd/",
-    vi: "blo-n-đ",
-    notes: "Đọc 'blon' bật nhẹ đuôi 'đ'.",
-    syllables: [{ part: "blonde", desc: "đọc 'blon' bật đuôi 'đ'" }]
+    vi: "BƠ-LON-đ",
+    notes: "Đọc 'bơ-lon' rồi bật nhẹ âm đuôi 'đ'.",
+    syllables: [{ part: "blonde", desc: "đọc 'bơ-lon' bật nhẹ đuôi 'đ'" }]
   },
   "bald": {
     ipa: "/bɔːld/",
-    vi: "bo-ừld",
-    notes: "Đọc 'bo' kéo dài rồi cong lưỡi bật nhẹ 'ld'.",
-    syllables: [{ part: "bald", desc: "đọc 'bo' kéo dài uốn lưỡi 'ld'" }]
+    vi: "BO-ồ-đ",
+    notes: "Đọc 'BO' kéo dài rồi uốn lưỡi chạm nhẹ đuôi 'đ'.",
+    syllables: [{ part: "bald", desc: "đọc 'BO-ồ' chạm nhẹ 'đ'" }]
   },
   "beard": {
     ipa: "/bɪəd/",
@@ -761,7 +1158,7 @@ function generateVietnamesePhonetics(rawWord) {
              .replace(/qu/g, 'cu-');
 
   // Đổi chữ cái đơn
-  phon = phon.replace(/w/g, 'o-')
+  phon = phon.replace(/w/g, 'u-')
              .replace(/j/g, 'd-')
              .replace(/x/g, 'c-s')
              .replace(/z/g, 'z')
@@ -769,8 +1166,8 @@ function generateVietnamesePhonetics(rawWord) {
 
   // Tách âm đẹp
   const syllablesParts = phon.split(/[-]+/).filter(Boolean);
-  let prettyVi = syllablesParts.join('-').toUpperCase();
-  if (prettyVi.length > 6) {
+  let prettyVi = syllablesParts.map(p => p.toUpperCase()).join('-');
+  if (prettyVi.length > 5) {
     const parts = prettyVi.split('-');
     if (parts.length > 1) {
       prettyVi = parts[0] + '-' + parts.slice(1).map(p => p.toLowerCase()).join('-');
