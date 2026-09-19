@@ -160,8 +160,12 @@ app.get('/api/translate-word', async (req, res) => {
     const response = await fetch(url);
     if (!response.ok) throw new Error('Translate service error');
     const data = await response.json();
-    const translation = (data && data[0] && data[0][0] && data[0][0][0]) || word;
-    res.json({ word, translation: translation.toLowerCase() });
+    let translation = '';
+    if (data && data[0] && Array.isArray(data[0])) {
+      translation = data[0].map(item => (item && item[0]) || '').join(' ');
+    }
+    if (!translation) translation = word;
+    res.json({ word, translation: translation.trim() });
   } catch (err) {
     console.error('Translate word error:', err.message);
     res.json({ word, translation: word });

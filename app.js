@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderQuestionNav();
   startTimer();
   updateProgressCounters();
+  initTextSelectionAndCopyFeatures();
 });
 
 // Lưu và khôi phục trạng thái từ LocalStorage
@@ -188,18 +189,20 @@ function renderAllSections() {
   const signsHTML = renderMCQList(EXAM_DATA.readingSignQuestions, 10);
   if (signsContainer) signsContainer.innerHTML = signsHTML;
 
-  // Render Tony Passage text
+  // Render Tony Passage text & controls
+  const tonyCardHtml = renderTonyPassageCardHtml('tony-tab');
   const tonyPassageEl = document.getElementById('tony-passage-text');
   if (tonyPassageEl) {
-    tonyPassageEl.innerHTML = `<div class="passage-title">MY BEST FRIEND</div>${escapeHtml(EXAM_DATA.readingTonyPassage.replace('MY BEST FRIEND\n', ''))}`;
+    tonyPassageEl.innerHTML = tonyCardHtml;
   }
   const tonyHTML = renderMCQList(EXAM_DATA.readingTonyQuestions, 15);
   if (tonyContainer) tonyContainer.innerHTML = tonyHTML;
 
-  // Render Anna Passage text
+  // Render Anna Passage text & controls
+  const annaCardHtml = renderAnnaPassageCardHtml('anna-tab');
   const annaPassageEl = document.getElementById('anna-passage-text');
   if (annaPassageEl) {
-    annaPassageEl.innerHTML = `<div class="passage-title">CLOZE PASSAGE - ANNA</div>${escapeHtml(EXAM_DATA.readingAnnaPassage)}`;
+    annaPassageEl.innerHTML = annaCardHtml;
   }
   const annaHTML = renderMCQList(EXAM_DATA.readingAnnaQuestions, 20);
   if (annaContainer) annaContainer.innerHTML = annaHTML;
@@ -232,10 +235,7 @@ function renderAllSections() {
           <h3 class="section-card-title">📰 Phần II.b: Bài đọc "MY BEST FRIEND" (Tony - 5 câu)</h3>
           <span class="section-tag">Câu 16 - 20</span>
         </div>
-        <div class="passage-card">
-          <div class="passage-title">MY BEST FRIEND</div>
-          ${escapeHtml(EXAM_DATA.readingTonyPassage.replace('MY BEST FRIEND\n', ''))}
-        </div>
+        ${renderTonyPassageCardHtml('tony-all')}
         ${tonyHTML}
       </div>
 
@@ -244,10 +244,7 @@ function renderAllSections() {
           <h3 class="section-card-title">📰 Phần II.c: Điền từ vào đoạn văn (Anna - 10 câu)</h3>
           <span class="section-tag">Câu 21 - 30</span>
         </div>
-        <div class="passage-card">
-          <div class="passage-title">CLOZE PASSAGE - ANNA</div>
-          ${escapeHtml(EXAM_DATA.readingAnnaPassage)}
-        </div>
+        ${renderAnnaPassageCardHtml('anna-all')}
         ${annaHTML}
       </div>
 
@@ -1751,6 +1748,419 @@ function speakWriting(qId, lang = 'en') {
     const viText = qData.vietnameseTranslation || "Chưa có bản dịch cho câu này.";
     speakSmart(viText, 'vi-VN');
   }
+}
+
+// ============================================================================
+// BÀI ĐỌC TONY & ANNA: GIAO DIỆN BẢN DỊCH VÀ PHÁT ÂM TOÀN BÀI
+// ============================================================================
+
+// Render HTML thẻ bài đọc Tony kèm thanh công cụ Dịch & Phát âm
+function renderTonyPassageCardHtml(cardId = 'tony') {
+  return `
+    <div class="passage-card" id="passage-card-${cardId}">
+      <div class="passage-header-flex">
+        <div class="passage-title">📖 BÀI ĐỌC: MY BEST FRIEND (TONY)</div>
+        <div class="passage-actions-bar">
+          <button type="button" class="btn-audio-action" onclick="togglePassageTranslation('${cardId}')" title="Hiện hoặc ẩn bản dịch tiếng Việt trọn vẹn của bài đọc">
+            🌐 Dịch bài đọc sang Tiếng Việt
+          </button>
+          <button type="button" class="btn-audio-action" onclick="speakPassage('tony', 'en')" title="Nghe đọc toàn bộ bài tiếng Anh">
+            🔊 Đọc Tiếng Anh
+          </button>
+          <button type="button" class="btn-audio-action" onclick="speakPassage('tony', 'vi')" title="Nghe đọc toàn bộ bản dịch tiếng Việt">
+            🗣️ Đọc Tiếng Việt
+          </button>
+          <button type="button" class="btn-audio-action" style="color: var(--danger); border-color: var(--danger-border);" onclick="stopSpeaking()" title="Dừng đọc">
+            ⏹️ Dừng
+          </button>
+        </div>
+      </div>
+
+      <div class="passage-body-en" id="passage-body-${cardId}">
+        ${escapeHtml(EXAM_DATA.readingTonyPassage.replace('MY BEST FRIEND\n', ''))}
+      </div>
+
+      <div class="passage-translation-box" id="trans-passage-${cardId}" style="display: none;">
+        <div class="passage-trans-header">
+          <strong>🇻🇳 BẢN DỊCH TIẾNG VIỆT TOÀN VĂN:</strong>
+        </div>
+        <div class="passage-trans-body">
+          ${escapeHtml(EXAM_DATA.readingTonyTranslation.replace('BẠN THÂN CỦA TÔI\n', ''))}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Render HTML thẻ bài đọc Anna kèm thanh công cụ Dịch & Phát âm
+function renderAnnaPassageCardHtml(cardId = 'anna') {
+  return `
+    <div class="passage-card" id="passage-card-${cardId}">
+      <div class="passage-header-flex">
+        <div class="passage-title">📖 ĐOẠN VĂN ĐIỀN TỪ: ANNA</div>
+        <div class="passage-actions-bar">
+          <button type="button" class="btn-audio-action" onclick="togglePassageTranslation('${cardId}')" title="Hiện hoặc ẩn bản dịch tiếng Việt trọn vẹn của bài đọc">
+            🌐 Dịch đoạn văn sang Tiếng Việt
+          </button>
+          <button type="button" class="btn-audio-action" onclick="speakPassage('anna', 'en')" title="Nghe đọc toàn bộ đoạn văn tiếng Anh">
+            🔊 Đọc Tiếng Anh
+          </button>
+          <button type="button" class="btn-audio-action" onclick="speakPassage('anna', 'vi')" title="Nghe đọc toàn bộ bản dịch tiếng Việt">
+            🗣️ Đọc Tiếng Việt
+          </button>
+          <button type="button" class="btn-audio-action" style="color: var(--danger); border-color: var(--danger-border);" onclick="stopSpeaking()" title="Dừng đọc">
+            ⏹️ Dừng
+          </button>
+        </div>
+      </div>
+
+      <div class="passage-body-en" id="passage-body-${cardId}">
+        ${escapeHtml(EXAM_DATA.readingAnnaPassage)}
+      </div>
+
+      <div class="passage-translation-box" id="trans-passage-${cardId}" style="display: none;">
+        <div class="passage-trans-header">
+          <strong>🇻🇳 BẢN DỊCH TIẾNG VIỆT TOÀN VĂN:</strong>
+        </div>
+        <div class="passage-trans-body">
+          ${escapeHtml(EXAM_DATA.readingAnnaTranslation)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Bật / tắt hiển thị bản dịch của bài đọc Tony hoặc Anna
+function togglePassageTranslation(cardId) {
+  const prefix = cardId.includes('tony') ? 'tony' : 'anna';
+  const boxes = document.querySelectorAll(`[id^="trans-passage-${prefix}"]`);
+  const anyHidden = Array.from(boxes).some(b => b.style.display !== 'block');
+  boxes.forEach(box => {
+    box.style.display = anyHidden ? 'block' : 'none';
+  });
+}
+
+// Đọc toàn bộ bài đọc Tony hoặc Anna (Tiếng Anh hoặc Tiếng Việt)
+function speakPassage(type, lang = 'en') {
+  stopSpeaking();
+  let text = '';
+  if (type === 'tony') {
+    text = (lang === 'en')
+      ? EXAM_DATA.readingTonyPassage.replace('MY BEST FRIEND\n', '')
+      : EXAM_DATA.readingTonyTranslation.replace('BẠN THÂN CỦA TÔI\n', '');
+  } else if (type === 'anna') {
+    text = (lang === 'en')
+      ? EXAM_DATA.readingAnnaPassage
+      : EXAM_DATA.readingAnnaTranslation;
+  }
+
+  // Tự động mở khung dịch nếu người dùng bấm nghe bản dịch tiếng Việt
+  if (lang === 'vi') {
+    document.querySelectorAll(`[id^="trans-passage-${type}"]`).forEach(box => {
+      box.style.display = 'block';
+    });
+  }
+
+  // Tách câu để đọc tự nhiên từng câu
+  const sentences = text
+    .replace(/([.?!])\s+/g, '$1|')
+    .split('|')
+    .map(s => s.trim())
+    .filter(s => s.length > 0);
+
+  if (sentences.length === 0) return;
+
+  isReadingSequence = true;
+  const statusEl = document.getElementById('global-speech-status');
+  if (statusEl) {
+    statusEl.style.display = 'inline-flex';
+    statusEl.innerHTML = (lang === 'en') 
+      ? `🔊 Đang đọc bài (${type === 'tony' ? 'Tony' : 'Anna'})...` 
+      : `🗣️ Đang đọc bản dịch (${type === 'tony' ? 'Tony' : 'Anna'})...`;
+  }
+
+  let idx = 0;
+  function readNext() {
+    if (!isReadingSequence || idx >= sentences.length) {
+      stopSpeaking();
+      return;
+    }
+    const current = sentences[idx];
+    idx++;
+
+    speakSmart(current, lang === 'en' ? 'en-US' : 'vi-VN', () => {
+      if (isReadingSequence) {
+        setTimeout(readNext, 400);
+      }
+    });
+  }
+
+  readNext();
+}
+
+// ============================================================================
+// TÍNH NĂNG BÔI ĐEN (SELECTION) & SAO CHÉP (COPY): HIỆN NÚT DỊCH + ĐỌC TA + ĐỌC TV
+// ============================================================================
+let currentSelectedText = '';
+let currentTranslatedText = '';
+let copyToastTimeout = null;
+
+function initTextSelectionAndCopyFeatures() {
+  const toolbar = document.getElementById('selection-quick-toolbar');
+  const previewEl = document.getElementById('sel-text-preview');
+  const transResultEl = document.getElementById('sel-trans-result');
+  const btnTrans = document.getElementById('sel-btn-trans');
+  const btnEn = document.getElementById('sel-btn-en');
+  const btnVi = document.getElementById('sel-btn-vi');
+  const btnCopy = document.getElementById('sel-btn-copy');
+  const btnClose = document.getElementById('sel-btn-close');
+
+  if (!toolbar) return;
+
+  function handleSelection(e) {
+    if (toolbar.contains(e.target)) return;
+
+    const selection = window.getSelection();
+    const text = selection ? selection.toString().trim() : '';
+
+    if (!text || text.length < 1) {
+      hideSelectionToolbar();
+      return;
+    }
+
+    currentSelectedText = text;
+    currentTranslatedText = '';
+    if (transResultEl) {
+      transResultEl.style.display = 'none';
+      transResultEl.innerHTML = '';
+    }
+
+    if (previewEl) {
+      const displaySnippet = text.length > 25 ? text.substring(0, 24) + '...' : text;
+      previewEl.innerText = `"${displaySnippet}"`;
+      previewEl.title = text;
+    }
+
+    try {
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+      toolbar.style.display = 'flex';
+
+      let top = rect.top + scrollY - toolbar.offsetHeight - 12;
+      let left = rect.left + scrollX + (rect.width / 2) - (toolbar.offsetWidth / 2);
+
+      if (rect.top < 60) {
+        top = rect.bottom + scrollY + 8;
+      }
+      if (left < 10) left = 10;
+      if (left + toolbar.offsetWidth > window.innerWidth - 10) {
+        left = window.innerWidth - toolbar.offsetWidth - 10;
+      }
+
+      toolbar.style.top = `${top}px`;
+      toolbar.style.left = `${left}px`;
+    } catch (err) {
+      // fallback
+    }
+  }
+
+  document.addEventListener('mouseup', (e) => {
+    setTimeout(() => handleSelection(e), 40);
+  });
+
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'Shift' || e.key.startsWith('Arrow')) {
+      setTimeout(() => handleSelection(e), 40);
+    }
+  });
+
+  document.addEventListener('mousedown', (e) => {
+    if (!toolbar.contains(e.target)) {
+      hideSelectionToolbar();
+    }
+  });
+
+  if (btnTrans) {
+    btnTrans.onclick = async (e) => {
+      e.stopPropagation();
+      if (!currentSelectedText) return;
+
+      if (transResultEl) {
+        transResultEl.style.display = 'block';
+        transResultEl.innerHTML = '<em>⏳ Đang dịch sang Tiếng Việt...</em>';
+      }
+
+      const trans = await fetchTranslationForText(currentSelectedText);
+      currentTranslatedText = trans;
+
+      if (transResultEl) {
+        transResultEl.innerHTML = `<strong>🇻🇳 Dịch:</strong> ${escapeHtml(trans)}`;
+      }
+    };
+  }
+
+  if (btnEn) {
+    btnEn.onclick = (e) => {
+      e.stopPropagation();
+      if (currentSelectedText) {
+        speakSmart(currentSelectedText, 'en-US');
+      }
+    };
+  }
+
+  if (btnVi) {
+    btnVi.onclick = async (e) => {
+      e.stopPropagation();
+      if (!currentSelectedText) return;
+
+      if (!currentTranslatedText) {
+        if (transResultEl) {
+          transResultEl.style.display = 'block';
+          transResultEl.innerHTML = '<em>⏳ Đang dịch và phát âm...</em>';
+        }
+        currentTranslatedText = await fetchTranslationForText(currentSelectedText);
+        if (transResultEl) {
+          transResultEl.innerHTML = `<strong>🇻🇳 Dịch:</strong> ${escapeHtml(currentTranslatedText)}`;
+        }
+      }
+
+      speakSmart(currentTranslatedText, 'vi-VN');
+    };
+  }
+
+  if (btnCopy) {
+    btnCopy.onclick = (e) => {
+      e.stopPropagation();
+      if (currentSelectedText) {
+        navigator.clipboard.writeText(currentSelectedText).then(() => {
+          btnCopy.innerText = '✅ Đã copy';
+          setTimeout(() => { btnCopy.innerText = '📋 Copy'; }, 2000);
+          showCopyToast(currentSelectedText);
+        });
+      }
+    };
+  }
+
+  if (btnClose) {
+    btnClose.onclick = (e) => {
+      e.stopPropagation();
+      hideSelectionToolbar();
+    };
+  }
+
+  // Lắng nghe phím tắt Copy (Ctrl+C) hoặc Copy trên trình duyệt
+  document.addEventListener('copy', () => {
+    const text = window.getSelection() ? window.getSelection().toString().trim() : '';
+    if (text) {
+      showCopyToast(text);
+    }
+  });
+}
+
+function hideSelectionToolbar() {
+  const toolbar = document.getElementById('selection-quick-toolbar');
+  if (toolbar) toolbar.style.display = 'none';
+}
+
+// Hàm gọi API lấy bản dịch cho một câu hoặc từ bất kỳ
+async function fetchTranslationForText(text) {
+  if (!text) return '';
+
+  const words = text.trim().split(/\s+/);
+  if (words.length === 1) {
+    const directMeaning = getWordMeaning(words[0]);
+    if (directMeaning && directMeaning !== '(tên riêng)') {
+      return directMeaning;
+    }
+  }
+
+  try {
+    const isOnline = window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    const apiBase = isOnline ? '' : (window.location.protocol.startsWith('http') ? '' : 'https://tieng-anh-dau-ra-ptk.onrender.com');
+    const res = await fetch(`${apiBase}/api/translate-word?word=${encodeURIComponent(text)}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.translation) {
+        return data.translation;
+      }
+    }
+  } catch (err) {
+    console.warn("Lỗi dịch văn bản:", err);
+  }
+
+  return text;
+}
+
+let toastCopiedText = '';
+let toastCopiedTranslation = '';
+
+function showCopyToast(text) {
+  toastCopiedText = text;
+  toastCopiedTranslation = '';
+
+  const toast = document.getElementById('copy-action-toast');
+  const snippetEl = document.getElementById('toast-text-snippet');
+  const transEl = document.getElementById('toast-trans-snippet');
+  if (!toast) return;
+
+  if (snippetEl) {
+    snippetEl.innerText = `"${text.length > 80 ? text.substring(0, 77) + '...' : text}"`;
+  }
+  if (transEl) {
+    transEl.style.display = 'none';
+    transEl.innerHTML = '';
+  }
+
+  toast.style.display = 'block';
+
+  if (copyToastTimeout) clearTimeout(copyToastTimeout);
+  copyToastTimeout = setTimeout(() => {
+    hideCopyToast();
+  }, 10000);
+}
+
+function hideCopyToast() {
+  const toast = document.getElementById('copy-action-toast');
+  if (toast) toast.style.display = 'none';
+  if (copyToastTimeout) clearTimeout(copyToastTimeout);
+}
+
+async function handleToastTranslate() {
+  if (!toastCopiedText) return;
+  const transEl = document.getElementById('toast-trans-snippet');
+  if (transEl) {
+    transEl.style.display = 'block';
+    transEl.innerHTML = '<em>⏳ Đang dịch nghĩa...</em>';
+  }
+  toastCopiedTranslation = await fetchTranslationForText(toastCopiedText);
+  if (transEl) {
+    transEl.innerHTML = `<strong>🇻🇳 Dịch:</strong> ${escapeHtml(toastCopiedTranslation)}`;
+  }
+}
+
+function handleToastSpeakEn() {
+  if (toastCopiedText) {
+    speakSmart(toastCopiedText, 'en-US');
+  }
+}
+
+async function handleToastSpeakVi() {
+  if (!toastCopiedText) return;
+  if (!toastCopiedTranslation) {
+    const transEl = document.getElementById('toast-trans-snippet');
+    if (transEl) {
+      transEl.style.display = 'block';
+      transEl.innerHTML = '<em>⏳ Đang dịch và phát âm...</em>';
+    }
+    toastCopiedTranslation = await fetchTranslationForText(toastCopiedText);
+    if (transEl) {
+      transEl.innerHTML = `<strong>🇻🇳 Dịch:</strong> ${escapeHtml(toastCopiedTranslation)}`;
+    }
+  }
+  speakSmart(toastCopiedTranslation, 'vi-VN');
 }
 
 // TÍNH NĂNG ĐỌC TUẦN TỰ TOÀN BỘ BÀI THI BẰNG TIẾNG ANH
