@@ -6,6 +6,7 @@
 const AppState = {
   mode: 'practice', // 'practice' hoặc 'exam'
   userAnswers: {},  // { qId: answerValue }
+  revealedQuestions: new Set(), // Set các câu hỏi trắc nghiệm đã bấm "Xem kết quả"
   flagged: new Set(),
   isSubmitted: false,
   timerSeconds: 30 * 60, // 30 phút
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function saveState() {
   try {
     localStorage.setItem('tienganh_answers', JSON.stringify(AppState.userAnswers));
+    localStorage.setItem('tienganh_revealed', JSON.stringify(Array.from(AppState.revealedQuestions)));
     localStorage.setItem('tienganh_flags', JSON.stringify(Array.from(AppState.flagged)));
     const essayEl = document.getElementById('essay-input');
     if (essayEl) {
@@ -62,6 +64,9 @@ function loadSavedState() {
   try {
     const savedAns = localStorage.getItem('tienganh_answers');
     if (savedAns) AppState.userAnswers = JSON.parse(savedAns);
+
+    const savedRevealed = localStorage.getItem('tienganh_revealed');
+    if (savedRevealed) AppState.revealedQuestions = new Set(JSON.parse(savedRevealed));
 
     const savedFlags = localStorage.getItem('tienganh_flags');
     if (savedFlags) AppState.flagged = new Set(JSON.parse(savedFlags));
@@ -109,7 +114,7 @@ function setExamMode(mode) {
   renderQuestionNav();
 
   alert(mode === 'practice' 
-    ? "Chế độ LUYỆN TẬP: Đáp án đúng sẽ đổi sang MÀU XANH, đáp án sai đổi sang MÀU ĐỎ và hiển thị giải thích ngay lập tức!" 
+    ? "Chế độ LUYỆN TẬP: Chọn đáp án và bấm nút 'Xem kết quả' ở từng câu để kiểm tra đúng/sai và xem giải thích!" 
     : "Chế độ THI THỬ: Đáp án và lời giải sẽ được ẩn cho đến khi bạn bấm 'Nộp bài'!");
 }
 
@@ -825,9 +830,9 @@ function renderQuestionContentHtml(q) {
   const rawQuestion = q.question;
 
   if (selectedOpt) {
-    const shouldShowResult = (AppState.mode === 'practice' && selectedKey) || AppState.isSubmitted;
+    const isRevealed = AppState.isSubmitted || (AppState.revealedQuestions && AppState.revealedQuestions.has(q.id));
     let badgeClass = 'filled-blank-badge';
-    if (shouldShowResult) {
+    if (isRevealed) {
       badgeClass += (selectedKey === q.correctAnswer) ? ' correct' : ' wrong';
     }
 
@@ -851,22 +856,22 @@ function renderTranslationBoxContent(q) {
   let chosenCallout = '';
   if (selectedOpt) {
     const isCorrect = selectedKey === q.correctAnswer;
-    const shouldShowResult = (AppState.mode === 'practice' && selectedKey) || AppState.isSubmitted;
+    const isRevealed = AppState.isSubmitted || (AppState.revealedQuestions && AppState.revealedQuestions.has(q.id));
     const meaning = getWordMeaning(selectedOpt.text);
     const meaningStr = (meaning && meaning !== '(tên riêng)') ? ` (Nghĩa: ${meaning.split('/')[0].trim()})` : '';
 
     let calloutClass = 'selected-ans-callout';
     let statusPrefix = '';
-    if (shouldShowResult) {
+    let correctHint = '';
+
+    if (isRevealed) {
       calloutClass += isCorrect ? ' correct-callout' : ' wrong-callout';
       statusPrefix = isCorrect ? '✅ <strong>CHÍNH XÁC!</strong> ' : '❌ <strong>CHƯA ĐÚNG!</strong> ';
-    }
-
-    let correctHint = '';
-    if (shouldShowResult && !isCorrect) {
-      const correctOpt = q.options.find(o => o.key === q.correctAnswer);
-      const correctText = correctOpt ? ` (${correctOpt.text})` : '';
-      correctHint = ` — Đáp án đúng là <strong>${q.correctAnswer}${escapeHtml(correctText)}</strong>`;
+      if (!isCorrect) {
+        const correctOpt = q.options.find(o => o.key === q.correctAnswer);
+        const correctText = correctOpt ? ` (${correctOpt.text})` : '';
+        correctHint = ` — Đáp án đúng là <strong>${q.correctAnswer}${escapeHtml(correctText)}</strong>`;
+      }
     }
 
     chosenCallout = `
@@ -891,7 +896,7 @@ function renderMCQList(questions, offsetIndex) {
     const globalNumber = offsetIndex + idx + 1;
     const isFlagged = AppState.flagged.has(q.id);
     const selectedChoice = AppState.userAnswers[q.id];
-    const shouldShowResult = (AppState.mode === 'practice' && selectedChoice) || AppState.isSubmitted;
+    const isRevealed = AppState.isSubmitted || (AppState.revealedQuestions && AppState.revealedQuestions.has(q.id));
 
     let signHtml = '';
     if (q.signText) {
@@ -903,7 +908,7 @@ function renderMCQList(questions, offsetIndex) {
       let statusClass = '';
       if (isSelected) statusClass = 'selected';
 
-      if (shouldShowResult) {
+      if (isRevealed) {
         if (opt.key === q.correctAnswer) {
           statusClass += ' correct-choice';
         } else if (isSelected) {
@@ -923,11 +928,19 @@ function renderMCQList(questions, offsetIndex) {
       `;
     }).join('');
 
-    const showExp = shouldShowResult;
+    const showExp = isRevealed;
 
     let boxStatusClass = selectedChoice ? 'answered' : '';
-    if (shouldShowResult) {
+    if (isRevealed) {
       boxStatusClass += (selectedChoice === q.correctAnswer) ? ' correct' : ' incorrect';
+    }
+
+    let checkBtnText = '🔍 Xem kết quả';
+    let checkBtnClass = 'btn-audio-action btn-check-mcq';
+    if (isRevealed && selectedChoice) {
+      const isCorrect = selectedChoice === q.correctAnswer;
+      checkBtnClass += isCorrect ? ' revealed correct' : ' revealed wrong';
+      checkBtnText = isCorrect ? '✅ Đã xem (Đúng)' : '❌ Đã xem (Sai)';
     }
 
     return `
@@ -953,6 +966,9 @@ function renderMCQList(questions, offsetIndex) {
           </button>
           <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'vi')" title="Nghe đọc câu dịch tiếng Việt kèm đáp án đã chọn">
             🗣️ Đọc Tiếng Việt
+          </button>
+          <button class="${checkBtnClass}" id="btn-check-${q.id}" data-qid="${q.id}" onclick="checkMCQResult('${q.id}')" title="Bấm để kiểm tra đáp án đúng hay sai">
+            ${checkBtnText}
           </button>
         </div>
 
@@ -1049,30 +1065,22 @@ function selectOption(qId, key) {
   if (AppState.isSubmitted && AppState.mode === 'exam') return; // Khóa khi đã nộp bài thi
 
   AppState.userAnswers[qId] = key;
+  // Khi chọn hoặc đổi đáp án: NẾU CHƯA BẤM "XEM KẾT QUẢ", KHÔNG HIỆN ĐÚNG SAI!
+  AppState.revealedQuestions.delete(qId);
   saveState();
 
   const qData = QUESTION_LIST.find(q => q.id === qId);
-  const shouldShowResult = (AppState.mode === 'practice') || AppState.isSubmitted;
-  const isCorrect = qData && key === qData.correctAnswer;
 
-  // Cập nhật màu sắc các lựa chọn: đúng chuyển xanh, sai chuyển đỏ
+  // Chỉ đánh dấu đáp án đang chọn (selected), TUYỆT ĐỐI KHÔNG hiện màu xanh / đỏ
   document.querySelectorAll(`[data-qid="${qId}"]`).forEach(opt => {
     const optKey = opt.getAttribute('data-key');
     opt.classList.remove('selected', 'correct-choice', 'wrong-choice');
-
     if (optKey === key) {
       opt.classList.add('selected');
-      if (shouldShowResult) {
-        opt.classList.add(isCorrect ? 'correct-choice' : 'wrong-choice');
-      }
-    }
-    // Nếu chọn sai, hiển thị luôn đáp án đúng màu xanh để người học đối chiếu
-    if (shouldShowResult && !isCorrect && qData && optKey === qData.correctAnswer) {
-      opt.classList.add('correct-choice');
     }
   });
 
-  // Cập nhật câu hỏi hiển thị điền từ vào chỗ trống và khung dịch
+  // Cập nhật câu hỏi điền từ vào ô trống (màu tím trung tính) và khung dịch
   if (qData) {
     const formattedHtml = renderQuestionContentHtml(qData);
     document.querySelectorAll(`[id="qtext-${qId}"]`).forEach(el => {
@@ -1084,22 +1092,79 @@ function selectOption(qId, key) {
     });
   }
 
-  // Đánh dấu câu đã trả lời và đổi màu viền ô câu hỏi (xanh nếu đúng, đỏ nếu sai)
+  // Đánh dấu ô câu hỏi là đã trả lời (answered), KHÔNG hiện viền xanh / đỏ
   document.querySelectorAll(`#qbox-${qId}`).forEach(box => {
     box.classList.add('answered');
     box.classList.remove('correct', 'incorrect');
-    if (shouldShowResult && qData) {
-      box.classList.add(isCorrect ? 'correct' : 'incorrect');
-    }
   });
 
-  // Nếu ở chế độ Luyện tập, hiện ngay giải thích
-  if (AppState.mode === 'practice') {
-    document.querySelectorAll(`#exp-${qId}`).forEach(exp => exp.classList.add('show'));
-  }
+  // Ẩn giải thích chi tiết vì chưa bấm nút Xem kết quả
+  document.querySelectorAll(`#exp-${qId}`).forEach(exp => exp.classList.remove('show'));
+
+  // Reset nút Xem kết quả về trạng thái sẵn sàng
+  document.querySelectorAll(`[id="btn-check-${qId}"]`).forEach(btn => {
+    btn.className = 'btn-audio-action btn-check-mcq';
+    btn.innerHTML = '🔍 Xem kết quả';
+  });
 
   updateQuestionNav();
   updateProgressCounters();
+}
+
+// Bấm nút "Xem kết quả" để kiểm tra đúng/sai và hiện giải thích
+function checkMCQResult(qId) {
+  const selectedKey = AppState.userAnswers[qId];
+  if (!selectedKey) {
+    alert("Vui lòng chọn một đáp án (A, B, C hoặc D) trước khi xem kết quả!");
+    return;
+  }
+
+  const qData = QUESTION_LIST.find(q => q.id === qId);
+  if (!qData) return;
+
+  const isCorrect = selectedKey === qData.correctAnswer;
+  AppState.revealedQuestions.add(qId);
+  saveState();
+
+  // Đổi màu các đáp án: đáp án chọn đúng -> xanh, sai -> đỏ, đáp án chuẩn -> xanh
+  document.querySelectorAll(`[data-qid="${qId}"]`).forEach(opt => {
+    const optKey = opt.getAttribute('data-key');
+    opt.classList.remove('correct-choice', 'wrong-choice');
+
+    if (optKey === selectedKey) {
+      opt.classList.add(isCorrect ? 'correct-choice' : 'wrong-choice');
+    }
+    if (!isCorrect && optKey === qData.correctAnswer) {
+      opt.classList.add('correct-choice');
+    }
+  });
+
+  // Cập nhật câu hỏi điền từ (badge chuyển màu xanh/đỏ) và khung dịch
+  const formattedHtml = renderQuestionContentHtml(qData);
+  document.querySelectorAll(`[id="qtext-${qId}"]`).forEach(el => {
+    el.innerHTML = formattedHtml;
+  });
+  const transHtml = renderTranslationBoxContent(qData);
+  document.querySelectorAll(`[id="trans-${qId}"]`).forEach(el => {
+    el.innerHTML = transHtml;
+  });
+
+  // Đổi màu viền câu hỏi: xanh nếu đúng, đỏ nếu sai
+  document.querySelectorAll(`#qbox-${qId}`).forEach(box => {
+    box.classList.remove('correct', 'incorrect');
+    box.classList.add(isCorrect ? 'correct' : 'incorrect');
+  });
+
+  // Hiển thị khung giải thích chi tiết
+  document.querySelectorAll(`#exp-${qId}`).forEach(exp => exp.classList.add('show'));
+
+  // Cập nhật nút Xem kết quả sang trạng thái đã xem
+  document.querySelectorAll(`[id="btn-check-${qId}"]`).forEach(btn => {
+    btn.className = `btn-audio-action btn-check-mcq revealed ${isCorrect ? 'correct' : 'wrong'}`;
+    btn.innerHTML = isCorrect ? '✅ Đã xem (Đúng)' : '❌ Đã xem (Sai)';
+  });
+
+  updateQuestionNav();
 }
 
 // Nhập câu tự luận viết lại câu
@@ -1209,12 +1274,24 @@ function toggleFlag(qId) {
 // Khôi phục giá trị đã điền khi load lại trang
 function restoreAnswerInputs() {
   for (const [qId, val] of Object.entries(AppState.userAnswers)) {
+    const isRevealed = AppState.isSubmitted || (AppState.revealedQuestions && AppState.revealedQuestions.has(qId));
+    const qData = QUESTION_LIST.find(q => q.id === qId);
+    const isCorrect = qData && val === qData.correctAnswer;
+
     // Trắc nghiệm
     document.querySelectorAll(`[data-qid="${qId}"][data-key="${val}"]`).forEach(opt => {
       opt.classList.add('selected');
+      if (isRevealed) {
+        opt.classList.add(isCorrect ? 'correct-choice' : 'wrong-choice');
+      }
     });
 
-    const qData = QUESTION_LIST.find(q => q.id === qId);
+    if (isRevealed && !isCorrect && qData && qData.type === 'mcq') {
+      document.querySelectorAll(`[data-qid="${qId}"][data-key="${qData.correctAnswer}"]`).forEach(opt => {
+        opt.classList.add('correct-choice');
+      });
+    }
+
     if (qData && qData.type === 'mcq') {
       document.querySelectorAll(`[id="qtext-${qId}"]`).forEach(el => {
         el.innerHTML = renderQuestionContentHtml(qData);
@@ -1222,6 +1299,13 @@ function restoreAnswerInputs() {
       document.querySelectorAll(`[id="trans-${qId}"]`).forEach(el => {
         el.innerHTML = renderTranslationBoxContent(qData);
       });
+      if (isRevealed) {
+        document.querySelectorAll(`[id="btn-check-${qId}"]`).forEach(btn => {
+          btn.className = `btn-audio-action btn-check-mcq revealed ${isCorrect ? 'correct' : 'wrong'}`;
+          btn.innerHTML = isCorrect ? '✅ Đã xem (Đúng)' : '❌ Đã xem (Sai)';
+        });
+        document.querySelectorAll(`#exp-${qId}`).forEach(exp => exp.classList.add('show'));
+      }
     }
 
     // Tự luận
@@ -1231,6 +1315,9 @@ function restoreAnswerInputs() {
 
     document.querySelectorAll(`#qbox-${qId}`).forEach(box => {
       box.classList.add('answered');
+      if (isRevealed && qData && qData.type === 'mcq') {
+        box.classList.add(isCorrect ? 'correct' : 'incorrect');
+      }
     });
   }
 
@@ -1251,14 +1338,16 @@ function renderQuestionNav() {
   navContainer.innerHTML = QUESTION_LIST.map(q => {
     const isAnswered = Boolean(AppState.userAnswers[q.id]);
     const isFlagged = AppState.flagged.has(q.id);
+    const isRevealed = AppState.isSubmitted || (AppState.revealedQuestions && AppState.revealedQuestions.has(q.id));
 
     let statusClass = '';
-    if (isFlagged) statusClass = 'flagged';
-    else if (isAnswered) statusClass = 'answered';
-
-    if (AppState.isSubmitted) {
+    if (isRevealed) {
       const isCorrect = checkQuestionCorrect(q);
       statusClass = isCorrect ? 'correct' : 'incorrect';
+    } else if (isFlagged) {
+      statusClass = 'flagged';
+    } else if (isAnswered) {
+      statusClass = 'answered';
     }
 
     return `
@@ -1276,9 +1365,10 @@ function updateQuestionNav() {
 
     const isAnswered = Boolean(AppState.userAnswers[q.id]);
     const isFlagged = AppState.flagged.has(q.id);
+    const isRevealed = AppState.isSubmitted || (AppState.revealedQuestions && AppState.revealedQuestions.has(q.id));
 
     btn.className = 'q-nav-btn';
-    if (AppState.isSubmitted) {
+    if (isRevealed) {
       const isCorrect = checkQuestionCorrect(q);
       btn.classList.add(isCorrect ? 'correct' : 'incorrect');
     } else if (isFlagged) {
@@ -1552,10 +1642,12 @@ function resetExam() {
   if (!confirm("Bạn có muốn xóa toàn bộ bài làm hiện tại và bắt đầu thi lại từ đầu?")) return;
 
   AppState.userAnswers = {};
+  AppState.revealedQuestions.clear();
   AppState.flagged.clear();
   AppState.isSubmitted = false;
   AppState.timerSeconds = 30 * 60;
   localStorage.removeItem('tienganh_answers');
+  localStorage.removeItem('tienganh_revealed');
   localStorage.removeItem('tienganh_flags');
 
   const essayInput = document.getElementById('essay-input');
