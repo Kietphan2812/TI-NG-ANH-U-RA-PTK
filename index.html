@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luyện Thi Tiếng Anh Đầu Ra - Hệ Thống Trắc Nghiệm & Tự Luận</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-container">
+        <div class="brand-icon">🎓</div>
+        <div class="brand-title">
+          <h1>TIẾNG ANH ĐẦU RA</h1>
+          <span class="brand-badge" id="topic-badge">Topic 1: Describe People</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <!-- Chế độ làm bài -->
+        <div class="mode-switcher" title="Chuyển đổi chế độ làm bài">
+          <button class="mode-btn active" id="mode-practice-btn" onclick="setExamMode('practice')">Luyện tập</button>
+          <button class="mode-btn" id="mode-exam-btn" onclick="setExamMode('exam')">Thi thử</button>
+        </div>
+
+        <!-- Đồng hồ đếm ngược -->
+        <div class="timer-widget" id="timer-display" title="Thời gian còn lại">
+          <span>⏱️</span>
+          <span id="timer-text">30:00</span>
+          <button class="btn-icon" id="timer-toggle-btn" onclick="toggleTimer()" style="width: 28px; height: 28px; font-size: 0.8rem;" title="Tạm dừng / Tiếp tục">⏸️</button>
+        </div>
+
+        <!-- Chế độ Sáng / Tối -->
+        <button class="btn-icon" id="theme-toggle-btn" onclick="toggleTheme()" title="Chuyển nền Sáng/Tối">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Horizontal Navigation Tabs -->
+  <nav class="tabs-bar">
+    <div class="tabs-scroll">
+      <button class="tab-link active" onclick="switchTab('tab-all')">
+        <span>📋</span> Tất cả bài tập <span class="tab-badge" id="total-q-badge">35 câu</span>
+      </button>
+      <button class="tab-link" onclick="switchTab('tab-vocab-study')">
+        <span>📖</span> Từ vựng (53 từ)
+      </button>
+      <button class="tab-link" onclick="switchTab('tab-vocab-ex')">
+        <span>📝</span> I. Trắc nghiệm từ vựng <span class="tab-badge">10 câu</span>
+      </button>
+      <button class="tab-link" onclick="switchTab('tab-reading')">
+        <span>📰</span> II. Đọc hiểu (Reading) <span class="tab-badge">20 câu</span>
+      </button>
+      <button class="tab-link" onclick="switchTab('tab-writing')">
+        <span>✍️</span> V. Tự luận (Writing) <span class="tab-badge">5 câu + Thư</span>
+      </button>
+      <button class="tab-link" onclick="switchTab('tab-listening')">
+        <span>🎧</span> IV. Luyện nghe (Listening)
+      </button>
+      <button class="tab-link" onclick="switchTab('tab-speaking')">
+        <span>🗣️</span> III. Luyện nói (Speaking)
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Container Layout -->
+  <main class="main-wrapper">
+    <!-- Left: Content Panels -->
+    <div class="content-column">
+      
+      <!-- Topic Banner -->
+      <div class="topic-banner">
+        <h2>TOPIC 1: DESCRIBE PEOPLE</h2>
+        <p>Hệ thống ôn thi toàn diện gồm: 53 từ vựng miêu tả ngoại hình & tính cách, 10 câu trắc nghiệm từ vựng, 20 câu đọc hiểu (biển báo, đoạn văn Tony, điền từ Anna), 5 câu viết lại tương đương và bài viết thư 120 từ.</p>
+        <div class="banner-stats">
+          <span class="stat-chip">✨ 35 câu hỏi trắc nghiệm & tự luận</span>
+          <span class="stat-chip">⚡ Chấm điểm & Giải thích tự động</span>
+          <span class="stat-chip">🎯 Chuẩn tài liệu NoiDungDayDu.docx</span>
+        </div>
+      </div>
+
+      <!-- TAB 1: ALL QUESTIONS VIEW -->
+      <div id="tab-all" class="tab-content active">
+        <!-- Rendered by JS -->
+        <div id="all-sections-container"></div>
+      </div>
+
+      <!-- TAB 2: VOCABULARY STUDY & FLASHCARDS -->
+      <div id="tab-vocab-study" class="tab-content">
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3 class="section-card-title">📖 Sổ tay từ vựng: Describe People</h3>
+            <span class="section-tag">53 từ vựng & ví dụ</span>
+          </div>
+          <p style="color: var(--text-secondary); margin-bottom: 16px;">
+            Nhấp vào biểu tượng 🔊 bên cạnh mỗi từ để nghe phát âm tiếng Anh chuẩn. Sử dụng thanh tìm kiếm để tra cứu nhanh từ vựng hoặc nghĩa tiếng Việt.
+          </p>
+          <div class="vocab-toolbar">
+            <input type="text" id="vocab-search" class="search-input" placeholder="🔍 Tìm kiếm từ vựng, phiên âm hoặc nghĩa..." oninput="filterVocabulary()">
+          </div>
+          <div class="vocab-grid" id="vocab-grid-container">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: VOCABULARY EXERCISES ONLY -->
+      <div id="tab-vocab-ex" class="tab-content">
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3 class="section-card-title">📝 Phần I: Trắc nghiệm Từ vựng & Ngữ pháp</h3>
+            <span class="section-tag">10 câu</span>
+          </div>
+          <div id="vocab-questions-container"></div>
+        </div>
+      </div>
+
+      <!-- TAB 4: READING COMPREHENSION ONLY -->
+      <div id="tab-reading" class="tab-content">
+        <!-- a. Signs -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3 class="section-card-title">📰 Phần II.a: Đọc hiểu biển báo (Notices & Signs)</h3>
+            <span class="section-tag">5 câu</span>
+          </div>
+          <p style="color: var(--text-secondary); margin-bottom: 14px;">Look at the text in each question (1-5). What does it say? Circle the letter next to the correct explanation.</p>
+          <div id="reading-signs-container"></div>
+        </div>
+
+        <!-- b. Tony Passage -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3 class="section-card-title">📰 Phần II.b: Bài đọc "MY BEST FRIEND" (Tony)</h3>
+            <span class="section-tag">5 câu</span>
+          </div>
+          <div class="passage-card" id="tony-passage-text">
+            <!-- Injected by JS -->
+          </div>
+          <div id="reading-tony-container"></div>
+        </div>
+
+        <!-- c. Anna Cloze Text -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3 class="section-card-title">📰 Phần II.c: Điền từ vào đoạn văn (Anna)</h3>
+            <span class="section-tag">10 câu</span>
+          </div>
+          <div class="passage-card" id="anna-passage-text">
+            <!-- Injected by JS -->
+          </div>
+          <div id="reading-anna-container"></div>
+        </div>
+      </div>
+
+      <!-- TAB 5: WRITING (TỰ LUẬN VIẾT LẠI CÂU & VIẾT THƯ) -->
+      <div id="tab-writing" class="tab-content">
+        <!-- a. Sentence transformations -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3 class="section-card-title">✍️ Phần V.a: Viết lại câu (Sentence Transformation)</h3>
+            <span class="section-tag">5 câu tự luận làm trực tiếp</span>
+          </div>
+          <p style="color: var(--text-secondary); margin-bottom: 16px;">
+            Complete the second sentence in order that it means the same as the first. Nhập phần viết tiếp vào ô trống và bấm <strong>"Kiểm tra"</strong> để so sánh với đáp án chuẩn.
+          </p>
+          <div id="writing-transform-container"></div>
+        </div>
+
+        <!-- b. Letter writing -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3 class="section-card-title">✍️ Phần V.b: Viết thư / Tự luận (~120 từ)</h3>
+            <span class="section-tag">Tự luận</span>
+          </div>
+          <div class="essay-container">
+            <div class="prompt-guidelines">
+              <h4>Đề bài:</h4>
+              <p><strong>Write a letter (about 120 words) to your friend/colleague/parents/relatives about a new friend that you met in your English class.</strong></p>
+              <br>
+              <p>Your letter should include:</p>
+              <ul>
+                <li>What does he/she look like? (Appearance)</li>
+                <li>What is his/her personality? (Qualities & character)</li>
+                <li>What things does he/she impress you with? (Talents, skills, actions)</li>
+              </ul>
+              <p><em>⚠️ LƯU Ý: Write the body of the letter only. Do NOT write your name, your address and your signature in the letter!</em></p>
+            </div>
+
+            <textarea id="essay-input" class="essay-textarea" placeholder="Nhập bài viết thư của bạn tại đây (ví dụ: Hello Jessica,...)..." oninput="updateWordCount()"></textarea>
+
+            <div class="word-count-bar">
+              <div>
+                <strong>Số từ hiện tại:</strong> <span id="word-count-val">0</span> / 120 từ
+              </div>
+              <div class="progress-track">
+                <div id="word-progress-fill" class="progress-fill"></div>
+              </div>
+              <button class="btn-check-sentence" onclick="toggleSampleLetter()">👁️ Xem bài viết mẫu</button>
+            </div>
+
+            <div id="sample-letter-box" class="sample-answer-box">
+              <h4 style="color: var(--primary); margin-bottom: 8px;">Bài viết mẫu tham khảo chuẩn (Sample):</h4>
+              <div id="sample-letter-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 6: LISTENING -->
+      <div id="tab-listening" class="tab-content">
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3 class="section-card-title">🎧 Phần IV: Luyện nghe (Listening Practice)</h3>
+            <span class="section-tag">Part 1 & Part 2</span>
+          </div>
+          <div class="listening-notice-banner">
+            ℹ️ <strong>Lưu ý:</strong> Theo tài liệu Word, phần nghe câu 1-7 và bài điền thông tin Plymouth Sea Life Centre phụ thuộc vào băng audio của đề thi. Hệ thống cung cấp bảng câu hỏi mô tả hình ảnh và ô nhập dữ liệu tương tác để bạn luyện tập trước kỹ năng nhận diện đề thi!
+          </div>
+
+          <!-- Part A -->
+          <h4 style="margin: 16px 0 10px; color: var(--primary);">Part 1: Picture Questions (1 - 7)</h4>
+          <div id="listening-part-a-container"></div>
+
+          <!-- Part B -->
+          <h4 style="margin: 24px 0 10px; color: var(--primary);">Part 2: Điền thông tin Plymouth Sea Life Centre</h4>
+          <div id="listening-part-b-container"></div>
+        </div>
+      </div>
+
+      <!-- TAB 7: SPEAKING -->
+      <div id="tab-speaking" class="tab-content">
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3 class="section-card-title">🗣️ Phần III: Luyện nói (Speaking Card – No.1)</h3>
+            <span class="section-tag">Nói & Phát âm</span>
+          </div>
+
+          <div class="prompt-guidelines" style="background: var(--primary-light); border-color: #c7d2fe;">
+            <h4 style="color: var(--primary);">SPEAKING CARD – No.1: Talk about your best friend</h4>
+            <ul>
+              <li>What is his / her name?</li>
+              <li>What is he/she like? (Appearance?)</li>
+              <li>What are his / her personality, quality and ability?</li>
+              <li>What does he/she like doing?</li>
+              <li>And say what he/she would like to do in the future.</li>
+            </ul>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <h4 style="margin-bottom: 8px;">Bài nói mẫu chuẩn (Sample Speech):</h4>
+            <div class="passage-card" id="speaking-sample-text" style="font-style: italic;">
+              <!-- Rendered by JS -->
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+              <button class="btn-check-sentence" onclick="speakText(document.getElementById('speaking-sample-text').innerText)">
+                🔊 Nghe máy đọc bài mẫu (Voice AI)
+              </button>
+              <button class="btn-secondary-action" style="width: auto;" onclick="stopSpeaking()">
+                ⏹️ Dừng đọc
+              </button>
+            </div>
+          </div>
+
+          <!-- Voice recording simulator -->
+          <div class="speaking-tool-box">
+            <h4>🎙️ Luyện nói & Tự ghi âm bài thi của bạn</h4>
+            <p style="color: var(--text-secondary); text-align: center; font-size: 0.92rem;">
+              Bấm nút Ghi âm để luyện nói theo đề bài trên, sau đó nghe lại giọng phát âm của mình để cải thiện phản xạ và ngữ điệu.
+            </p>
+            <div class="record-btn-group">
+              <button id="record-btn" class="btn-record" onclick="toggleAudioRecording()">
+                🔴 Bắt đầu ghi âm
+              </button>
+            </div>
+            <div id="recording-status" style="font-weight: 600; font-size: 0.9rem; color: var(--text-muted);">
+              Micro sẵn sàng...
+            </div>
+            <audio id="audio-playback" controls style="display: none; margin-top: 10px; width: 100%; max-width: 400px;"></audio>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right: Sticky Exam Sidebar (Navigator & Actions) -->
+    <aside class="exam-sidebar">
+      <div class="sidebar-title">
+        <span>Bảng câu hỏi</span>
+        <span id="answered-counter" style="font-size: 0.85rem; color: var(--primary);">0/35 đã làm</span>
+      </div>
+
+      <!-- Thông tin thí sinh để lưu vào SQL -->
+      <div style="margin-bottom: 16px; padding: 12px; background: var(--bg-card-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <span>👤 THÔNG TIN THÍ SINH</span>
+          <span id="db-status-badge" style="font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; background: #ecfdf5; color: #059669; font-weight: 600;">⚡ Neon SQL Ready</span>
+        </div>
+        <input type="text" id="student-name-input" placeholder="Họ và tên của bạn..." style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; margin-bottom: 6px; background: var(--bg-card); color: var(--text-primary);">
+        <input type="text" id="student-code-input" placeholder="Mã số sinh viên (MSV)..." style="width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 0.85rem; background: var(--bg-card); color: var(--text-primary);">
+      </div>
+
+      <div class="legend-row">
+        <div class="legend-item"><span class="legend-dot unanswered"></span> Chưa làm</div>
+        <div class="legend-item"><span class="legend-dot answered"></span> Đã làm</div>
+        <div class="legend-item"><span class="legend-dot flagged"></span> Đánh dấu</div>
+        <div class="legend-item"><span class="legend-dot correct"></span> Đúng</div>
+        <div class="legend-item"><span class="legend-dot incorrect"></span> Sai</div>
+      </div>
+
+      <!-- Quick Navigator Grid -->
+      <div class="question-nav-grid" id="question-nav-grid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="sidebar-actions">
+        <button class="btn-primary-action" onclick="submitExam()">
+          🚀 Nộp bài & Lưu vào SQL
+        </button>
+        <button class="btn-secondary-action" onclick="resetExam()">
+          🔄 Làm lại từ đầu
+        </button>
+        <button class="btn-secondary-action" onclick="toggleExplanations()">
+          💡 Hiện/Ẩn tất cả lời giải
+        </button>
+        <button class="btn-secondary-action" onclick="loadSqlSubmissions()">
+          📊 Xem bảng điểm lưu trong SQL
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Results Modal -->
+  <div class="modal-overlay" id="result-modal">
+    <div class="modal-content">
+      <h2 style="font-size: 1.5rem; margin-bottom: 6px;">Kết Quả Bài Luyện Thi</h2>
+      <p style="color: var(--text-secondary); font-size: 0.95rem;" id="modal-subtitle">Chi tiết kết quả Topic 1: Describe People</p>
+
+      <div class="score-circle">
+        <div class="score-number" id="modal-score-number">0/35</div>
+        <div class="score-total" id="modal-percentage">0%</div>
+      </div>
+
+      <div id="modal-rating" style="font-weight: 700; font-size: 1.15rem; margin-bottom: 16px;"></div>
+
+      <table class="breakdown-table">
+        <thead>
+          <tr>
+            <th>Phần thi</th>
+            <th>Số câu đúng</th>
+            <th>Tỷ lệ</th>
+          </tr>
+        </thead>
+        <tbody id="modal-breakdown-body">
+          <!-- Rendered by JS -->
+        </tbody>
+      </table>
+
+      <div style="display: flex; gap: 12px; margin-top: 24px;">
+        <button class="btn-primary-action" onclick="closeResultModal(); switchTab('tab-all');">
+          🔍 Xem chi tiết đáp án & lời giải
+        </button>
+        <button class="btn-secondary-action" onclick="closeResultModal(); resetExam();">
+          🔄 Thi lại
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal xem danh sách bài thi đã lưu trong PostgreSQL -->
+  <div class="modal-overlay" id="sql-submissions-modal">
+    <div class="modal-content" style="max-width: 780px;">
+      <h2 style="font-size: 1.4rem; margin-bottom: 6px;">📊 Bảng Điểm Lưu Trữ - Neon PostgreSQL</h2>
+      <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 16px;">
+        Dữ liệu được đồng bộ trực tiếp với database PostgreSQL trên Neon Tech
+      </p>
+
+      <div style="max-height: 380px; overflow-y: auto;">
+        <table class="breakdown-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Họ tên</th>
+              <th>Mã SV</th>
+              <th>Điểm số</th>
+              <th>Tỷ lệ</th>
+              <th>Thời gian nộp</th>
+            </tr>
+          </thead>
+          <tbody id="sql-submissions-body">
+            <tr><td colspan="6" style="text-align:center;">Đang tải dữ liệu từ Neon SQL...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <button class="btn-secondary-action" onclick="document.getElementById('sql-submissions-modal').classList.remove('show');">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
