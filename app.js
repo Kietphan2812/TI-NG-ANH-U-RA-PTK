@@ -955,6 +955,127 @@ async function fetchMissingWordTranslation(word, chipId) {
   }
 }
 
+// Bảng dịch tiếng Việt đầy đủ cho 100% các lựa chọn trắc nghiệm trong đề thi
+const OPTION_TRANSLATIONS = {
+  'me': 'tôi / mình',
+  'their': 'của họ',
+  'his': 'của anh ấy / cậu ấy',
+  'our': 'của chúng tôi / chúng ta',
+  'are': 'thì / là (số nhiều)',
+  'is': 'thì / là (số ít)',
+  'am': 'thì / là (đi với I)',
+  '∅': 'không điền từ',
+  'we': 'chúng tôi / chúng ta',
+  'they': 'họ / chúng nó',
+  'there': 'ở đó / có',
+  'she': 'cô ấy',
+  'there is': 'có (số ít)',
+  'there are': 'có (số nhiều)',
+  'this is': 'đây là (số ít)',
+  'this are': 'đây là (sai ngữ pháp)',
+  'these are': 'đây là những (số nhiều)',
+  'your': 'của bạn',
+  'mine': 'của tôi',
+  'wrong-built': 'vóc người không chuẩn',
+  'well-built': 'vóc dáng vạm vỡ, săn chắc',
+  'good-built': 'vóc dáng tốt (sai ngữ pháp)',
+  'nice-built': 'vóc dáng đẹp (sai ngữ pháp)',
+  'tall': 'cao ráo',
+  'height': 'chiều cao',
+  'weight': 'cân nặng',
+  'high': 'cao (độ cao)',
+  'hair': 'mái tóc',
+  'figure': 'vóc dáng / thân hình',
+  'personality': 'tính cách',
+  'permission is needed to park here.': 'Cần có sự cho phép để đỗ xe ở đây.',
+  'always keep this door open.': 'Luôn luôn giữ cánh cửa này mở.',
+  'only use this entrance in an emergency.': 'Chỉ sử dụng lối vào này trong trường hợp khẩn cấp.',
+  'do not park in front of this entrance': 'Không được đỗ xe ở phía trước lối vào này.',
+  'this room cannot be used at present.': 'Căn phòng này hiện tại không thể sử dụng.',
+  'keep the key to this door in the room.': 'Để chìa khóa của cánh cửa này ở trong phòng.',
+  'this door must always be kept locked.': 'Cánh cửa này phải luôn luôn được khóa.',
+  'lock the room when it is not being used.': 'Khóa căn phòng lại khi không có ai đang dùng.',
+  'the librarian needs to see your books before you go.': 'Người thủ thư cần xem sách của bạn trước khi bạn đi.',
+  'return your books before you leave the library.': 'Hãy trả sách trước khi bạn rời khỏi thư viện.',
+  'the librarian will show you where to put your books.': 'Thủ thư sẽ chỉ cho bạn nơi để sách.',
+  'make sure you take all your books with you.': 'Hãy chắc chắn bạn mang theo tất cả sách của mình.',
+  'supersaver tickets can be used every day except fridays.': 'Vé siêu tiết kiệm có thể dùng mọi ngày trừ thứ Sáu.',
+  'you can save money by travelling on a friday.': 'Bạn có thể tiết kiệm tiền bằng cách đi lại vào thứ Sáu.',
+  'you need a special ticket to travel on a friday.': 'Bạn cần một vé đặc biệt để đi lại vào thứ Sáu.',
+  'supersaver tickets cannot be bought before the weekend.': 'Vé siêu tiết kiệm không thể mua trước cuối tuần.',
+  'drinks can not be ordered at the bar.': 'Không thể gọi đồ uống tại quầy bar.',
+  'this machine isn\'t working at the moment.': 'Chiếc máy này hiện tại đang không hoạt động.',
+  'use this machine when the bar is closed.': 'Sử dụng chiếc máy này khi quầy bar đóng cửa.',
+  'there is a drinks machine in the bar.': 'Có một chiếc máy bán đồ uống ở trong quầy bar.',
+  'a farmer': 'Một người nông dân',
+  'a teacher': 'Một giáo viên',
+  'a guitar player': 'Một người chơi đàn ghi-ta',
+  'a school principal': 'Một hiệu trưởng trường học',
+  'he is tall and slim.': 'Bạn ấy cao ráo và thon thả.',
+  'he is tall and fat.': 'Bạn ấy cao và béo.',
+  'he is friendly and honest.': 'Bạn ấy thân thiện và trung thực.',
+  'he likes to play the guitar.': 'Bạn ấy thích chơi đàn ghi-ta.',
+  'straight blonde hair and blue eyes': 'Mái tóc vàng thẳng và đôi mắt xanh lam',
+  'green eyes and curly brown hair': 'Mắt xanh lá và tóc xoăn màu nâu',
+  'curly brown hair and blue eyes': 'Tóc xoăn màu nâu và mắt xanh lam',
+  'blue eyes and curly blonde hair': 'Mắt xanh lam và tóc xoăn màu vàng',
+  'he is tall and thin.': 'Bạn ấy cao và gầy.',
+  'he likes sports.': 'Bạn ấy thích thể thao.',
+  'he is friendly, clever and honest.': 'Bạn ấy thân thiện, thông minh và thật thà.',
+  'he loves to listen to guitar music.': 'Bạn ấy rất thích nghe nhạc ghi-ta.',
+  'honest': 'trung thực / thật thà',
+  'well-behaved': 'ngoan ngoãn / biết cư xử',
+  'humorous': 'hài hước / vui tính',
+  'hard-working': 'chăm chỉ / cần cù',
+  'children': 'trẻ em / con cái',
+  'neighborhood': 'khu phố / hàng xóm',
+  'generous': 'hào phóng / rộng lượng',
+  'extroverted': 'hướng ngoại',
+  'beautiful': 'xinh đẹp',
+  'smart': 'thông minh / khôn ngoan',
+  'ponytail': 'tóc buộc đuôi ngựa',
+  'travel': 'đi du lịch',
+  'country': 'đất nước / quốc gia',
+  'learn': 'học hỏi / học tập',
+  'child': 'đứa trẻ',
+  'family': 'gia đình',
+  'house': 'ngôi nhà',
+  'gifts': 'quà tặng',
+  'university': 'trường đại học',
+  'coutry': 'đất nước',
+  'a (café with tables and lamps)': 'Quán cà phê có bàn và đèn',
+  'b (in front of building entrance)': 'Phía trước lối vào tòa nhà',
+  'c (people waiting at bus/train)': 'Người đang chờ ở xe buýt/tàu hỏa',
+  'a (pen)': 'Cây bút mực',
+  'b (keys)': 'Chùm chìa khóa',
+  'c (papers/documents)': 'Giấy tờ, tài liệu',
+  'a (ski jumping)': 'Môn nhảy trượt tuyết',
+  'b (dolphins/underwater)': 'Cá heo dưới nước',
+  'c (cooking, wok)': 'Nấu ăn, chảo xào',
+  'a (magazine/booklet)': 'Tạp chí / cuốn sổ nhỏ',
+  'b (mobile phone)': 'Điện thoại di động',
+  'c (computer/internet)': 'Máy tính / Mạng Internet',
+  'a (gardening)': 'Làm vườn',
+  'b (shopping/supermarket)': 'Mua sắm tại siêu thị',
+  'c (bricklaying outdoors)': 'Xây gạch ngoài trời',
+  'a (painting a window/ladder)': 'Sơn cửa sổ trên thang',
+  'b (car with roof rack/ladder)': 'Ô tô có giá nóc chở thang',
+  'c (two people carrying a ladder)': 'Hai người đang khiêng thang',
+  'a (house with tree in front, no pool)': 'Ngôi nhà có cây phía trước, không có hồ bơi',
+  'b (house with pool)': 'Ngôi nhà có hồ bơi',
+  'c (house with pool, different angle)': 'Ngôi nhà có hồ bơi nhìn từ góc khác'
+};
+
+// Tra cứu nhanh bản dịch tiếng Việt của lựa chọn trắc nghiệm
+function getOptionTranslation(optText) {
+  if (!optText) return '';
+  const clean = optText.toLowerCase().trim();
+  if (OPTION_TRANSLATIONS[clean]) return OPTION_TRANSLATIONS[clean];
+  const dictMeaning = typeof getWordMeaning === 'function' ? getWordMeaning(clean) : '';
+  if (dictMeaning && dictMeaning !== '(tên riêng)') return dictMeaning.split('/')[0].trim();
+  return '';
+}
+
 // Hàm tạo thanh phân tích từng từ tiếng Anh sang tiếng Việt (Không bao giờ bị 'từ vựng'!)
 function renderWordBreakdownHtml(sentenceText) {
   if (!sentenceText) return '';
@@ -1145,10 +1266,15 @@ function renderMCQList(questions, offsetIndex) {
         }
       }
 
+      const optVi = getOptionTranslation(opt.text);
+
       return `
         <div class="option-item ${statusClass}" onclick="selectOption('${q.id}', '${opt.key}')" data-qid="${q.id}" data-key="${opt.key}">
           <div class="option-key">${opt.key}</div>
-          <div class="option-text">${escapeHtml(opt.text)}</div>
+          <div class="option-content">
+            <div class="option-text">${escapeHtml(opt.text)}</div>
+            ${optVi ? `<div class="option-vi-subtext">🇻🇳 ${escapeHtml(optVi)}</div>` : ''}
+          </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
             <button type="button" class="btn-opt-audio" onclick="event.stopPropagation(); speakSmart('${escapeHtml(opt.text).replace(/'/g, "\\'")}', 'en-US')" title="Nghe tiếng Anh: ${opt.key}">🔊</button>
             <button type="button" class="btn-opt-audio btn-opt-vi" onclick="event.stopPropagation(); speakOptionVi('${escapeHtml(opt.text).replace(/'/g, "\\'")}')" title="Nghe tiếng Việt: ${opt.key}">🗣️</button>
@@ -2111,15 +2237,25 @@ function speakViWord(meaning) {
   if (clean) speakSmart(clean, 'vi-VN');
 }
 
-// Phát âm bản dịch Tiếng Việt của lựa chọn trắc nghiệm
-async function speakOptionVi(optText) {
+// Phát âm bản dịch Tiếng Việt của lựa chọn trắc nghiệm (Tức thì 0ms, không độ trễ)
+function speakOptionVi(optText) {
   if (!optText) return;
   if (optText === '∅') {
     speakSmart("Không điền từ", 'vi-VN');
     return;
   }
 
-  // 1. Tra cứu nhanh từ điển offline và 53 từ vựng
+  // 1. Tra cứu nhanh từ điển dịch lựa chọn (tức thời)
+  const trans = getOptionTranslation(optText);
+  if (trans) {
+    const cleanVi = trans.split('/')[0].replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '').trim();
+    if (cleanVi) {
+      speakSmart(cleanVi, 'vi-VN');
+      return;
+    }
+  }
+
+  // 2. Tra cứu nhanh từ điển từ vựng
   let meaning = getWordMeaning(optText);
   if (meaning && meaning !== '(tên riêng)') {
     const cleanVi = meaning.split('/')[0].replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '').trim();
@@ -2127,24 +2263,6 @@ async function speakOptionVi(optText) {
       speakSmart(cleanVi, 'vi-VN');
       return;
     }
-  }
-
-  // 2. Tra cứu online nếu là cụm từ chưa có trong từ điển
-  try {
-    const isOnline = window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-    const apiBase = isOnline ? '' : (window.location.protocol.startsWith('http') ? '' : 'https://tieng-anh-dau-ra-ptk.onrender.com');
-    const res = await fetch(`${apiBase}/api/translate-word?word=${encodeURIComponent(optText)}`);
-    if (res.ok) {
-      const data = await res.json();
-      if (data && data.translation) {
-        WORD_DICTIONARY[optText.toLowerCase()] = data.translation;
-        const cleanVi = data.translation.split('/')[0].replace(/[.,/#!$%^&*;:{}=\-_`~()?"]/g, '').trim();
-        speakSmart(cleanVi, 'vi-VN');
-        return;
-      }
-    }
-  } catch (e) {
-    console.warn("Lỗi tra dịch lựa chọn:", e);
   }
 
   // 3. Fallback đọc
@@ -2219,7 +2337,7 @@ function speakQuestion(qId, lang = 'en') {
     // Đọc tiếng Việt: bản dịch câu và kết quả đã chọn kèm nghĩa
     let viText = qData.vietnameseTranslation || "Chưa có bản dịch cho câu này.";
     if (completed.hasSelection) {
-      const optMeaning = getWordMeaning(completed.selectedText);
+      const optMeaning = getOptionTranslation(completed.selectedText) || getWordMeaning(completed.selectedText);
       let meaningStr = '';
       if (optMeaning && optMeaning !== '(tên riêng)') {
         meaningStr = ` nghĩa là ${optMeaning.split('/')[0].trim()}`;
@@ -2822,16 +2940,22 @@ function renderListeningSections() {
           </div>
         </div>
         <div class="options-list">
-          ${q.options.map(opt => `
-            <div class="option-item" onclick="this.classList.toggle('selected')">
-              <div class="option-key">${opt.key}</div>
-              <div class="option-text">${escapeHtml(opt.text)}</div>
-              <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
-                <button type="button" class="btn-opt-audio" onclick="event.stopPropagation(); speakSmart('${escapeHtml(opt.text).replace(/'/g, "\\'")}', 'en-US')" title="Nghe tiếng Anh: ${opt.key}">🔊</button>
-                <button type="button" class="btn-opt-audio btn-opt-vi" onclick="event.stopPropagation(); speakOptionVi('${escapeHtml(opt.text).replace(/'/g, "\\'")}')" title="Nghe tiếng Việt: ${opt.key}">🗣️</button>
+          ${q.options.map(opt => {
+            const optVi = getOptionTranslation(opt.text);
+            return `
+              <div class="option-item" onclick="this.classList.toggle('selected')">
+                <div class="option-key">${opt.key}</div>
+                <div class="option-content">
+                  <div class="option-text">${escapeHtml(opt.text)}</div>
+                  ${optVi ? `<div class="option-vi-subtext">🇻🇳 ${escapeHtml(optVi)}</div>` : ''}
+                </div>
+                <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
+                  <button type="button" class="btn-opt-audio" onclick="event.stopPropagation(); speakSmart('${escapeHtml(opt.text).replace(/'/g, "\\'")}', 'en-US')" title="Nghe tiếng Anh: ${opt.key}">🔊</button>
+                  <button type="button" class="btn-opt-audio btn-opt-vi" onclick="event.stopPropagation(); speakOptionVi('${escapeHtml(opt.text).replace(/'/g, "\\'")}')" title="Nghe tiếng Việt: ${opt.key}">🗣️</button>
+                </div>
               </div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
         <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">
           📌 Gợi ý nhận diện: <em>${escapeHtml(q.suggestedAnswer)}</em> (${escapeHtml(q.note || '')})

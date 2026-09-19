@@ -1079,8 +1079,27 @@ body {
 
 .option-text {
   font-size: 0.98rem;
-  flex: 1;
+  font-weight: 500;
   color: var(--text-primary);
+}
+
+.option-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.option-vi-subtext {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #7c3aed;
+  line-height: 1.35;
+  margin-top: 1px;
+}
+
+[data-theme="dark"] .option-vi-subtext {
+  color: #c084fc;
 }
 
 .btn-opt-audio {
