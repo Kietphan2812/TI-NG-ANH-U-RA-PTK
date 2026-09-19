@@ -7,20 +7,20 @@ const WORD_PRONUNCIATION_DB = {
   // --- Từ trong ảnh ví dụ của học viên ---
   "countries": {
     ipa: "/ˈkʌn.triz/",
-    vi: "CAN-triz",
-    notes: "Nhấn mạnh vào âm đầu 'CAN', 'tries' đọc nhẹ và nhanh, âm cuối 'z' chứ không phải 's'.",
+    vi: "CƠN-trịz",
+    notes: "Đọc liền mạch, nhanh, nhấn mạnh vào âm đầu 'CƠN'.",
     syllables: [
-      { part: "CAN", desc: "giống 'can' trong tiếng Anh (không phải 'can' tiếng Việt)" },
-      { part: "tries", desc: "đọc nhanh, gần giống 'chrịz'" }
+      { part: "CƠN", desc: "đọc giống \"cơn\" trong tiếng Việt nhưng bật hơi nhẹ hơn" },
+      { part: "trịz", desc: "đọc nhanh, nối liền, âm cuối kéo nhẹ ra \"z\" (không phải \"s\")" }
     ]
   },
   "country": {
     ipa: "/ˈkʌn.tri/",
-    vi: "CAN-tri",
-    notes: "Nhấn trọng âm vào âm đầu 'CAN', 'tri' đọc nhanh.",
+    vi: "CƠN-tri",
+    notes: "Nhấn trọng âm vào âm đầu 'CƠN', 'tri' đọc nhanh.",
     syllables: [
-      { part: "CAN", desc: "phát âm giống 'căn' lai 'can'" },
-      { part: "tri", desc: "đọc nhanh, gần như 'chri'" }
+      { part: "CƠN", desc: "đọc giống \"cơn\" trong tiếng Việt nhưng bật hơi nhẹ hơn" },
+      { part: "tri", desc: "đọc nhanh, nối liền" }
     ]
   },
   "some": {
@@ -802,35 +802,42 @@ function showWordPronounceDetail(word) {
   if (!modal || !body) return;
 
   const syllablesHtml = (data.syllables && data.syllables.length > 0)
-    ? data.syllables.map(s => `<li><strong>${escapeHtml(s.part)}:</strong> ${escapeHtml(s.desc)}</li>`).join('')
-    : `<li><strong>${escapeHtml(cleanWord)}:</strong> phát âm liền mạch là "${escapeHtml(data.readingVi)}"</li>`;
+    ? data.syllables.map(s => `<li><strong>${escapeHtml(s.part)}</strong> – ${escapeHtml(s.desc)}</li>`).join('')
+    : `<li><strong>${escapeHtml(cleanWord)}</strong> – đọc phát âm liền mạch là "${escapeHtml(data.readingVi)}"</li>`;
 
   body.innerHTML = `
-    <div class="pronounce-card-modal">
-      <div class="pronounce-word-title">
-        "<strong>${escapeHtml(cleanWord)}</strong>" đọc là: <span class="pronounce-ipa-tag">${escapeHtml(data.ipa)}</span>
+    <div class="pronounce-viet-card">
+      <div class="pronounce-header-line">
+        "<strong>${escapeHtml(cleanWord)}</strong>" đọc theo kiểu phiên âm tiếng Việt là: <strong class="highlight-vi-word">"${escapeHtml(data.readingVi)}"</strong>
       </div>
-      <div class="pronounce-vi-box">
-        Phiên âm gần đúng theo cách đọc tiếng Việt: <strong class="highlight-vi-word">"${escapeHtml(data.readingVi)}"</strong>
-        ${data.notes ? `<div class="pronounce-notes-text">(${escapeHtml(data.notes)})</div>` : ''}
+
+      <div class="pronounce-detail-title">Cách đọc chi tiết:</div>
+      <ul class="pronounce-viet-list">
+        ${syllablesHtml}
+      </ul>
+
+      <div class="pronounce-footer-line">
+        Ghép lại đọc liền mạch, nhanh: <strong class="highlight-vi-word">"${escapeHtml(data.readingVi)}"</strong>
       </div>
-      <div class="pronounce-syllables-wrap">
-        <div style="font-weight: 700; margin-bottom: 6px; color: var(--text-primary);">📌 Hướng dẫn chi tiết từng âm:</div>
-        <ul class="pronounce-syllables-list">
-          ${syllablesHtml}
-        </ul>
-      </div>
+
+      ${data.ipa ? `
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">
+          (Phiên âm quốc tế IPA: <span class="pronounce-ipa-tag">${escapeHtml(data.ipa)}</span>)
+        </div>
+      ` : ''}
+
       ${meaning ? `
-        <div class="pronounce-meaning-callout">
+        <div class="pronounce-meaning-line">
           🇻🇳 <strong>Nghĩa tiếng Việt:</strong> ${escapeHtml(meaning)}
         </div>
       ` : ''}
+
       <div class="pronounce-actions-row">
         <button type="button" class="btn-check-sentence" onclick="speakWord('${escapeHtml(cleanWord).replace(/'/g, "\\'")}')">
-          🔊 Nghe phát âm tiếng Anh chuẩn
+          🔊 Nghe phát âm tiếng Anh
         </button>
-        <button type="button" class="btn-audio-action" onclick="speakViWord('Từ ${cleanWord} đọc là ${data.readingVi.replace(/-/g, ' ')}')">
-          🗣️ Nghe hướng dẫn tiếng Việt
+        <button type="button" class="btn-audio-action" onclick="speakViWord('${escapeHtml(cleanWord)} đọc theo kiểu tiếng Việt là ${data.readingVi.replace(/-/g, ' ')}')">
+          🗣️ Nghe máy đọc phiên âm
         </button>
       </div>
     </div>
