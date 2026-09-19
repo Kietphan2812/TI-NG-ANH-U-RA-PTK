@@ -788,6 +788,84 @@ function renderWordBreakdownHtml(sentenceText) {
   `;
 }
 
+// Lấy văn bản câu hỏi hoàn chỉnh khi đã chọn đáp án
+function getCompletedQuestionText(qData) {
+  const selectedKey = AppState.userAnswers[qData.id];
+  const selectedOpt = (qData.options && selectedKey) ? qData.options.find(o => o.key === selectedKey) : null;
+  const rawQuestion = qData.question;
+
+  if (!selectedOpt) {
+    return {
+      sentence: rawQuestion,
+      hasSelection: false,
+      selectedKey: null,
+      selectedText: null
+    };
+  }
+
+  const wordToFill = selectedOpt.text === '∅' ? '' : selectedOpt.text;
+  let filledSentence = rawQuestion;
+
+  if (/(_{2,}|…+|\.{3,}|\(\d+\)[….]*)/.test(rawQuestion)) {
+    filledSentence = rawQuestion.replace(/(_{2,}|…+|\.{3,}|\(\d+\)[….]*)/, wordToFill).replace(/\s+/g, ' ').trim();
+  } else {
+    filledSentence = `${rawQuestion} ${wordToFill}`.trim();
+  }
+
+  return {
+    sentence: filledSentence,
+    hasSelection: true,
+    selectedKey: selectedOpt.key,
+    selectedText: selectedOpt.text,
+    wordToFill: wordToFill,
+    originalQuestion: rawQuestion
+  };
+}
+
+// Định dạng HTML câu hỏi: khi đã chọn đáp án thì điền từ đó vào chỗ trống
+function renderQuestionContentHtml(q) {
+  const selectedKey = AppState.userAnswers[q.id];
+  const selectedOpt = (q.options && selectedKey) ? q.options.find(o => o.key === selectedKey) : null;
+  const rawQuestion = q.question;
+
+  if (selectedOpt) {
+    const wordText = selectedOpt.text === '∅' ? '(để trống)' : selectedOpt.text;
+    const badgeHtml = `<span class="filled-blank-badge" title="Từ bạn đã chọn: ${escapeHtml(selectedOpt.text)}">${escapeHtml(wordText)}</span>`;
+
+    if (/(_{2,}|…+|\.{3,}|\(\d+\)[….]*)/.test(rawQuestion)) {
+      return escapeHtml(rawQuestion).replace(/(_{2,}|…+|\.{3,}|\(\d+\)[….]*)/, badgeHtml);
+    } else {
+      return `${escapeHtml(rawQuestion)} <span class="filled-blank-badge" style="margin-left: 8px;">[Đã chọn: ${selectedOpt.key}. ${escapeHtml(selectedOpt.text)}]</span>`;
+    }
+  }
+
+  return escapeHtml(rawQuestion);
+}
+
+// Định dạng nội dung khung dịch tiếng Việt: cập nhật đáp án đã chọn
+function renderTranslationBoxContent(q) {
+  const selectedKey = AppState.userAnswers[q.id];
+  const selectedOpt = (q.options && selectedKey) ? q.options.find(o => o.key === selectedKey) : null;
+  let chosenCallout = '';
+  if (selectedOpt) {
+    const meaning = getWordMeaning(selectedOpt.text);
+    const meaningStr = (meaning && meaning !== '(tên riêng)') ? ` (Nghĩa: ${meaning.split('/')[0].trim()})` : '';
+    chosenCallout = `
+      <div class="selected-ans-callout">
+        <span>🎯 <strong>Đáp án bạn chọn:</strong> <strong>${selectedOpt.key}. ${escapeHtml(selectedOpt.text)}</strong>${escapeHtml(meaningStr)}</span>
+      </div>
+    `;
+  }
+
+  return `
+    <div style="font-size: 0.98rem; font-weight: 600; margin-bottom: 6px; cursor: pointer;" onclick="speakQuestion('${q.id}', 'vi')" title="Bấm để nghe đọc câu dịch tiếng Việt kèm đáp án">
+      🇻🇳 Dịch cả câu: ${escapeHtml(q.vietnameseTranslation || '')}
+    </div>
+    ${chosenCallout}
+    ${renderWordBreakdownHtml(q.question + (selectedOpt && selectedOpt.text !== '∅' ? ' ' + selectedOpt.text : ''))}
+  `;
+}
+
 // Render danh sách câu hỏi trắc nghiệm
 function renderMCQList(questions, offsetIndex) {
   return questions.map((q, idx) => {
@@ -829,7 +907,7 @@ function renderMCQList(questions, offsetIndex) {
         <div class="q-header">
           <div class="q-title">
             <span class="q-number-badge">Câu ${globalNumber}</span>
-            <div class="q-sentence-text" onclick="speakQuestion('${q.id}', 'en')" title="Bấm vào câu hỏi để nghe phát âm tiếng Anh">${escapeHtml(q.question)}</div>
+            <div class="q-sentence-text" id="qtext-${q.id}" onclick="speakQuestion('${q.id}', 'en')" title="Bấm vào câu hỏi để nghe phát âm tiếng Anh">${renderQuestionContentHtml(q)}</div>
           </div>
           <button class="btn-flag ${isFlagged ? 'flagged' : ''}" onclick="toggleFlag('${q.id}')" title="Đánh dấu xem lại">
             ${isFlagged ? '🚩 Đã đánh dấu' : '🏳️ Đánh dấu'}
@@ -839,22 +917,19 @@ function renderMCQList(questions, offsetIndex) {
         ${signHtml}
 
         <div class="q-actions-bar">
-          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'en')" title="Nghe phát âm riêng câu hỏi này bằng Tiếng Anh">
+          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'en')" title="Nghe phát âm câu hỏi hoàn chỉnh kèm từ đã chọn">
             🔊 Đọc Tiếng Anh
           </button>
           <button class="btn-audio-action" onclick="toggleTranslation('${q.id}')" title="Dịch câu hỏi sang Tiếng Việt & tra từng từ">
             🌐 Dịch Tiếng Việt & Tra từ
           </button>
-          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'vi')" title="Nghe đọc riêng câu dịch bằng Tiếng Việt">
+          <button class="btn-audio-action" onclick="speakQuestion('${q.id}', 'vi')" title="Nghe đọc câu dịch tiếng Việt kèm đáp án đã chọn">
             🗣️ Đọc Tiếng Việt
           </button>
         </div>
 
         <div class="translation-box" id="trans-${q.id}">
-          <div style="font-size: 0.98rem; font-weight: 600; margin-bottom: 4px; cursor: pointer;" onclick="speakQuestion('${q.id}', 'vi')" title="Bấm để nghe đọc câu dịch tiếng Việt">
-            🇻🇳 Dịch cả câu: ${escapeHtml(q.vietnameseTranslation || '')}
-          </div>
-          ${renderWordBreakdownHtml(q.question)}
+          ${renderTranslationBoxContent(q)}
         </div>
 
         <div class="options-list">
@@ -952,6 +1027,19 @@ function selectOption(qId, key) {
   document.querySelectorAll(`[data-qid="${qId}"]`).forEach(opt => {
     opt.classList.toggle('selected', opt.getAttribute('data-key') === key);
   });
+
+  // Cập nhật câu hỏi hiển thị điền từ vào chỗ trống và khung dịch
+  const qData = QUESTION_LIST.find(q => q.id === qId);
+  if (qData) {
+    const formattedHtml = renderQuestionContentHtml(qData);
+    document.querySelectorAll(`[id="qtext-${qId}"]`).forEach(el => {
+      el.innerHTML = formattedHtml;
+    });
+    const transHtml = renderTranslationBoxContent(qData);
+    document.querySelectorAll(`[id="trans-${qId}"]`).forEach(el => {
+      el.innerHTML = transHtml;
+    });
+  }
 
   // Đánh dấu câu đã trả lời
   document.querySelectorAll(`#qbox-${qId}`).forEach(box => {
@@ -1078,6 +1166,16 @@ function restoreAnswerInputs() {
     document.querySelectorAll(`[data-qid="${qId}"][data-key="${val}"]`).forEach(opt => {
       opt.classList.add('selected');
     });
+
+    const qData = QUESTION_LIST.find(q => q.id === qId);
+    if (qData && qData.type === 'mcq') {
+      document.querySelectorAll(`[id="qtext-${qId}"]`).forEach(el => {
+        el.innerHTML = renderQuestionContentHtml(qData);
+      });
+      document.querySelectorAll(`[id="trans-${qId}"]`).forEach(el => {
+        el.innerHTML = renderTranslationBoxContent(qData);
+      });
+    }
 
     // Tự luận
     document.querySelectorAll(`#input-${qId}`).forEach(inp => {
@@ -1706,7 +1804,7 @@ function toggleAllTranslations() {
   boxes.forEach(b => b.classList.toggle('show', anyHidden));
 }
 
-// Đọc 1 câu trắc nghiệm (Tiếng Anh hoặc Tiếng Việt) - CHỈ ĐỌC ĐÚNG CÂU NÀY
+// Đọc 1 câu trắc nghiệm (Tiếng Anh hoặc Tiếng Việt) - Khi đã chọn đáp án thì đọc trọn vẹn cả câu kèm từ đã chọn!
 function speakQuestion(qId, lang = 'en') {
   const qData = QUESTION_LIST.find(q => q.id === qId);
   if (!qData) return;
@@ -1718,12 +1816,27 @@ function speakQuestion(qId, lang = 'en') {
     setTimeout(() => box.classList.remove('reading-highlight'), 5000);
   }
 
+  const completed = getCompletedQuestionText(qData);
+
   if (lang === 'en') {
-    // Đọc chính xác DUY NHẤT câu hỏi tiếng Anh (Không đọc dồn options A, B, C, D)
-    speakSmart(qData.question, 'en-US');
+    if (completed.hasSelection) {
+      // Đọc toàn bộ câu hoàn chỉnh đã điền từ kết quả, sau đó đọc lại từ kết quả đó để nhấn mạnh
+      let speech = `${completed.sentence}. Selected answer: ${completed.selectedText}.`;
+      speakSmart(speech, 'en-US');
+    } else {
+      speakSmart(qData.question, 'en-US');
+    }
   } else {
-    // Đọc chính xác DUY NHẤT câu dịch tiếng Việt
-    const viText = qData.vietnameseTranslation || "Chưa có bản dịch cho câu này.";
+    // Đọc tiếng Việt: bản dịch câu và kết quả đã chọn kèm nghĩa
+    let viText = qData.vietnameseTranslation || "Chưa có bản dịch cho câu này.";
+    if (completed.hasSelection) {
+      const optMeaning = getWordMeaning(completed.selectedText);
+      let meaningStr = '';
+      if (optMeaning && optMeaning !== '(tên riêng)') {
+        meaningStr = ` nghĩa là ${optMeaning.split('/')[0].trim()}`;
+      }
+      viText += `. Đáp án bạn đã chọn là ${completed.selectedKey}: ${completed.selectedText}${meaningStr}.`;
+    }
     speakSmart(viText, 'vi-VN');
   }
 }
