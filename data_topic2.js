@@ -3,7 +3,7 @@
 // Nguồn: TaiLieu_DayDu_Topic1_Topic2.docx
 // Đã bổ sung bản dịch tiếng Việt song ngữ chuẩn cho 100% câu hỏi
 
-const EXAM_DATA_TOPIC2 = {
+var EXAM_DATA_TOPIC2 = {
   "topicId": "topic2",
   "topicTitle": "TOPIC 2: LEISURE AND FREE TIME",
   "topicSubtitle": "Thời gian rảnh rỗi và Sở thích (Sở thích, Thói quen, Hoạt động giải trí)",

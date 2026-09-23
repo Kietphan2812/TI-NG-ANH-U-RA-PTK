@@ -2,21 +2,29 @@
 // Tác giả: Antigravity IDE
 // Hỗ trợ đồng thời: Topic 1 (Describe People) & Topic 2 (Leisure and Free Time)
 
-// Quản lý đa Topic ôn thi
-const ALL_TOPICS = {
-  topic1: (typeof EXAM_DATA_TOPIC1 !== 'undefined') ? EXAM_DATA_TOPIC1 : (typeof EXAM_DATA !== 'undefined' ? EXAM_DATA : null),
-  topic2: (typeof EXAM_DATA_TOPIC2 !== 'undefined') ? EXAM_DATA_TOPIC2 : null
-};
+// Quản lý đa Topic ôn thi - tra cứu động để tránh lỗi timing khi script load
+function getTopicData(topicId) {
+  if (topicId === 'topic1') {
+    return window.EXAM_DATA_TOPIC1 || window.EXAM_DATA || null;
+  }
+  if (topicId === 'topic2') {
+    return window.EXAM_DATA_TOPIC2 || null;
+  }
+  return null;
+}
+
+// Danh sách topic hợp lệ
+const VALID_TOPICS = ['topic1', 'topic2'];
 
 let currentTopicId = 'topic1';
 try {
   const savedTId = localStorage.getItem('active_topic_id');
-  if (savedTId && ALL_TOPICS[savedTId]) {
+  if (savedTId && VALID_TOPICS.includes(savedTId)) {
     currentTopicId = savedTId;
   }
 } catch (e) {}
 
-let EXAM_DATA = ALL_TOPICS[currentTopicId] || ALL_TOPICS.topic1;
+let EXAM_DATA = getTopicData(currentTopicId) || getTopicData('topic1');
 
 // State toàn cục
 const AppState = {
@@ -125,9 +133,13 @@ function loadSavedState() {
 
 // Chức năng chuyển đổi Topic
 function switchTopic(newTopicId) {
-  if (!ALL_TOPICS[newTopicId]) return;
+  const newData = getTopicData(newTopicId);
+  if (!newData) {
+    console.warn('switchTopic: Không tìm thấy dữ liệu cho topic:', newTopicId);
+    return;
+  }
   currentTopicId = newTopicId;
-  EXAM_DATA = ALL_TOPICS[newTopicId];
+  EXAM_DATA = newData;
   try {
     localStorage.setItem('active_topic_id', newTopicId);
   } catch (e) {}
