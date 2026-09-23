@@ -2,7 +2,7 @@
 // Nguồn: Trích xuất chính xác theo file NoiDungDayDu.docx (TOPIC 1: DESCRIBE PEOPLE)
 // Đã bổ sung bản dịch tiếng Việt song ngữ chuẩn cho 100% câu hỏi
 
-var EXAM_DATA = {
+const EXAM_DATA = {
   topicId: "topic1",
   topicTitle: "TOPIC 1: DESCRIBE PEOPLE",
   topicSubtitle: "Miêu tả người (Ngoại hình, Tính cách, Khả năng)",
