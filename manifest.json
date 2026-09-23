@@ -1,0 +1,26 @@
+{
+  "name": "Tiếng Anh Đầu Ra – PTK",
+  "short_name": "Anh Đầu Ra",
+  "description": "Ứng dụng ôn luyện thi Tiếng Anh Đầu Ra – Phan Tấn Kiệt",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["education"],
+  "lang": "vi"
+}

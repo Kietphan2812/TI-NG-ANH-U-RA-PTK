@@ -4,7 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#7c3aed">
   <title>Luyện Thi Tiếng Anh Đầu Ra - Hệ Thống Trắc Nghiệm & Tự Luận</title>
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css?v=20260923_03">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,6 +56,10 @@
 
         <!-- Chế độ Sáng / Tối -->
         <button class="btn-icon" id="theme-toggle-btn" onclick="toggleTheme()" title="Chuyển nền Sáng/Tối">🌙</button>
+
+        <!-- Nút Tải App -->
+        <button class="btn-icon" id="btn-install-app" onclick="showInstallModal()" title="Tải / Cài đặt App"
+          style="display:inline-flex;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;gap:4px;align-items:center;">⬇ Tải App</button>
       </div>
     </div>
   </header>
@@ -520,10 +528,132 @@
     </div>
   </div>
 
+  <!-- ── INSTALL MODAL ── -->
+  <div id="install-modal-overlay" onclick="closeInstallModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;justify-content:center;align-items:center;">
+    <div onclick="event.stopPropagation()" style="background:#1a1a2e;border:1px solid rgba(124,58,237,0.5);border-radius:18px;padding:28px 24px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <div style="width:52px;height:52px;background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;">🎓</div>
+        <div>
+          <div style="font-size:1rem;font-weight:800;color:#fff;">Tiếng Anh Đầu Ra</div>
+          <div style="font-size:0.75rem;color:#94a3b8;">Dùng mượt như App riêng trên PC, Android &amp; iPhone</div>
+        </div>
+      </div>
+
+      <!-- Tab chọn platform -->
+      <div style="display:flex;gap:6px;margin-bottom:16px;background:#0f0f1a;border-radius:10px;padding:4px;">
+        <button onclick="switchInstallTab('pc')" id="itab-pc" style="flex:1;padding:8px 4px;border:none;border-radius:8px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:0.78rem;font-weight:700;cursor:pointer;">💻 Máy tính</button>
+        <button onclick="switchInstallTab('android')" id="itab-android" style="flex:1;padding:8px 4px;border:none;border-radius:8px;background:transparent;color:#94a3b8;font-size:0.78rem;font-weight:600;cursor:pointer;">🤖 Android</button>
+        <button onclick="switchInstallTab('ios')" id="itab-ios" style="flex:1;padding:8px 4px;border:none;border-radius:8px;background:transparent;color:#94a3b8;font-size:0.78rem;font-weight:600;cursor:pointer;">🍎 iPhone (iOS)</button>
+      </div>
+
+      <!-- PC Panel -->
+      <div id="ipanel-pc">
+        <div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:8px;padding:8px 12px;font-size:0.72rem;color:#86efac;margin-bottom:12px;">Cách 1 &nbsp;Bấm cài trực tiếp:</div>
+        <button id="btn-pwa-install" onclick="triggerPWAInstall()" style="width:100%;padding:13px;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;border:none;border-radius:10px;font-size:0.92rem;font-weight:700;cursor:pointer;margin-bottom:14px;">⬇ Bấm để Cài đặt ngay lên Máy tính</button>
+        <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:12px;font-size:0.78rem;color:#94a3b8;line-height:1.7;">
+          <div style="color:#e2e8f0;font-weight:600;margin-bottom:6px;">Cách 2 &nbsp;Cài qua thanh địa chỉ trình duyệt:</div>
+          <div>• Trên Chrome / Edge / Cốc Cốc: Nhìn sang cuối thanh địa chỉ URL, bấm vào biểu tượng <b>⬇ Cài đặt ứng dụng</b>.</div>
+          <div style="margin-top:6px;">• Hoặc bấm dấu 3 chấm ⋮ ở góc phải trên cùng → Lưu và chia sẻ → Cài đặt trang web này dưới dạng ứng dụng.</div>
+        </div>
+      </div>
+
+      <!-- Android Panel -->
+      <div id="ipanel-android" style="display:none;">
+        <div style="font-size:0.82rem;color:#e2e8f0;line-height:1.8;">
+          <b style="color:#a855f7;">Trên Chrome Android:</b><br>
+          1. Mở trang web trong Chrome<br>
+          2. Bấm dấu 3 chấm ⋮ ở góc trên phải<br>
+          3. Chọn <b>"Thêm vào màn hình chính"</b> (Add to Home screen)<br>
+          4. Bấm <b>Thêm</b> → App xuất hiện trên màn hình điện thoại!
+        </div>
+      </div>
+
+      <!-- iOS Panel -->
+      <div id="ipanel-ios" style="display:none;">
+        <div style="font-size:0.82rem;color:#e2e8f0;line-height:1.8;">
+          <b style="color:#a855f7;">Trên Safari iPhone / iPad:</b><br>
+          1. Mở trang web trong Safari<br>
+          2. Bấm nút <b>Chia sẻ 📤</b> ở dưới màn hình<br>
+          3. Cuộn xuống, chọn <b>"Thêm vào Màn hình chính"</b><br>
+          4. Bấm <b>Thêm</b> → Xong!
+          <div style="margin-top:10px;padding:8px;background:rgba(245,158,11,0.1);border-radius:8px;color:#fbbf24;font-size:0.74rem;">⚠ iOS chỉ hỗ trợ cài qua Safari, không hỗ trợ Chrome iOS.</div>
+        </div>
+      </div>
+
+      <button onclick="closeInstallModal()" style="margin-top:18px;width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#94a3b8;border-radius:10px;font-size:0.85rem;cursor:pointer;">Đóng</button>
+    </div>
+  </div>
+
   <script src="data.js?v=20260923_03"></script>
   <script src="data_topic2.js?v=20260923_03"></script>
   <script src="pronunciation.js?v=20260923_03"></script>
   <script src="app.js?v=20260923_03"></script>
+
+  <script>
+  // ── PWA INSTALL LOGIC ──
+  var deferredInstallPrompt = null;
+  var currentInstallTab = 'pc';
+
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    var btn = document.getElementById('btn-install-app');
+    if (btn) { btn.style.display = 'inline-flex'; }
+  });
+
+  window.addEventListener('appinstalled', function() {
+    deferredInstallPrompt = null;
+    var btn = document.getElementById('btn-install-app');
+    if (btn) btn.style.display = 'none';
+    closeInstallModal();
+  });
+
+  function showInstallModal() {
+    var overlay = document.getElementById('install-modal-overlay');
+    overlay.style.display = 'flex';
+    switchInstallTab('pc');
+  }
+
+  function closeInstallModal() {
+    document.getElementById('install-modal-overlay').style.display = 'none';
+  }
+
+  function switchInstallTab(tab) {
+    currentInstallTab = tab;
+    ['pc','android','ios'].forEach(function(t) {
+      var panel = document.getElementById('ipanel-' + t);
+      var btn = document.getElementById('itab-' + t);
+      if (panel) panel.style.display = t === tab ? 'block' : 'none';
+      if (btn) {
+        btn.style.background = t === tab ? 'linear-gradient(135deg,#7c3aed,#a855f7)' : 'transparent';
+        btn.style.color = t === tab ? '#fff' : '#94a3b8';
+      }
+    });
+  }
+
+  function triggerPWAInstall() {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.then(function(result) {
+        if (result.outcome === 'accepted') {
+          deferredInstallPrompt = null;
+          closeInstallModal();
+        }
+      });
+    } else {
+      alert('👉 Bạn có thể cài đặt dễ dàng theo Cách 2 bên dưới:\n\n• Trên Chrome / Edge / Cốc Cốc: Bấm vào biểu tượng ⬇ (Cài đặt) ở cuối thanh địa chỉ URL.\n• Hoặc bấm Menu (⋮) góc phải trên cùng ➔ Lưu và chia sẻ ➔ Cài đặt ứng dụng.');
+    }
+  }
+
+  // Register Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').catch(function(e) {
+        console.warn('SW register failed:', e);
+      });
+    });
+  }
+  </script>
 </body>
 
 </html>
