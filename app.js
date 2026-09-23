@@ -1373,7 +1373,8 @@ function renderQuestionContentHtml(q) {
 }
 
 // Định dạng nội dung khung dịch tiếng Việt: cập nhật đáp án đã chọn
-function renderTranslationBoxContent(q) {
+// showBreakdown=true chỉ khi người dùng bấm nút Dịch (lazy render để tránh chậm)
+function renderTranslationBoxContent(q, showBreakdown) {
   const selectedKey = AppState.userAnswers[q.id];
   const selectedOpt = (q.options && selectedKey) ? q.options.find(o => o.key === selectedKey) : null;
   let chosenCallout = '';
@@ -1408,12 +1409,15 @@ function renderTranslationBoxContent(q) {
   const textToBreakdown = isSign ? q.signText : (q.question + (selectedOpt && selectedOpt.text !== '∅' ? ' ' + selectedOpt.text : ''));
   const headerTitle = isSign ? '🇻🇳 Dịch nội dung trong ô biển báo:' : '🇻🇳 Dịch cả câu:';
 
+  // Word breakdown chỉ render khi người dùng bấm nút Dịch
+  const breakdownHtml = showBreakdown ? renderWordBreakdownHtml(textToBreakdown) : '';
+
   return `
     <div style="font-size: 0.98rem; font-weight: 600; margin-bottom: 6px; cursor: pointer;" onclick="speakQuestion('${q.id}', 'vi')" title="Bấm để nghe đọc bản dịch tiếng Việt">
       ${headerTitle} ${escapeHtml(q.vietnameseTranslation || '')}
     </div>
     ${chosenCallout}
-    ${renderWordBreakdownHtml(textToBreakdown)}
+    ${breakdownHtml}
   `;
 }
 
@@ -1558,7 +1562,7 @@ function renderWritingTransformList(questions, offsetIndex) {
           </button>
         </div>
 
-        <div class="translation-box" id="trans-${q.id}">
+        <div class="translation-box" id="trans-${q.id}" data-writing-qid="${q.id}">
           <div style="margin-bottom: 6px;">
             <div style="cursor: pointer; margin-bottom: 3px;" onclick="speakWriting('${q.id}', 'vi')" title="Bấm để nghe đọc bản dịch câu gốc">
               <strong>🇻🇳 Dịch câu gốc:</strong> ${escapeHtml(q.vietnameseTranslation || '')}
@@ -1567,7 +1571,7 @@ function renderWritingTransformList(questions, offsetIndex) {
               <strong>🇻🇳 Dịch câu hoàn chỉnh:</strong> ${escapeHtml(q.vietnameseModelTranslation || '')}
             </div>
           </div>
-          ${renderWordBreakdownHtml(q.originalSentence)}
+          <div class="writing-breakdown-placeholder" data-sentence="${escapeHtml(q.originalSentence)}"></div>
         </div>
 
         <div class="input-row-container" style="margin-top: 14px;">
@@ -1623,9 +1627,10 @@ function selectOption(qId, key) {
     document.querySelectorAll(`[id="qtext-${qId}"]`).forEach(el => {
       el.innerHTML = formattedHtml;
     });
-    const transHtml = renderTranslationBoxContent(qData);
+    // Chỉ cập nhật nội dung trans-box nếu đang mở, không render word breakdown
     document.querySelectorAll(`[id="trans-${qId}"]`).forEach(el => {
-      el.innerHTML = transHtml;
+      const isOpen = el.classList.contains('show');
+      el.innerHTML = renderTranslationBoxContent(qData, isOpen);
     });
   }
 
@@ -1681,9 +1686,10 @@ function checkMCQResult(qId) {
   document.querySelectorAll(`[id="qtext-${qId}"]`).forEach(el => {
     el.innerHTML = formattedHtml;
   });
-  const transHtml = renderTranslationBoxContent(qData);
+  // Chỉ render word breakdown nếu trans-box đang mở
   document.querySelectorAll(`[id="trans-${qId}"]`).forEach(el => {
-    el.innerHTML = transHtml;
+    const isOpen = el.classList.contains('show');
+    el.innerHTML = renderTranslationBoxContent(qData, isOpen);
   });
 
   // Đổi màu viền câu hỏi: xanh nếu đúng, đỏ nếu sai
@@ -1862,8 +1868,9 @@ function restoreAnswerInputs() {
       document.querySelectorAll(`[id="qtext-${qId}"]`).forEach(el => {
         el.innerHTML = renderQuestionContentHtml(qData);
       });
+      // Không render word breakdown khi restore (tránh chậm)
       document.querySelectorAll(`[id="trans-${qId}"]`).forEach(el => {
-        el.innerHTML = renderTranslationBoxContent(qData);
+        el.innerHTML = renderTranslationBoxContent(qData, false);
       });
       if (isRevealed) {
         document.querySelectorAll(`[id="btn-check-${qId}"]`).forEach(btn => {
@@ -2498,10 +2505,28 @@ function stopSpeaking() {
   if (statusEl) statusEl.style.display = 'none';
 }
 
-// Bật / tắt hiển thị bản dịch của 1 câu
+// Bật / tắt hiển thị bản dịch của 1 câu (lazy render word breakdown khi mở lần đầu)
 function toggleTranslation(qId) {
   document.querySelectorAll(`#trans-${qId}`).forEach(box => {
+    const wasOpen = box.classList.contains('show');
     box.classList.toggle('show');
+    // Lazy render word breakdown lần đầu khi mở
+    if (!wasOpen && !box.dataset.breakdownRendered) {
+      // MCQ questions
+      const qData = QUESTION_LIST.find(q => q.id === qId);
+      if (qData) {
+        box.innerHTML = renderTranslationBoxContent(qData, true);
+        box.dataset.breakdownRendered = '1';
+      } else {
+        // Writing transform questions: render placeholder
+        const placeholder = box.querySelector('.writing-breakdown-placeholder');
+        if (placeholder) {
+          const sentence = placeholder.getAttribute('data-sentence') || '';
+          placeholder.innerHTML = renderWordBreakdownHtml(sentence);
+          box.dataset.breakdownRendered = '1';
+        }
+      }
+    }
   });
 }
 
@@ -2509,7 +2534,20 @@ function toggleTranslation(qId) {
 function toggleAllTranslations() {
   const boxes = document.querySelectorAll('.translation-box');
   const anyHidden = Array.from(boxes).some(b => !b.classList.contains('show'));
-  boxes.forEach(b => b.classList.toggle('show', anyHidden));
+  boxes.forEach(b => {
+    b.classList.toggle('show', anyHidden);
+    // Lazy render word breakdown lần đầu khi mở
+    if (anyHidden && !b.dataset.breakdownRendered) {
+      const qId = b.id ? b.id.replace('trans-', '') : null;
+      if (qId) {
+        const qData = QUESTION_LIST.find(q => q.id === qId);
+        if (qData) {
+          b.innerHTML = renderTranslationBoxContent(qData, true);
+          b.dataset.breakdownRendered = '1';
+        }
+      }
+    }
+  });
 }
 
 // Đọc 1 câu trắc nghiệm (Tiếng Anh hoặc Tiếng Việt) - Khi đã chọn đáp án thì đọc trọn vẹn cả câu kèm từ đã chọn!
