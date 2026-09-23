@@ -1,4 +1,3 @@
-sửa phần đọc
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -6,7 +5,7 @@ sửa phần đọc
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Luyện Thi Tiếng Anh Đầu Ra - Hệ Thống Trắc Nghiệm & Tự Luận</title>
-  <link rel="stylesheet" href="style.css?v=20260919_08">
+  <link rel="stylesheet" href="style.css?v=20260923_02">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
@@ -24,6 +23,15 @@ sửa phần đọc
           <h1>TIẾNG ANH ĐẦU RA</h1>
           <span class="brand-badge" id="topic-badge">Topic 1: Describe People</span>
         </div>
+      </div>
+
+      <!-- Bộ chọn Topic trực tiếp trên Header -->
+      <div class="topic-picker-container" title="Chọn chủ đề ôn luyện">
+        <span class="topic-picker-icon">📚</span>
+        <select id="topic-select" class="topic-picker-select" onchange="switchTopic(this.value)">
+          <option value="topic1">Topic 1: Describe People</option>
+          <option value="topic2">Topic 2: Leisure and Free Time</option>
+        </select>
       </div>
 
       <div class="header-controls">
@@ -54,7 +62,7 @@ sửa phần đọc
         <span>📋</span> Tất cả bài tập <span class="tab-badge" id="total-q-badge">35 câu</span>
       </button>
       <button class="tab-link" onclick="switchTab('tab-vocab-study')">
-        <span>📖</span> Từ vựng (53 từ)
+        <span id="nav-vocab-tab-title">📖 Từ vựng (53 từ)</span>
       </button>
       <button class="tab-link" onclick="switchTab('tab-vocab-ex')">
         <span>📝</span> I. Trắc nghiệm từ vựng <span class="tab-badge">10 câu</span>
@@ -81,13 +89,14 @@ sửa phần đọc
 
       <!-- Topic Banner -->
       <div class="topic-banner">
-        <h2>TOPIC 1: DESCRIBE PEOPLE</h2>
-        <p>Hệ thống ôn thi toàn diện gồm: 53 từ vựng miêu tả ngoại hình & tính cách, 10 câu trắc nghiệm từ vựng, 20 câu
+        <h2 id="banner-topic-title">TOPIC 1: DESCRIBE PEOPLE</h2>
+        <p id="banner-topic-desc">Hệ thống ôn thi toàn diện gồm: 53 từ vựng miêu tả ngoại hình & tính cách, 10 câu trắc nghiệm từ vựng, 20 câu
           đọc hiểu (biển báo, đoạn văn Tony, điền từ Anna), 5 câu viết lại tương đương và bài viết thư 120 từ.</p>
         <div class="banner-stats">
           <span class="stat-chip">✨ 35 câu hỏi trắc nghiệm & tự luận</span>
+          <span class="stat-chip" id="banner-vocab-count">📖 53 từ vựng tra cứu</span>
           <span class="stat-chip">⚡ Chấm điểm & Giải thích tự động</span>
-          <span class="stat-chip">🎯 Chuẩn tài liệu NoiDungDayDu.docx</span>
+          <span class="stat-chip">🎯 Chuẩn đề cương Đại học</span>
         </div>
       </div>
 
@@ -120,8 +129,8 @@ sửa phần đọc
       <div id="tab-vocab-study" class="tab-content">
         <div class="section-card">
           <div class="section-card-header">
-            <h3 class="section-card-title">📖 Sổ tay từ vựng: Describe People</h3>
-            <span class="section-tag">53 từ vựng & ví dụ</span>
+            <h3 class="section-card-title" id="vocab-study-card-title">📖 Sổ tay từ vựng: Describe People</h3>
+            <span class="section-tag" id="vocab-study-card-tag">53 từ vựng & ví dụ</span>
           </div>
           <p style="color: var(--text-secondary); margin-bottom: 16px;">
             Nhấp vào biểu tượng 🔊 bên cạnh mỗi từ để nghe phát âm tiếng Anh chuẩn. Sử dụng thanh tìm kiếm để tra cứu
@@ -164,8 +173,8 @@ sửa phần đọc
         <!-- b. Tony Passage -->
         <div class="section-card">
           <div class="section-card-header">
-            <h3 class="section-card-title">📰 Phần II.b: Bài đọc "MY BEST FRIEND" (Tony)</h3>
-            <span class="section-tag">5 câu</span>
+            <h3 class="section-card-title" id="reading-b-card-title">📰 Phần II.b: Bài đọc "MY BEST FRIEND" (Tony)</h3>
+            <span class="section-tag" id="reading-b-card-tag">5 câu</span>
           </div>
           <div id="tony-passage-text">
             <!-- Injected by JS -->
@@ -176,8 +185,8 @@ sửa phần đọc
         <!-- c. Anna Cloze Text -->
         <div class="section-card">
           <div class="section-card-header">
-            <h3 class="section-card-title">📰 Phần II.c: Điền từ vào đoạn văn (Anna)</h3>
-            <span class="section-tag">10 câu</span>
+            <h3 class="section-card-title" id="reading-c-card-title">📰 Phần II.c: Điền từ vào đoạn văn (Anna)</h3>
+            <span class="section-tag" id="reading-c-card-tag">10 câu</span>
           </div>
           <div id="anna-passage-text">
             <!-- Injected by JS -->
@@ -208,7 +217,7 @@ sửa phần đọc
             <span class="section-tag">Tự luận</span>
           </div>
           <div class="essay-container">
-            <div class="prompt-guidelines">
+            <div class="prompt-guidelines" id="letter-prompt-container">
               <h4>Đề bài:</h4>
               <p><strong>Write a letter (about 120 words) to your friend/colleague/parents/relatives about a new friend
                   that you met in your English class.</strong></p>
@@ -272,11 +281,11 @@ sửa phần đọc
       <div id="tab-speaking" class="tab-content">
         <div class="section-card">
           <div class="section-card-header">
-            <h3 class="section-card-title">🗣️ Phần III: Luyện nói (Speaking Card – No.1)</h3>
+            <h3 class="section-card-title" id="speaking-card-header-title">🗣️ Phần III: Luyện nói (Speaking Card – No.1)</h3>
             <span class="section-tag">Nói & Phát âm</span>
           </div>
 
-          <div class="prompt-guidelines" style="background: var(--primary-light); border-color: #c7d2fe;">
+          <div class="prompt-guidelines" id="speaking-prompt-box" style="background: var(--primary-light); border-color: #c7d2fe;">
             <h4 style="color: var(--primary);">SPEAKING CARD – No.1: Talk about your best friend</h4>
             <ul>
               <li>What is his / her name?</li>
@@ -507,9 +516,10 @@ sửa phần đọc
     </div>
   </div>
 
-  <script src="data.js?v=20260919_08"></script>
-  <script src="pronunciation.js?v=20260919_08"></script>
-  <script src="app.js?v=20260919_08"></script>
+  <script src="data.js?v=20260923_02"></script>
+  <script src="data_topic2.js?v=20260923_02"></script>
+  <script src="pronunciation.js?v=20260923_02"></script>
+  <script src="app.js?v=20260923_02"></script>
 </body>
 
 </html>

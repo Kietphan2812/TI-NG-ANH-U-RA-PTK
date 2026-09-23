@@ -1192,6 +1192,536 @@ const WORD_PRONUNCIATION_DB = {
     notes: "Nhấn mạnh vào âm hai 'LAI'.",
     syllables: [{ part: "re-", desc: "đọc nhẹ 'ri'" }, { part: "-li-", desc: "nhấn mạnh 'lai'" }, { part: "-a-ble", desc: "đọc 'ơ-bồ'" }]
   }
+,
+  // --- TOPIC 2: LEISURE AND FREE TIME ---
+  "collect antiques": {
+      "ipa": "/kəˈlekt ˈæntiːks/",
+      "vi": "cơ-LẾCH-t AN-tíc-s",
+      "notes": "Nhấn vào \"LẾCH\" và \"AN\", âm cuối bật \"ks\".",
+      "syllables": [
+          {
+              "part": "col-lect",
+              "desc": "đọc là \"cơ-lếcht\", bật âm \"t\" nhẹ"
+          },
+          {
+              "part": "an-tiques",
+              "desc": "đọc là \"an-tícs\", xì nhẹ âm \"s\" ở cuối"
+          }
+      ]
+  },
+  "collect coins": {
+      "ipa": "/kəˈlekt kɔɪnz/",
+      "vi": "cơ-LẾCH-t COI-nz",
+      "notes": "Âm \"coin\" phát âm nguyên âm đôi \"oi\", âm cuối rung \"z\".",
+      "syllables": [
+          {
+              "part": "col-lect",
+              "desc": "đọc là \"cơ-lếcht\""
+          },
+          {
+              "part": "coins",
+              "desc": "đọc là \"coi-nz\", kéo dài âm oi và kết thúc bằng z"
+          }
+      ]
+  },
+  "collect stamps": {
+      "ipa": "/kəˈlekt stæmps/",
+      "vi": "cơ-LẾCH-t S-TAM-ps",
+      "notes": "Bật nhẹ âm \"s\" trước \"tam\", kết thúc bật \"ps\".",
+      "syllables": [
+          {
+              "part": "col-lect",
+              "desc": "đọc là \"cơ-lếcht\""
+          },
+          {
+              "part": "stamps",
+              "desc": "đọc là \"s-tam-ps\", kết thúc bằng ps"
+          }
+      ]
+  },
+  "play cards": {
+      "ipa": "/pleɪ kɑːdz/",
+      "vi": "P-LÂY CẠC-dz",
+      "notes": "Bật phụ âm kép \"pl-\", âm \"cards\" mở rộng miệng kéo dài và kết thúc âm z.",
+      "syllables": [
+          {
+              "part": "play",
+              "desc": "đọc nối \"p-lây\" dứt khoát"
+          },
+          {
+              "part": "cards",
+              "desc": "đọc là \"cạc-dz\", âm a kéo dài"
+          }
+      ]
+  },
+  "play chess": {
+      "ipa": "/pleɪ tʃes/",
+      "vi": "P-LÂY CHÉT-s",
+      "notes": "Âm \"chess\" bắt đầu bằng \"ch\" bật hơi và kết thúc xì hơi \"s\".",
+      "syllables": [
+          {
+              "part": "play",
+              "desc": "đọc là \"p-lây\""
+          },
+          {
+              "part": "chess",
+              "desc": "đọc là \"chét-s\", bật mạnh âm ch"
+          }
+      ]
+  },
+  "play computer games": {
+      "ipa": "/pleɪ kəmˈpjuːtər geɪmz/",
+      "vi": "P-LÂY cơm-PIU-tờ GÂYM-z",
+      "notes": "Nhấn trọng âm vào \"PIU\" trong computer và \"GÂYM\".",
+      "syllables": [
+          {
+              "part": "play",
+              "desc": "đọc là \"p-lây\""
+          },
+          {
+              "part": "com-pu-ter",
+              "desc": "đọc là \"cơm-piu-tờ\", nhấn vào piu"
+          },
+          {
+              "part": "games",
+              "desc": "đọc là \"gâym-z\", âm cuối rung z"
+          }
+      ]
+  },
+  "play the violin": {
+      "ipa": "/pleɪ ðə ˌvaɪəˈlɪn/",
+      "vi": "P-LÂY đơ vai-ơ-LIN",
+      "notes": "Nhấn trọng âm chính vào âm cuối \"LIN\" của violin.",
+      "syllables": [
+          {
+              "part": "play the",
+              "desc": "đọc là \"p-lây đơ\", lưỡi kẹp giữa răng"
+          },
+          {
+              "part": "vi-o-lin",
+              "desc": "đọc là \"vai-ơ-lin\", nhấn mạnh âm lin"
+          }
+      ]
+  },
+  "go camping": {
+      "ipa": "/gəʊ ˈkæmpɪŋ/",
+      "vi": "GÂU CAM-pinh",
+      "notes": "Nhấn mạnh vào âm \"CAM\".",
+      "syllables": [
+          {
+              "part": "go",
+              "desc": "đọc là \"gâu\" tròn môi"
+          },
+          {
+              "part": "cam-ping",
+              "desc": "đọc là \"cam-pinh\""
+          }
+      ]
+  },
+  "go hiking": {
+      "ipa": "/gəʊ ˈhaɪkɪŋ/",
+      "vi": "GÂU HAI-kinh",
+      "notes": "Nhấn mạnh vào \"HAI\".",
+      "syllables": [
+          {
+              "part": "go",
+              "desc": "đọc là \"gâu\""
+          },
+          {
+              "part": "hi-king",
+              "desc": "đọc là \"hai-kinh\""
+          }
+      ]
+  },
+  "go jogging": {
+      "ipa": "/gəʊ ˈdʒɒgɪŋ/",
+      "vi": "GÂU DÓC-ginh",
+      "notes": "Âm \"j\" bật mạnh như \"d/gi\", nhấn \"DÓC\".",
+      "syllables": [
+          {
+              "part": "go",
+              "desc": "đọc là \"gâu\""
+          },
+          {
+              "part": "jog-ging",
+              "desc": "đọc là \"dóc-ginh\", âm o tròn môi"
+          }
+      ]
+  },
+  "go scuba-diving": {
+      "ipa": "/gəʊ ˈskuːbə daɪvɪŋ/",
+      "vi": "GÂU S-CU-bơ ĐAI-vinh",
+      "notes": "Âm \"cu\" kéo dài, nhấn \"CU\" và \"ĐAI\".",
+      "syllables": [
+          {
+              "part": "scu-ba",
+              "desc": "đọc là \"s-cu-bơ\""
+          },
+          {
+              "part": "di-ving",
+              "desc": "đọc là \"đai-vinh\""
+          }
+      ]
+  },
+  "go window-shopping": {
+      "ipa": "/gəʊ ˈwɪndəʊ ʃɒpɪŋ/",
+      "vi": "GÂU UY-n-đâu SÓP-pinh",
+      "notes": "Âm \"sh\" cong môi thổi gió: \"sóp\".",
+      "syllables": [
+          {
+              "part": "win-dow",
+              "desc": "đọc là \"uyn-đâu\""
+          },
+          {
+              "part": "shop-ping",
+              "desc": "đọc là \"sóp-pinh\", cong lưỡi ở âm s"
+          }
+      ]
+  },
+  "go sightseeing": {
+      "ipa": "/gəʊ ˈsaɪtsiːɪŋ/",
+      "vi": "GÂU SAI-t-xi-inh",
+      "notes": "Nhấn vào \"SAI\", giữa từ có âm dừng t nhẹ.",
+      "syllables": [
+          {
+              "part": "sight",
+              "desc": "đọc là \"sai-t\""
+          },
+          {
+              "part": "see-ing",
+              "desc": "đọc là \"xi-inh\""
+          }
+      ]
+  },
+  "go dancing": {
+      "ipa": "/gəʊ ˈdɑːnsɪŋ/",
+      "vi": "GÂU ĐAN-xinh",
+      "notes": "Nhấn mạnh vào âm \"ĐAN\".",
+      "syllables": [
+          {
+              "part": "go",
+              "desc": "đọc là \"gâu\""
+          },
+          {
+              "part": "dan-cing",
+              "desc": "đọc là \"đan-xinh\" (Anh) hoặc \"đen-xinh\" (Mỹ)"
+          }
+      ]
+  },
+  "do gardening": {
+      "ipa": "/duː ˈgɑːdnɪŋ/",
+      "vi": "ĐU GA-đ-ninh",
+      "notes": "Nhấn vào âm \"GA\" kéo dài.",
+      "syllables": [
+          {
+              "part": "do",
+              "desc": "đọc là \"đu\" tròn môi"
+          },
+          {
+              "part": "gar-den-ing",
+              "desc": "đọc là \"ga-đ-ninh\", âm r nhẹ"
+          }
+      ]
+  },
+  "surf the internet": {
+      "ipa": "/sɜːf ði ˈɪntənet/",
+      "vi": "SƠ-f đi IN-tơ-nét",
+      "notes": "Sau \"the\" là nguyên âm \"i\" nên đọc \"the\" thành \"đi\".",
+      "syllables": [
+          {
+              "part": "surf",
+              "desc": "đọc là \"sơ-f\", răng trên cắn môi dưới bật hơi f"
+          },
+          {
+              "part": "the in-ter-net",
+              "desc": "đọc là \"đi in-tơ-nét\", nhấn vào in"
+          }
+      ]
+  },
+  "paint": {
+      "ipa": "/peɪnt/",
+      "vi": "PÂY-n-t",
+      "notes": "Bật hơi phụ âm p đầu, âm cuối là \"n-t\".",
+      "syllables": [
+          {
+              "part": "paint",
+              "desc": "đọc là \"pây-n-t\", kết thúc bật nhẹ âm t"
+          }
+      ]
+  },
+  "take a photo": {
+      "ipa": "/teɪk ə ˈfəʊtəʊ/",
+      "vi": "TÂY-k ơ PHÂU-tâu",
+      "notes": "Nối âm: \"tây-kơ phâu-tâu\", nhấn vào PHÂU.",
+      "syllables": [
+          {
+              "part": "take a",
+              "desc": "đọc nối là \"tây-kơ\""
+          },
+          {
+              "part": "pho-to",
+              "desc": "đọc là \"phâu-tâu\""
+          }
+      ]
+  },
+  "hang out": {
+      "ipa": "/hæŋ aʊt/",
+      "vi": "HANG-ao-t",
+      "notes": "Nối âm \"hang-out\" thành \"hang-ngao-t\".",
+      "syllables": [
+          {
+              "part": "hang",
+              "desc": "đọc là \"hang\""
+          },
+          {
+              "part": "out",
+              "desc": "đọc là \"ao-t\", bật nhẹ âm t cuối"
+          }
+      ]
+  },
+  "join in": {
+      "ipa": "/dʒɔɪn ɪn/",
+      "vi": "DOI-n-in",
+      "notes": "Nối âm: \"doi-nin\".",
+      "syllables": [
+          {
+              "part": "join in",
+              "desc": "bật âm d mạnh, nối thành \"doi-nin\""
+          }
+      ]
+  },
+  "to be keen on sth": {
+      "ipa": "/kiːn/",
+      "vi": "KIN on",
+      "notes": "Âm i kéo dài: \"kin on\".",
+      "syllables": [
+          {
+              "part": "keen on",
+              "desc": "đọc nối là \"kin-non\""
+          }
+      ]
+  },
+  "barbecue": {
+      "ipa": "/ˈbɑːbɪkjuː/",
+      "vi": "BA-bi-kiu",
+      "notes": "Nhấn trọng âm 1 vào \"BA\".",
+      "syllables": [
+          {
+              "part": "bar-",
+              "desc": "đọc là \"ba\" kéo dài"
+          },
+          {
+              "part": "-be-",
+              "desc": "đọc là \"bi\" nhẹ"
+          },
+          {
+              "part": "-cue",
+              "desc": "đọc là \"kiu\""
+          }
+      ]
+  },
+  "beach": {
+      "ipa": "/biːtʃ/",
+      "vi": "BI-ch",
+      "notes": "Âm i kéo dài, kết thúc bật âm \"ch\" dứt khoát.",
+      "syllables": [
+          {
+              "part": "beach",
+              "desc": "đọc là \"bi-ch\", kéo dài âm bi rồi bật ch"
+          }
+      ]
+  },
+  "campsite": {
+      "ipa": "/ˈkæmpsaɪt/",
+      "vi": "CAM-p-xai-t",
+      "notes": "Nhấn vào \"CAM\", kết thúc bằng âm t nhẹ.",
+      "syllables": [
+          {
+              "part": "camp-",
+              "desc": "đọc là \"cam-p\""
+          },
+          {
+              "part": "-site",
+              "desc": "đọc là \"xai-t\", bật âm t cuối"
+          }
+      ]
+  },
+  "tent": {
+      "ipa": "/tent/",
+      "vi": "TEN-t",
+      "notes": "Đọc dứt khoát, bật nhẹ âm t cuối.",
+      "syllables": [
+          {
+              "part": "tent",
+              "desc": "đọc là \"ten-t\""
+          }
+      ]
+  },
+  "cruise": {
+      "ipa": "/kruːz/",
+      "vi": "C-RU-z",
+      "notes": "Âm u kéo dài, kết thúc bằng âm z rung dây thanh.",
+      "syllables": [
+          {
+              "part": "cruise",
+              "desc": "đọc là \"c-ru-z\", âm u dài và z cuối"
+          }
+      ]
+  },
+  "doll": {
+      "ipa": "/dɒl/",
+      "vi": "ĐO-l",
+      "notes": "Âm o mở tròn môi, uốn đầu lưỡi âm l ở cuối.",
+      "syllables": [
+          {
+              "part": "doll",
+              "desc": "đọc là \"đo-l\""
+          }
+      ]
+  },
+  "festival": {
+      "ipa": "/ˈfestɪvl/",
+      "vi": "PHÉT-s-ti-vồ-l",
+      "notes": "Nhấn trọng âm 1 vào \"PHÉT\".",
+      "syllables": [
+          {
+              "part": "fes-",
+              "desc": "đọc là \"phét-s\", có xì s nhẹ"
+          },
+          {
+              "part": "-ti-",
+              "desc": "đọc là \"ti\" nhẹ"
+          },
+          {
+              "part": "-val",
+              "desc": "đọc là \"vồ-l\""
+          }
+      ]
+  },
+  "fiction": {
+      "ipa": "/ˈfɪkʃn/",
+      "vi": "PHÍC-sừn",
+      "notes": "Nhấn âm 1 \"PHÍC\", âm sh cong môi.",
+      "syllables": [
+          {
+              "part": "fic-",
+              "desc": "đọc là \"phíc\""
+          },
+          {
+              "part": "-tion",
+              "desc": "đọc là \"sừn\" cong môi"
+          }
+      ]
+  },
+  "gallery": {
+      "ipa": "/ˈgælərɪ/",
+      "vi": "GA-lơ-ri",
+      "notes": "Nhấn trọng âm vào \"GA\".",
+      "syllables": [
+          {
+              "part": "gal-",
+              "desc": "đọc là \"ga\" hoặc \"gæ\""
+          },
+          {
+              "part": "-le-",
+              "desc": "đọc là \"lơ\""
+          },
+          {
+              "part": "-ry",
+              "desc": "đọc là \"ri\""
+          }
+      ]
+  },
+  "magazine": {
+      "ipa": "/ˌmægəˈziːn/",
+      "vi": "ma-gơ-ZIN",
+      "notes": "Nhấn mạnh nhất vào âm cuối \"ZIN\", âm i kéo dài.",
+      "syllables": [
+          {
+              "part": "ma-ga-",
+              "desc": "đọc lướt nhanh là \"ma-gơ\""
+          },
+          {
+              "part": "-zine",
+              "desc": "đọc là \"zin\" nhấn mạnh và ngân dài"
+          }
+      ]
+  },
+  "museum": {
+      "ipa": "/mjuːˈzɪəm/",
+      "vi": "miu-ZI-ơm",
+      "notes": "Nhấn trọng âm 2 vào \"ZI\".",
+      "syllables": [
+          {
+              "part": "mu-",
+              "desc": "đọc là \"miu\" nhẹ"
+          },
+          {
+              "part": "-se-",
+              "desc": "đọc là \"zi\", nhấn mạnh"
+          },
+          {
+              "part": "-um",
+              "desc": "đọc là \"ơm\" ngậm môi"
+          }
+      ]
+  },
+  "music": {
+      "ipa": "/ˈmjuːzɪk/",
+      "vi": "MIU-zíc",
+      "notes": "Nhấn trọng âm 1 vào \"MIU\".",
+      "syllables": [
+          {
+              "part": "mu-",
+              "desc": "đọc là \"miu\" nhấn mạnh"
+          },
+          {
+              "part": "-sic",
+              "desc": "đọc là \"zíc\", có âm z rung"
+          }
+      ]
+  },
+  "party": {
+      "ipa": "/ˈpɑːti/",
+      "vi": "PA-ti",
+      "notes": "Nhấn vào \"PA\", trong giọng Mỹ có thể đọc thành \"pa-đi\".",
+      "syllables": [
+          {
+              "part": "par-",
+              "desc": "đọc là \"pa\" kéo dài"
+          },
+          {
+              "part": "-ty",
+              "desc": "đọc là \"ti\" hoặc \"đi\" lướt nhanh"
+          }
+      ]
+  },
+  "playground": {
+      "ipa": "/ˈpleɪgraʊnd/",
+      "vi": "P-LÂY-grao-n-d",
+      "notes": "Nhấn vào \"P-LÂY\", kết thúc bằng âm \"nd\".",
+      "syllables": [
+          {
+              "part": "play-",
+              "desc": "đọc là \"p-lây\""
+          },
+          {
+              "part": "-ground",
+              "desc": "đọc là \"grao-n-d\", bật d nhẹ ở cuối"
+          }
+      ]
+  },
+  "quiz": {
+      "ipa": "/kwɪz/",
+      "vi": "C-UÝT-z",
+      "notes": "Bắt đầu bằng \"qu\" (c-u), âm cuối là rung z.",
+      "syllables": [
+          {
+              "part": "quiz",
+              "desc": "đọc là \"cuýt-z\", dứt khoát"
+          }
+      ]
+  }
 };
 
 // ============================================================================

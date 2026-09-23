@@ -1,6 +1,22 @@
 // Logic tương tác hệ thống ôn thi Tiếng Anh Đầu Ra
 // Tác giả: Antigravity IDE
-// Dữ liệu: NoiDungDayDu.docx (Topic 1: Describe People)
+// Hỗ trợ đồng thời: Topic 1 (Describe People) & Topic 2 (Leisure and Free Time)
+
+// Quản lý đa Topic ôn thi
+const ALL_TOPICS = {
+  topic1: (typeof EXAM_DATA_TOPIC1 !== 'undefined') ? EXAM_DATA_TOPIC1 : (typeof EXAM_DATA !== 'undefined' ? EXAM_DATA : null),
+  topic2: (typeof EXAM_DATA_TOPIC2 !== 'undefined') ? EXAM_DATA_TOPIC2 : null
+};
+
+let currentTopicId = 'topic1';
+try {
+  const savedTId = localStorage.getItem('active_topic_id');
+  if (savedTId && ALL_TOPICS[savedTId]) {
+    currentTopicId = savedTId;
+  }
+} catch (e) {}
+
+let EXAM_DATA = ALL_TOPICS[currentTopicId] || ALL_TOPICS.topic1;
 
 // State toàn cục
 const AppState = {
@@ -18,23 +34,32 @@ const AppState = {
 };
 
 // Đăng ký danh sách 35 câu hỏi chuẩn để vẽ bảng điều hướng
-const QUESTION_LIST = [
-  // 1-10: Vocab
-  ...EXAM_DATA.vocabularyQuestions.map((q, idx) => ({ ...q, globalIndex: idx + 1, type: 'mcq' })),
-  // 11-15: Reading Signs
-  ...EXAM_DATA.readingSignQuestions.map((q, idx) => ({ ...q, globalIndex: 10 + idx + 1, type: 'mcq' })),
-  // 16-20: Reading Tony
-  ...EXAM_DATA.readingTonyQuestions.map((q, idx) => ({ ...q, globalIndex: 15 + idx + 1, type: 'mcq' })),
-  // 21-30: Reading Anna
-  ...EXAM_DATA.readingAnnaQuestions.map((q, idx) => ({ ...q, globalIndex: 20 + idx + 1, type: 'mcq' })),
-  // 31-35: Writing Sentence Transformations
-  ...EXAM_DATA.sentenceTransformations.map((q, idx) => ({ ...q, globalIndex: 30 + idx + 1, type: 'writing_transform' }))
-];
+let QUESTION_LIST = [];
+function buildQuestionList() {
+  QUESTION_LIST = [
+    // 1-10: Vocab
+    ...EXAM_DATA.vocabularyQuestions.map((q, idx) => ({ ...q, globalIndex: idx + 1, type: 'mcq' })),
+    // 11-15: Reading Signs
+    ...EXAM_DATA.readingSignQuestions.map((q, idx) => ({ ...q, globalIndex: 10 + idx + 1, type: 'mcq' })),
+    // 16-20: Reading Tony / Jack
+    ...EXAM_DATA.readingTonyQuestions.map((q, idx) => ({ ...q, globalIndex: 15 + idx + 1, type: 'mcq' })),
+    // 21-30: Reading Anna / Drawing
+    ...EXAM_DATA.readingAnnaQuestions.map((q, idx) => ({ ...q, globalIndex: 20 + idx + 1, type: 'mcq' })),
+    // 31-35: Writing Sentence Transformations
+    ...EXAM_DATA.sentenceTransformations.map((q, idx) => ({ ...q, globalIndex: 30 + idx + 1, type: 'writing_transform' }))
+  ];
+}
+buildQuestionList();
 
 // Khởi chạy ứng dụng khi DOM tải xong
 document.addEventListener('DOMContentLoaded', () => {
+  // Đồng bộ dropdown chọn topic
+  const topicSelect = document.getElementById('topic-select');
+  if (topicSelect) topicSelect.value = currentTopicId;
+
   loadSavedState();
   initTheme();
+  updateTopicUIInfo();
   renderAllSections();
   renderVocabularyStudy();
   renderSpeakingSample();
@@ -45,15 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initTextSelectionAndCopyFeatures();
 });
 
-// Lưu và khôi phục trạng thái từ LocalStorage
+// Lưu và khôi phục trạng thái từ LocalStorage theo từng Topic riêng biệt
 function saveState() {
   try {
-    localStorage.setItem('tienganh_answers', JSON.stringify(AppState.userAnswers));
-    localStorage.setItem('tienganh_revealed', JSON.stringify(Array.from(AppState.revealedQuestions)));
-    localStorage.setItem('tienganh_flags', JSON.stringify(Array.from(AppState.flagged)));
+    localStorage.setItem(`tienganh_answers_${currentTopicId}`, JSON.stringify(AppState.userAnswers));
+    localStorage.setItem(`tienganh_revealed_${currentTopicId}`, JSON.stringify(Array.from(AppState.revealedQuestions)));
+    localStorage.setItem(`tienganh_flags_${currentTopicId}`, JSON.stringify(Array.from(AppState.flagged)));
     const essayEl = document.getElementById('essay-input');
     if (essayEl) {
-      localStorage.setItem('tienganh_essay', essayEl.value);
+      localStorage.setItem(`tienganh_essay_${currentTopicId}`, essayEl.value);
     }
   } catch (e) {
     console.error("Không thể lưu trạng thái:", e);
@@ -62,16 +87,28 @@ function saveState() {
 
 function loadSavedState() {
   try {
-    const savedAns = localStorage.getItem('tienganh_answers');
-    if (savedAns) AppState.userAnswers = JSON.parse(savedAns);
+    let savedAns = localStorage.getItem(`tienganh_answers_${currentTopicId}`);
+    if (!savedAns && currentTopicId === 'topic1') {
+      savedAns = localStorage.getItem('tienganh_answers');
+    }
+    AppState.userAnswers = savedAns ? JSON.parse(savedAns) : {};
 
-    const savedRevealed = localStorage.getItem('tienganh_revealed');
-    if (savedRevealed) AppState.revealedQuestions = new Set(JSON.parse(savedRevealed));
+    let savedRevealed = localStorage.getItem(`tienganh_revealed_${currentTopicId}`);
+    if (!savedRevealed && currentTopicId === 'topic1') {
+      savedRevealed = localStorage.getItem('tienganh_revealed');
+    }
+    AppState.revealedQuestions = savedRevealed ? new Set(JSON.parse(savedRevealed)) : new Set();
 
-    const savedFlags = localStorage.getItem('tienganh_flags');
-    if (savedFlags) AppState.flagged = new Set(JSON.parse(savedFlags));
+    let savedFlags = localStorage.getItem(`tienganh_flags_${currentTopicId}`);
+    if (!savedFlags && currentTopicId === 'topic1') {
+      savedFlags = localStorage.getItem('tienganh_flags');
+    }
+    AppState.flagged = savedFlags ? new Set(JSON.parse(savedFlags)) : new Set();
 
-    const savedEssay = localStorage.getItem('tienganh_essay');
+    let savedEssay = localStorage.getItem(`tienganh_essay_${currentTopicId}`);
+    if (!savedEssay && currentTopicId === 'topic1') {
+      savedEssay = localStorage.getItem('tienganh_essay');
+    }
     if (savedEssay) {
       setTimeout(() => {
         const essayEl = document.getElementById('essay-input');
@@ -85,6 +122,139 @@ function loadSavedState() {
     console.error("Lỗi đọc LocalStorage:", e);
   }
 }
+
+// Chức năng chuyển đổi Topic
+function switchTopic(newTopicId) {
+  if (!ALL_TOPICS[newTopicId]) return;
+  currentTopicId = newTopicId;
+  EXAM_DATA = ALL_TOPICS[newTopicId];
+  try {
+    localStorage.setItem('active_topic_id', newTopicId);
+  } catch (e) {}
+
+  const topicSelect = document.getElementById('topic-select');
+  if (topicSelect) topicSelect.value = newTopicId;
+
+  // Reset trạng thái nộp bài theo topic mới
+  AppState.isSubmitted = false;
+
+  buildQuestionList();
+  loadSavedState();
+
+  updateTopicUIInfo();
+  renderAllSections();
+  renderVocabularyStudy();
+  renderSpeakingSample();
+  renderListeningSections();
+  renderQuestionNav();
+  restoreAnswerInputs();
+  updateProgressCounters();
+
+  const sampleBox = document.getElementById('sample-letter-box');
+  if (sampleBox) sampleBox.style.display = 'none';
+
+  switchTab('tab-all');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Cập nhật thông tin giao diện theo Topic đang chọn
+function updateTopicUIInfo() {
+  const badge = document.getElementById('topic-badge');
+  if (badge) badge.innerText = EXAM_DATA.topicTitle;
+
+  const bannerTitle = document.getElementById('banner-topic-title');
+  if (bannerTitle) bannerTitle.innerText = EXAM_DATA.topicTitle;
+
+  const bannerDesc = document.getElementById('banner-topic-desc');
+  if (bannerDesc) {
+    if (EXAM_DATA.topicId === 'topic2') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 36 từ vựng chủ đề Thời gian rảnh & Sở thích, 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, Jack & Gloria, điền từ Drawing), 5 câu viết lại tương đương và bài viết thư 120 từ.';
+    } else {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 53 từ vựng miêu tả ngoại hình & tính cách, 10 câu trắc nghiệm từ vựng, 20 câu đọc hiểu (biển báo, đoạn văn Tony, điền từ Anna), 5 câu viết lại tương đương và bài viết thư 120 từ.';
+    }
+  }
+
+  const bannerVocabCount = document.getElementById('banner-vocab-count');
+  if (bannerVocabCount) bannerVocabCount.innerText = `📖 ${EXAM_DATA.vocabulary.length} từ vựng tra cứu`;
+
+  // Cập nhật tổng số câu hỏi trong tab badge và sidebar
+  const totalQ = QUESTION_LIST.length;
+  const totalQBadge = document.getElementById('total-q-badge');
+  if (totalQBadge) totalQBadge.innerText = `${totalQ} câu`;
+
+  // Cập nhật stat chip trên banner
+  const bannerStatChips = document.querySelectorAll('.stat-chip');
+  if (bannerStatChips.length > 0) {
+    bannerStatChips[0].innerText = `✨ ${totalQ} câu hỏi trắc nghiệm & tự luận`;
+  }
+
+  const navVocab = document.getElementById('nav-vocab-tab-title');
+  if (navVocab) navVocab.innerText = `📖 Từ vựng (${EXAM_DATA.vocabulary.length} từ)`;
+
+  const vocabStudyTitle = document.getElementById('vocab-study-card-title');
+  if (vocabStudyTitle) {
+    const subtitle = EXAM_DATA.topicTitle.includes(':') ? EXAM_DATA.topicTitle.split(':')[1].trim() : EXAM_DATA.topicTitle;
+    vocabStudyTitle.innerText = `📖 Sổ tay từ vựng: ${subtitle}`;
+  }
+  const vocabStudyTag = document.getElementById('vocab-study-card-tag');
+  if (vocabStudyTag) {
+    vocabStudyTag.innerText = `${EXAM_DATA.vocabulary.length} từ vựng & ví dụ`;
+  }
+
+  const readingBTitle = document.getElementById('reading-b-card-title');
+  if (readingBTitle) {
+    readingBTitle.innerText = `📰 Phần II.b: Bài đọc "${EXAM_DATA.readingPassageBTitle || 'Passage B'}"`;
+  }
+  const readingCTitle = document.getElementById('reading-c-card-title');
+  if (readingCTitle) {
+    readingCTitle.innerText = `📰 Phần II.c: ${EXAM_DATA.readingPassageCTitle || 'Cloze Test'}`;
+  }
+
+  // Cập nhật phần đề bài Viết Thư
+  const letterPrompt = document.getElementById('letter-prompt-container');
+  if (letterPrompt && EXAM_DATA.letterWriting) {
+    letterPrompt.innerHTML = `
+      <h4>Đề bài:</h4>
+      <p><strong>${escapeHtml(EXAM_DATA.letterWriting.topic)}</strong></p>
+      ${EXAM_DATA.letterWriting.vietnameseTranslation ? `<p style="color: var(--text-secondary); margin: 6px 0 10px; font-style: italic;">🇻🇳 ${escapeHtml(EXAM_DATA.letterWriting.vietnameseTranslation)}</p>` : ''}
+      <br>
+      <p>Your letter should include:</p>
+      <ul>
+        ${EXAM_DATA.letterWriting.requirements.map(r => `<li>${escapeHtml(r)}</li>`).join('')}
+      </ul>
+      <p><em>⚠️ LƯU Ý: ${escapeHtml(EXAM_DATA.letterWriting.note || 'Write the body of the letter only. Do NOT write your name, your address and your signature in the letter!')}</em></p>
+    `;
+  }
+
+  const sampleLetterContent = document.getElementById('sample-letter-content');
+  if (sampleLetterContent && EXAM_DATA.letterWriting) {
+    sampleLetterContent.innerHTML = `
+      <div style="white-space: pre-wrap; font-family: inherit; line-height: 1.6; margin-bottom: 12px;">${escapeHtml(EXAM_DATA.letterWriting.sample)}</div>
+      ${EXAM_DATA.letterWriting.sampleTranslation ? `
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-color); color: var(--text-secondary); font-style: italic; white-space: pre-wrap;">
+          <strong>🇻🇳 Dịch Tiếng Việt tham khảo:</strong><br>${escapeHtml(EXAM_DATA.letterWriting.sampleTranslation)}
+        </div>
+      ` : ''}
+    `;
+  }
+
+  // Cập nhật phần đề bài Luyện Nói
+  const speakingHeader = document.getElementById('speaking-card-header-title');
+  if (speakingHeader && EXAM_DATA.speakingCard) {
+    speakingHeader.innerText = `🗣️ Phần III: Luyện nói (${EXAM_DATA.speakingCard.title})`;
+  }
+  const speakingPrompt = document.getElementById('speaking-prompt-box');
+  if (speakingPrompt && EXAM_DATA.speakingCard) {
+    speakingPrompt.innerHTML = `
+      <h4 style="color: var(--primary);">${escapeHtml(EXAM_DATA.speakingCard.title)}: ${escapeHtml(EXAM_DATA.speakingCard.task)}</h4>
+      ${EXAM_DATA.speakingCard.vietnameseTranslation ? `<p style="color: var(--text-secondary); margin: 6px 0 10px; font-style: italic;">🇻🇳 ${escapeHtml(EXAM_DATA.speakingCard.vietnameseTranslation)}</p>` : ''}
+      <ul>
+        ${EXAM_DATA.speakingCard.prompts.map(p => `<li>${escapeHtml(p)}</li>`).join('')}
+      </ul>
+    `;
+  }
+}
+
 
 // Chuyển đổi tab
 function switchTab(tabId) {
@@ -233,7 +403,7 @@ function renderAllSections() {
 
       <div class="section-card">
         <div class="section-card-header">
-          <h3 class="section-card-title">📰 Phần II.b: Bài đọc "MY BEST FRIEND" (Tony - 5 câu)</h3>
+          <h3 class="section-card-title">📰 Phần II.b: Bài đọc "${escapeHtml(EXAM_DATA.readingPassageBTitle || 'Passage B')}" (5 câu)</h3>
           <span class="section-tag">Câu 16 - 20</span>
         </div>
         ${renderTonyPassageCardHtml('tony-all')}
@@ -242,7 +412,7 @@ function renderAllSections() {
 
       <div class="section-card">
         <div class="section-card-header">
-          <h3 class="section-card-title">📰 Phần II.c: Điền từ vào đoạn văn (Anna - 10 câu)</h3>
+          <h3 class="section-card-title">📰 Phần II.c: ${escapeHtml(EXAM_DATA.readingPassageCTitle || 'Điền từ vào đoạn văn')} (10 câu)</h3>
           <span class="section-tag">Câu 21 - 30</span>
         </div>
         ${renderAnnaPassageCardHtml('anna-all')}
@@ -2405,10 +2575,14 @@ function speakWriting(qId, lang = 'en') {
 
 // Render HTML thẻ bài đọc Tony kèm thanh công cụ Dịch & Phát âm
 function renderTonyPassageCardHtml(cardId = 'tony') {
+  const pTitle = EXAM_DATA.readingPassageBTitle || 'MY BEST FRIEND';
+  // Strip leading title line if present (e.g. "MY BEST FRIEND\n") for clean display
+  const passageText = (EXAM_DATA.readingTonyPassage || '').replace(/^[A-ZÀÁÂĂẠẢẤẦẨẪẬẮẰẲẴẶÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴĐ ]+\n/, '');
+  const translationText = (EXAM_DATA.readingTonyTranslation || '').replace(/^[A-ZÀÁÂĂẠẢẤẦẨẪẬẮẰẲẴẶÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴĐ &]+\n/, '');
   return `
     <div class="passage-card" id="passage-card-${cardId}">
       <div class="passage-header-flex">
-        <div class="passage-title">📖 BÀI ĐỌC: MY BEST FRIEND (TONY)</div>
+        <div class="passage-title">📖 BÀI ĐỌC: ${escapeHtml(pTitle)}</div>
         <div class="passage-actions-bar">
           <button type="button" class="btn-audio-action" onclick="togglePassageTranslation('${cardId}')" title="Hiện hoặc ẩn bản dịch tiếng Việt trọn vẹn của bài đọc">
             🌐 Dịch bài đọc sang Tiếng Việt
@@ -2426,7 +2600,7 @@ function renderTonyPassageCardHtml(cardId = 'tony') {
       </div>
 
       <div class="passage-body-en" id="passage-body-${cardId}">
-        ${escapeHtml(EXAM_DATA.readingTonyPassage.replace('MY BEST FRIEND\n', ''))}
+        ${escapeHtml(passageText)}
       </div>
 
       <div class="passage-translation-box" id="trans-passage-${cardId}" style="display: none;">
@@ -2434,7 +2608,7 @@ function renderTonyPassageCardHtml(cardId = 'tony') {
           <strong>🇻🇳 BẢN DỊCH TIẾNG VIỆT TOÀN VĂN:</strong>
         </div>
         <div class="passage-trans-body">
-          ${escapeHtml(EXAM_DATA.readingTonyTranslation.replace('BẠN THÂN CỦA TÔI\n', ''))}
+          ${escapeHtml(translationText)}
         </div>
       </div>
     </div>
@@ -2443,10 +2617,11 @@ function renderTonyPassageCardHtml(cardId = 'tony') {
 
 // Render HTML thẻ bài đọc Anna kèm thanh công cụ Dịch & Phát âm
 function renderAnnaPassageCardHtml(cardId = 'anna') {
+  const pTitle = EXAM_DATA.readingPassageCTitle || 'ĐIỀN TỪ VÀO ĐOẠN VĂN';
   return `
     <div class="passage-card" id="passage-card-${cardId}">
       <div class="passage-header-flex">
-        <div class="passage-title">📖 ĐOẠN VĂN ĐIỀN TỪ: ANNA</div>
+        <div class="passage-title">📖 ĐOẠN VĂN ĐIỀN TỪ: ${escapeHtml(pTitle)}</div>
         <div class="passage-actions-bar">
           <button type="button" class="btn-audio-action" onclick="togglePassageTranslation('${cardId}')" title="Hiện hoặc ẩn bản dịch tiếng Việt trọn vẹn của bài đọc">
             🌐 Dịch đoạn văn sang Tiếng Việt
@@ -2494,9 +2669,9 @@ function speakPassage(type, lang = 'en') {
   stopSpeaking();
   let text = '';
   if (type === 'tony') {
-    text = (lang === 'en')
-      ? EXAM_DATA.readingTonyPassage.replace('MY BEST FRIEND\n', '')
-      : EXAM_DATA.readingTonyTranslation.replace('BẠN THÂN CỦA TÔI\n', '');
+    const raw = (lang === 'en') ? (EXAM_DATA.readingTonyPassage || '') : (EXAM_DATA.readingTonyTranslation || '');
+    // Strip optional leading all-caps title line
+    text = raw.replace(/^[A-ZÀÁÂĂẠẢẤẦẨẪẬẮẰẲẴẶÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴĐ &]+\n/, '');
   } else if (type === 'anna') {
     text = (lang === 'en')
       ? EXAM_DATA.readingAnnaPassage
@@ -2905,10 +3080,18 @@ function readAllQuestionsVietnamese() {
 // SPEAKING SAMPLE & RECORDING
 function renderSpeakingSample() {
   const sampleEl = document.getElementById('speaking-sample-text');
-  if (sampleEl) {
-    sampleEl.innerText = EXAM_DATA.speakingCard.sample;
+  if (sampleEl && EXAM_DATA.speakingCard) {
+    sampleEl.innerHTML = `
+      <div style="margin-bottom: 12px; line-height: 1.6;">${escapeHtml(EXAM_DATA.speakingCard.sample)}</div>
+      ${EXAM_DATA.speakingCard.sampleTranslation ? `
+        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-color); color: var(--text-secondary); font-style: normal; font-size: 0.95rem;">
+          <strong>🇻🇳 Dịch Tiếng Việt bài mẫu:</strong><br>${escapeHtml(EXAM_DATA.speakingCard.sampleTranslation)}
+        </div>
+      ` : ''}
+    `;
   }
 }
+
 
 async function toggleAudioRecording() {
   const recordBtn = document.getElementById('record-btn');

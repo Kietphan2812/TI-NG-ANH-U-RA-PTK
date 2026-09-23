@@ -809,5 +809,14 @@ Jim is musical and acts very well. He would like to be an actor when he grows up
     sampleTranslation: `Jim là người bạn thân nhất của tôi. Chúng tôi sống trong cùng một tòa nhà. Tôi đã quen biết cậu ấy từ rất lâu rồi. Jim cao lớn và khỏe khoắn với mái tóc đen. Cậu ấy có gương mặt tròn, sống mũi nhỏ và đôi mắt nâu to tròn. Đôi mắt ấy lúc nào cũng sáng ngời và tràn ngập nụ cười. Tôi nghĩ cậu ấy rất ưa nhìn và điển trai.
 Jim lúc nào cũng thân thiện và hay giúp đỡ mọi người. Mỗi khi tôi cảm thấy buồn chán hay vui vẻ, cậu ấy thường kể những câu chuyện cười hóm hỉnh và khiến chúng tôi bật cười. Cậu ấy rất hào phóng và luôn sẵn lòng chia sẻ đồ đạc của mình với bạn bè.
 Jim có khiếu âm nhạc và diễn xuất rất cừ. Cậu ấy mong muốn trở thành một diễn viên khi lớn lên. Tôi tin rằng cậu ấy có thể trở nên nổi tiếng như Thành Long và đi du lịch vòng quanh thế giới trong tương lai.`
-  }
+  },
+  readingPassageBTitle: "MY BEST FRIEND (TONY)",
+  readingPassageBTag: "5 câu đọc hiểu trắc nghiệm",
+  readingPassageCTitle: "ANNA'S BEST FRIEND",
+  readingPassageCTag: "10 câu điền từ vào đoạn văn"
 };
+
+if (typeof window !== "undefined") {
+  window.EXAM_DATA_TOPIC1 = EXAM_DATA;
+}
+
