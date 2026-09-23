@@ -24,7 +24,8 @@ try {
   }
 } catch (e) {}
 
-let EXAM_DATA = getTopicData(currentTopicId) || getTopicData('topic1');
+// EXAM_DATA đã được khai báo global bởi data.js (var EXAM_DATA), chỉ gán lại
+EXAM_DATA = getTopicData(currentTopicId) || getTopicData('topic1');
 
 // State toàn cục
 const AppState = {
