@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giới Thiệu Bản Thân – Phan Tấn Kiệt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #7c3aed;
+  --primary-light: #a855f7;
+  --primary-dark: #5b21b6;
+  --accent: #f97316;
+  --q-color: #2563eb;
+  --a-color: #16a34a;
+  --phonetic-color: #dc2626;
+  --bg: #0f0f1a;
+  --surface: #1a1a2e;
+  --surface2: #16213e;
+  --card: #1e1e35;
+  --border: #2d2d50;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --full-color: #f59e0b;
+  --radius: 14px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+/* ── HEADER ── */
+header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(124,58,237,0.5);
+}
+.header-inner {
+  max-width: 960px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  gap: 12px;
+}
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.back-btn:hover { background: rgba(255,255,255,0.28); transform: translateY(-1px); }
+.header-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  flex: 1;
+}
+.header-title span { display: block; font-size: 0.72rem; font-weight: 400; opacity: 0.8; margin-top: 2px; }
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, #1e0a3c 0%, #2d1b69 50%, #1a0533 100%);
+  padding: 44px 20px 36px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%; transform: translateX(-50%);
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.avatar {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 16px;
+  box-shadow: 0 0 30px rgba(168,85,247,0.5);
+}
+.hero h1 { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.hero p { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+/* ── LEGEND ── */
+.legend {
+  max-width: 960px;
+  margin: 24px auto 0;
+  padding: 0 16px;
+}
+.legend-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+.legend-card h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); width: 100%; margin-bottom: 4px; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; }
+.legend-dot { width: 14px; height: 14px; border-radius: 4px; flex-shrink: 0; }
+.dot-q { background: var(--q-color); }
+.dot-a { background: var(--a-color); }
+.dot-phonetic { background: var(--phonetic-color); }
+.dot-vi { background: #64748b; }
+.phonetic-sample { color: var(--phonetic-color); font-style: italic; font-size: 0.82rem; }
+/* ── GLOBAL TOOLBAR ── */
+.toolbar {
+  max-width: 960px;
+  margin: 16px auto 0;
+  padding: 0 16px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btn-speak-all {
+  display: flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 40px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 15px rgba(124,58,237,0.4);
+}
+.btn-speak-all:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(124,58,237,0.6); }
+.btn-stop {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.4);
+  color: #f87171;
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-stop:hover { background: rgba(239,68,68,0.3); }
+/* ── MAIN CONTENT ── */
+main {
+  max-width: 960px;
+  margin: 24px auto 60px;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+/* ── SECTION CARD ── */
+.section-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.section-header {
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon { font-size: 1.4rem; }
+.section-title { font-size: 1rem; font-weight: 700; color: #fff; }
+.section-title span { display: block; font-size: 0.75rem; font-weight: 400; color: var(--text-muted); margin-top: 1px; }
+.section-count {
+  margin-left: auto;
+  background: rgba(255,255,255,0.1);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.section-body { padding: 18px 18px 22px; display: flex; flex-direction: column; gap: 20px; }
+/* ── Q BLOCK ── */
+.q-block {
+  background: rgba(37,99,235,0.08);
+  border-left: 4px solid var(--q-color);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+}
+.q-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--q-color);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+/* ── A BLOCK ── */
+.a-block {
+  background: rgba(22,163,74,0.08);
+  border-left: 4px solid var(--a-color);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 16px;
+  margin-top: 10px;
+}
+.a-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--a-color);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+/* ── ENTRY CONTENT ── */
+.entry-en {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.15s;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.entry-en:hover { color: var(--primary-light); }
+.entry-phonetic {
+  color: var(--phonetic-color);
+  font-style: italic;
+  font-size: 0.87rem;
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+.entry-vi {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.tts-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.tts-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 14px;
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid;
+  transition: all 0.15s;
+}
+.tts-en {
+  background: rgba(37,99,235,0.12);
+  border-color: rgba(37,99,235,0.4);
+  color: #93c5fd;
+}
+.tts-en:hover { background: rgba(37,99,235,0.3); }
+.tts-vi {
+  background: rgba(22,163,74,0.12);
+  border-color: rgba(22,163,74,0.4);
+  color: #86efac;
+}
+.tts-vi:hover { background: rgba(22,163,74,0.3); }
+/* ── FULL INTRO ── */
+.full-section {
+  background: var(--card);
+  border: 2px solid var(--full-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 30px rgba(245,158,11,0.2);
+}
+.full-header {
+  background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(249,115,22,0.15));
+  padding: 16px 22px;
+  border-bottom: 1px solid rgba(245,158,11,0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.full-header-title { font-size: 1rem; font-weight: 700; color: var(--full-color); }
+.full-header-title span { display: block; font-size: 0.74rem; color: rgba(245,158,11,0.7); font-weight: 400; margin-top: 1px; }
+.full-body { padding: 20px 22px; }
+.full-sentence {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.full-sentence:last-child { border-bottom: none; }
+.sentence-en {
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+.sentence-en:hover { color: var(--full-color); }
+.sentence-phonetic {
+  color: var(--phonetic-color);
+  font-style: italic;
+  font-size: 0.83rem;
+  margin-bottom: 3px;
+}
+.sentence-vi { color: var(--text-muted); font-size: 0.82rem; }
+/* ── SPEAK ALL BAR ── */
+.speak-all-bar {
+  max-width: 960px;
+  margin: 0 auto 16px;
+  padding: 0 16px;
+}
+.speak-all-card {
+  background: #111827;
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.speak-all-info { flex: 1; min-width: 180px; }
+.speak-all-title { font-size: 0.9rem; font-weight: 700; color: var(--full-color); }
+.speak-all-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+.speak-all-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn-full-speak {
+  background: linear-gradient(135deg, var(--full-color), var(--accent));
+  color: #000;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+}
+.btn-full-speak:hover { transform: translateY(-2px); opacity: 0.9; }
+/* ── PROGRESS BAR ── */
+.progress-bar-wrap {
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+  display: none;
+}
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--full-color), var(--accent)); width: 0%; transition: width 0.3s; border-radius: 2px; }
+/* ── CURRENT SPEAKING HIGHLIGHT ── */
+.speaking { background: rgba(168,85,247,0.15) !important; border-radius: 8px; }
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  border-top: 1px solid var(--border);
+}
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 1.4rem; }
+  .header-title { font-size: 0.9rem; }
+  .entry-en { font-size: 0.93rem; }
+}
+/* ── SECTION COLORS ── */
+.s1 .section-header { background: linear-gradient(90deg, rgba(37,99,235,0.15), transparent); }
+.s2 .section-header { background: linear-gradient(90deg, rgba(22,163,74,0.15), transparent); }
+.s3 .section-header { background: linear-gradient(90deg, rgba(234,179,8,0.15), transparent); }
+.s4 .section-header { background: linear-gradient(90deg, rgba(249,115,22,0.15), transparent); }
+.s5 .section-header { background: linear-gradient(90deg, rgba(239,68,68,0.15), transparent); }
+.s6 .section-header { background: linear-gradient(90deg, rgba(168,85,247,0.15), transparent); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="back-btn" id="btn-back">⬅ Quay lại</a>
+    <div class="header-title">
+      🗣️ Giới Thiệu Bản Thân
+      <span>Self Introduction – English Practice</span>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="avatar">👤</div>
+  <h1>Phan Tấn Kiệt</h1>
+  <p>Luyện nói tiếng Anh – Bài Giới Thiệu Bản Thân</p>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-card">
+    <h3>📖 Hướng dẫn đọc màu sắc</h3>
+    <div class="legend-item"><div class="legend-dot dot-q"></div> Câu hỏi (Q – Question)</div>
+    <div class="legend-item"><div class="legend-dot dot-a"></div> Câu trả lời (A – Answer)</div>
+    <div class="legend-item"><div class="legend-dot dot-phonetic"></div> <span class="phonetic-sample">Cách đọc gần đúng tiếng Việt (đỏ nghiêng)</span></div>
+    <div class="legend-item"><div class="legend-dot dot-vi"></div> Nghĩa tiếng Việt</div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <button class="btn-speak-all" id="btn-speak-qa" onclick="speakAllQA()">🔊 Đọc toàn bài Q&A</button>
+  <button class="btn-stop" onclick="stopSpeaking()">⏹ Dừng</button>
+</div>
+
+<!-- MAIN -->
+<main id="main-content">
+
+<!-- ── SECTION 1: THÔNG TIN CƠ BẢN ── -->
+<div class="section-card s1" id="sec1">
+  <div class="section-header">
+    <span class="section-icon">👋</span>
+    <div class="section-title">Thông tin cơ bản <span>Basic Information</span></div>
+    <span class="section-count">3 Q&A</span>
+  </div>
+  <div class="section-body">
+
+    <!-- Q1 -->
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('What is your name?')" id="q1en">What's your name?</div>
+        <div class="entry-phonetic">Goát-s dơ nêm?</div>
+        <div class="entry-vi">Tên bạn là gì?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('What is your name?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tên bạn là gì?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('My name is Phan Tan Kiet. You can call me Kiet.')" id="a1en">My name is Phan Tấn Kiệt. You can call me Kiệt.</div>
+        <div class="entry-phonetic">Mai nêm iz Phan Tấn Kiệt. Diu ken col mi Kiệt.</div>
+        <div class="entry-vi">Tên tôi là Phan Tấn Kiệt. Bạn có thể gọi tôi là Kiệt.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('My name is Phan Tan Kiet. You can call me Kiet.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tên tôi là Phan Tấn Kiệt. Bạn có thể gọi tôi là Kiệt.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('How old are you?')">How old are you?</div>
+        <div class="entry-phonetic">Hao ôld a diu?</div>
+        <div class="entry-vi">Bạn bao nhiêu tuổi?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('How old are you?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Bạn bao nhiêu tuổi?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('I am 22 years old.')">I'm 22 years old.</div>
+        <div class="entry-phonetic">Ai-m twen-ti-tu ia-z ôld.</div>
+        <div class="entry-vi">Tôi 22 tuổi.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('I am 22 years old.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tôi 22 tuổi.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('Where do you study? What do you major in?')">Where do you study? What do you major in?</div>
+        <div class="entry-phonetic">Guê-a đu diu xtơ-đi? Goát đu diu mê-giơ in?</div>
+        <div class="entry-vi">Bạn học ở đâu? Bạn học ngành gì?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('Where do you study? What do you major in?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Bạn học ở đâu? Bạn học ngành gì?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('I am currently a student at Mien Trung University of Science and Technology, majoring in Information Technology. I am in my fourth year.')">I'm currently a student at Mien Trung University of Science and Technology, majoring in Information Technology. I'm in my fourth year.</div>
+        <div class="entry-phonetic">Ai-m cơ-rèn-li ơ xtiu-đần at Mi-ên Trung diu-ni-vơ-xi-ti ơv xai-ần và téc-no-lo-gi, mê-giơ-ring in in-for-mê-sần téc-no-lo-gi. Ai-m in mai for-th dia.</div>
+        <div class="entry-vi">Tôi hiện đang là sinh viên tại Trường Đại học Khoa học và Công nghệ Miền Trung, chuyên ngành Công nghệ Thông tin. Tôi đang học năm tư.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('I am currently a student at Mien Trung University of Science and Technology, majoring in Information Technology. I am in my fourth year.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tôi hiện đang là sinh viên tại Trường Đại học Khoa học và Công nghệ Miền Trung, chuyên ngành Công nghệ Thông tin. Tôi đang học năm tư.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── SECTION 2: GIA ĐÌNH ── -->
+<div class="section-card s2" id="sec2">
+  <div class="section-header">
+    <span class="section-icon">👨‍👩‍👧‍👦</span>
+    <div class="section-title">Gia đình <span>Family</span></div>
+    <span class="section-count">1 Q&A</span>
+  </div>
+  <div class="section-body">
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('Can you tell me about your family?')">Can you tell me about your family?</div>
+        <div class="entry-phonetic">Ken diu tel mi ơ-bao dơ fém-li?</div>
+        <div class="entry-vi">Bạn có thể kể về gia đình của bạn không?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('Can you tell me about your family?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Bạn có thể kể về gia đình của bạn không?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('My family has 4 members: my parents, my younger brother, and me. My father is a carpenter and my mother is a farmer. We live in Quang Ngai province.')">My family has 4 members: my parents, my younger brother, and me. My father is a carpenter and my mother is a farmer. We live in Quang Ngai province.</div>
+        <div class="entry-phonetic">Mai fém-li hét-s for mem-bơ-z: mai pé-ren-tz, mai dăng-gờ brơ-đờ, ần mi. Mai fa-đờ iz ơ ca-pen-tờ ần mai mơ-đờ iz ơ fa-mờ. Dui liv in Quảng Ngãi pro-vin-tz.</div>
+        <div class="entry-vi">Gia đình tôi có 4 thành viên: cha mẹ tôi, em trai tôi và tôi. Cha tôi là thợ mộc và mẹ tôi là nông dân. Chúng tôi sống ở tỉnh Quảng Ngãi.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('My family has 4 members: my parents, my younger brother, and me. My father is a carpenter and my mother is a farmer. We live in Quang Ngai province.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Gia đình tôi có 4 thành viên: cha mẹ tôi, em trai tôi và tôi. Cha tôi là thợ mộc và mẹ tôi là nông dân. Chúng tôi sống ở tỉnh Quảng Ngãi.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 3: NGOẠI HÌNH & TÍNH CÁCH ── -->
+<div class="section-card s3" id="sec3">
+  <div class="section-header">
+    <span class="section-icon">🪞</span>
+    <div class="section-title">Ngoại hình & Tính cách <span>Appearance & Personality</span></div>
+    <span class="section-count">2 Q&A</span>
+  </div>
+  <div class="section-body">
+
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('How would you describe your appearance?')">How would you describe your appearance?</div>
+        <div class="entry-phonetic">Hao ú-d diu đi-xcrai-b dơ ơ-pia-rần-tz?</div>
+        <div class="entry-vi">Bạn mô tả ngoại hình của bạn thế nào?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('How would you describe your appearance?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Bạn mô tả ngoại hình của bạn thế nào?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('I am quite tall with a slim build. I think I look fairly good, and I always try to dress neatly and tidily.')">I am quite tall with a slim build. I think I look fairly good, and I always try to dress neatly and tidily.</div>
+        <div class="entry-phonetic">Ai em quái tol uýt ơ xlim bild. Ai thinh ai luc fé-li gút, ần ai ol-uây-z trai tu dres nit-li ần tai-đi-li.</div>
+        <div class="entry-vi">Tôi khá cao với vóc dáng mảnh khảnh. Tôi nghĩ mình trông khá ổn, và tôi luôn cố gắng ăn mặc gọn gàng, chỉnh tề.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('I am quite tall with a slim build. I think I look fairly good, and I always try to dress neatly and tidily.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tôi khá cao với vóc dáng mảnh khảnh. Tôi nghĩ mình trông khá ổn, và tôi luôn cố gắng ăn mặc gọn gàng, chỉnh tề.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('What is your personality like?')">What is your personality like?</div>
+        <div class="entry-phonetic">Goát iz dơ pơ-son-ni-ti lai-k?</div>
+        <div class="entry-vi">Tính cách của bạn như thế nào?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('What is your personality like?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tính cách của bạn như thế nào?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('I am gentle, patient, and hard-working. I enjoy helping others and I am quite calm under pressure.')">I am gentle, patient, and hard-working. I enjoy helping others and I am quite calm under pressure.</div>
+        <div class="entry-phonetic">Ai em gen-tồl, pê-shần, ần ha-d-wơr-king. Ai en-joi hel-ping ơ-đờ-z ần ai em quái cam ăn-đờ pre-shờ.</div>
+        <div class="entry-vi">Tôi hiền lành, kiên nhẫn và chăm chỉ. Tôi thích giúp đỡ người khác và khá bình tĩnh khi áp lực.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('I am gentle, patient, and hard-working. I enjoy helping others and I am quite calm under pressure.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tôi hiền lành, kiên nhẫn và chăm chỉ. Tôi thích giúp đỡ người khác và khá bình tĩnh khi áp lực.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── SECTION 4: SỞ THÍCH ── -->
+<div class="section-card s4" id="sec4">
+  <div class="section-header">
+    <span class="section-icon">🎯</span>
+    <div class="section-title">Sở thích <span>Hobbies & Interests</span></div>
+    <span class="section-count">2 Q&A</span>
+  </div>
+  <div class="section-body">
+
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('What are your hobbies?')">What are your hobbies?</div>
+        <div class="entry-phonetic">Goát a dơ hó-bi-z?</div>
+        <div class="entry-vi">Sở thích của bạn là gì?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('What are your hobbies?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Sở thích của bạn là gì?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('I enjoy going for walks, listening to music, and spending quiet time alone to think and recharge. I also love researching new technology trends.')">I enjoy going for walks, listening to music, and spending quiet time alone to think and recharge. I also love researching new technology trends.</div>
+        <div class="entry-phonetic">Ai en-joi go-ing for wok-z, li-xờ-ning tu diu-zic, ần xpen-ding quái-ờt tai-m ơ-lon tu thinnh ần ri-cha-j. Ai ol-so lắv ri-xơ-ching niu téc-no-lo-gi tren-z.</div>
+        <div class="entry-vi">Tôi thích đi dạo, nghe nhạc và dành thời gian yên tĩnh một mình để suy nghĩ và nạp lại năng lượng. Tôi cũng thích tìm hiểu các xu hướng công nghệ mới.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('I enjoy going for walks, listening to music, and spending quiet time alone to think and recharge. I also love researching new technology trends.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tôi thích đi dạo, nghe nhạc và dành thời gian yên tĩnh một mình để suy nghĩ và nạp lại năng lượng. Tôi cũng thích tìm hiểu các xu hướng công nghệ mới.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('Do you prefer spending time indoors or outdoors?')">Do you prefer spending time indoors or outdoors?</div>
+        <div class="entry-phonetic">Đu diu pri-fờ xpen-ding tai-m in-đo-z o ao-đo-z?</div>
+        <div class="entry-vi">Bạn thích ở trong nhà hay ngoài trời hơn?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('Do you prefer spending time indoors or outdoors?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Bạn thích ở trong nhà hay ngoài trời hơn?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('I prefer quiet indoor environments where I can focus on reading or working on projects. However, I also enjoy morning walks to clear my mind.')">I prefer quiet indoor environments where I can focus on reading or working on projects. However, I also enjoy morning walks to clear my mind.</div>
+        <div class="entry-phonetic">Ai pri-fờ quái-ờt in-đo in-vai-rờn-mờn-tz guê-a ai ken fo-cơ-z on ri-ding o wơr-king on pro-jec-tz. Hao-ê-vờ, ai ol-so en-joi mo-ning wok-z tu clir mai mai-nd.</div>
+        <div class="entry-vi">Tôi thích môi trường trong nhà yên tĩnh, nơi tôi có thể tập trung đọc sách hoặc làm việc với các dự án. Tuy nhiên, tôi cũng thích đi bộ buổi sáng để xả stress.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('I prefer quiet indoor environments where I can focus on reading or working on projects. However, I also enjoy morning walks to clear my mind.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tôi thích môi trường trong nhà yên tĩnh, nơi tôi có thể tập trung đọc sách hoặc làm việc với các dự án. Tuy nhiên, tôi cũng thích đi bộ buổi sáng để xả stress.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── SECTION 5: ĐIỂM MẠNH / YẾU ── -->
+<div class="section-card s5" id="sec5">
+  <div class="section-header">
+    <span class="section-icon">⚡</span>
+    <div class="section-title">Điểm mạnh & Điểm yếu <span>Strengths & Weaknesses</span></div>
+    <span class="section-count">2 Q&A</span>
+  </div>
+  <div class="section-body">
+
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('What are your strengths?')">What are your strengths?</div>
+        <div class="entry-phonetic">Goát a dơ xtren-ths?</div>
+        <div class="entry-vi">Điểm mạnh của bạn là gì?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('What are your strengths?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Điểm mạnh của bạn là gì?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('My strengths are strong research skills and creative thinking. I am good at finding solutions and I always try to approach problems from different angles.')">My strengths are strong research skills and creative thinking. I am good at finding solutions and I always try to approach problems from different angles.</div>
+        <div class="entry-phonetic">Mai xtren-ths a xtrong ri-xơ-ch xcil-z ần cri-ê-tiv thinh-king. Ai em gút at fai-ding so-lu-shần-z ần ai ol-uây-z trai tu ơ-proc pro-blờm-z from di-fờ-ràn-t en-gồl-z.</div>
+        <div class="entry-vi">Điểm mạnh của tôi là kỹ năng nghiên cứu tốt và tư duy sáng tạo. Tôi giỏi tìm kiếm giải pháp và luôn cố tiếp cận vấn đề từ nhiều góc độ khác nhau.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('My strengths are strong research skills and creative thinking. I am good at finding solutions and I always try to approach problems from different angles.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Điểm mạnh của tôi là kỹ năng nghiên cứu tốt và tư duy sáng tạo. Tôi giỏi tìm kiếm giải pháp và luôn cố tiếp cận vấn đề từ nhiều góc độ khác nhau.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('What are your weaknesses?')">What are your weaknesses?</div>
+        <div class="entry-phonetic">Goát a dơ uik-nờ-sờ-z?</div>
+        <div class="entry-vi">Điểm yếu của bạn là gì?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('What are your weaknesses?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Điểm yếu của bạn là gì?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('My main weaknesses are that my English speaking skill is still limited, and sometimes I tend to procrastinate when facing complex tasks. I am working hard to improve these areas.')">My main weaknesses are that my English speaking skill is still limited, and sometimes I tend to procrastinate when facing complex tasks. I am working hard to improve these areas.</div>
+        <div class="entry-phonetic">Mai mên uik-nờ-sờ-z a đát mai Ing-lich xpik-ing xcil iz xtil li-mi-tờ-d, ần xăm-tai-mz ai ten tu pro-cờ-xtờ-nê-t guèn fê-sing com-plếch tách-tz. Ai em wơr-king ha-d tu im-pruv điz ê-ri-ờ-z.</div>
+        <div class="entry-vi">Điểm yếu chính của tôi là kỹ năng nói tiếng Anh vẫn còn hạn chế, và đôi khi tôi có xu hướng trì hoãn khi đối mặt với các nhiệm vụ phức tạp. Tôi đang cố gắng cải thiện những điều này.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('My main weaknesses are that my English speaking skill is still limited, and sometimes I tend to procrastinate when facing complex tasks. I am working hard to improve these areas.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Điểm yếu chính của tôi là kỹ năng nói tiếng Anh vẫn còn hạn chế, và đôi khi tôi có xu hướng trì hoãn khi đối mặt với các nhiệm vụ phức tạp. Tôi đang cố gắng cải thiện những điều này.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── SECTION 6: TƯƠNG LAI ── -->
+<div class="section-card s6" id="sec6">
+  <div class="section-header">
+    <span class="section-icon">🚀</span>
+    <div class="section-title">Kế hoạch tương lai <span>Future Plans</span></div>
+    <span class="section-count">1 Q&A</span>
+  </div>
+  <div class="section-body">
+    <div>
+      <div class="q-block">
+        <div class="q-label">Q – Câu hỏi</div>
+        <div class="entry-en" onclick="speakEn('What are your future plans or goals?')">What are your future plans or goals?</div>
+        <div class="entry-phonetic">Goát a dơ fiu-chờ plan-z o gol-z?</div>
+        <div class="entry-vi">Kế hoạch hoặc mục tiêu tương lai của bạn là gì?</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('What are your future plans or goals?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Kế hoạch hoặc mục tiêu tương lai của bạn là gì?')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+      <div class="a-block">
+        <div class="a-label">A – Trả lời</div>
+        <div class="entry-en" onclick="speakEn('In the future, I plan to start my own business. I hope to open 2 to 3 small shops or services that can help people in my local community. I want to create value and become financially independent.')">In the future, I plan to start my own business. I hope to open 2 to 3 small shops or services that can help people in my local community. I want to create value and become financially independent.</div>
+        <div class="entry-phonetic">In đờ fiu-chờ, ai plan tu xta-t mai on biz-nờ-s. Ai hop tu o-pần tu tu tri xmol shóp-z o xơ-vị-xờ-z đát ken hẹlp pi-pồl in mai lo-cồl cơ-miu-ni-ti. Ai woán tu cri-ê-t va-liu ần bi-căm fai-năn-shồ-li in-đi-pen-dần-t.</div>
+        <div class="entry-vi">Trong tương lai, tôi dự định khởi nghiệp kinh doanh riêng. Tôi hy vọng mở 2 đến 3 cửa hàng nhỏ hoặc dịch vụ có thể giúp ích cho mọi người trong cộng đồng địa phương. Tôi muốn tạo ra giá trị và trở nên độc lập tài chính.</div>
+        <div class="tts-row">
+          <button class="tts-btn tts-en" onclick="speakEn('In the future, I plan to start my own business. I hope to open 2 to 3 small shops or services that can help people in my local community. I want to create value and become financially independent.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Trong tương lai, tôi dự định khởi nghiệp kinh doanh riêng. Tôi hy vọng mở 2 đến 3 cửa hàng nhỏ hoặc dịch vụ có thể giúp ích cho mọi người trong cộng đồng địa phương. Tôi muốn tạo ra giá trị và trở nên độc lập tài chính.')">🗣️ Nghe VI</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FULL INTRODUCTION ── -->
+<div class="full-section" id="sec-full">
+  <div class="full-header">
+    <span style="font-size:1.4rem">📝</span>
+    <div class="full-header-title">
+      Đoạn Giới Thiệu Hoàn Chỉnh (10 câu)
+      <span>Full Self-Introduction Paragraph – Click từng câu để nghe</span>
+    </div>
+  </div>
+  <div class="full-body" id="full-body">
+
+    <div class="full-sentence" id="fs0">
+      <div class="sentence-en" onclick="speakEn('Hello everyone. My name is Phan Tan Kiet, but you can call me Kiet.')">1. Hello everyone. My name is Phan Tấn Kiệt, but you can call me Kiệt.</div>
+      <div class="sentence-phonetic">He-lo ev-ri-wăn. Mai nêm iz Phan Tấn Kiệt, bắt diu ken col mi Kiệt.</div>
+      <div class="sentence-vi">Xin chào mọi người. Tên tôi là Phan Tấn Kiệt, nhưng bạn có thể gọi tôi là Kiệt.</div>
+    </div>
+
+    <div class="full-sentence" id="fs1">
+      <div class="sentence-en" onclick="speakEn('I am 22 years old.')">2. I'm 22 years old.</div>
+      <div class="sentence-phonetic">Ai-m twen-ti-tu ia-z ôld.</div>
+      <div class="sentence-vi">Tôi 22 tuổi.</div>
+    </div>
+
+    <div class="full-sentence" id="fs2">
+      <div class="sentence-en" onclick="speakEn('I am currently a fourth-year student at Mien Trung University of Science and Technology, majoring in Information Technology.')">3. I'm currently a fourth-year student at Mien Trung University of Science and Technology, majoring in Information Technology.</div>
+      <div class="sentence-phonetic">Ai-m cơ-rèn-li ơ for-th-dia xtiu-đần at Mi-ên Trung diu-ni-vơ-xi-ti ơv xai-ần và téc-no-lo-gi, mê-giơ-ring in in-for-mê-shần téc-no-lo-gi.</div>
+      <div class="sentence-vi">Tôi hiện đang là sinh viên năm tư tại Trường Đại học Khoa học và Công nghệ Miền Trung, chuyên ngành Công nghệ Thông tin.</div>
+    </div>
+
+    <div class="full-sentence" id="fs3">
+      <div class="sentence-en" onclick="speakEn('My family has 4 members: my parents, my younger brother, and me.')">4. My family has 4 members: my parents, my younger brother, and me.</div>
+      <div class="sentence-phonetic">Mai fém-li hét-s for mem-bơ-z: mai pé-ren-tz, mai dăng-gờ brơ-đờ, ần mi.</div>
+      <div class="sentence-vi">Gia đình tôi có 4 thành viên: cha mẹ tôi, em trai tôi và tôi.</div>
+    </div>
+
+    <div class="full-sentence" id="fs4">
+      <div class="sentence-en" onclick="speakEn('My father is a carpenter and my mother is a farmer, and they both work very hard to support our family.')">5. My father is a carpenter and my mother is a farmer, and they both work very hard to support our family.</div>
+      <div class="sentence-phonetic">Mai fa-đờ iz ơ ca-pen-tờ ần mai mơ-đờ iz ơ fa-mờ, ần đê bot wơrk ve-ri ha-d tu xờ-po-t ao fém-li.</div>
+      <div class="sentence-vi">Cha tôi là thợ mộc và mẹ tôi là nông dân, và cả hai đều làm việc rất chăm chỉ để nuôi gia đình.</div>
+    </div>
+
+    <div class="full-sentence" id="fs5">
+      <div class="sentence-en" onclick="speakEn('I am gentle, patient, and hard-working.')">6. I am gentle, patient, and hard-working.</div>
+      <div class="sentence-phonetic">Ai em gen-tồl, pê-shần, ần ha-d-wơr-king.</div>
+      <div class="sentence-vi">Tôi hiền lành, kiên nhẫn và chăm chỉ.</div>
+    </div>
+
+    <div class="full-sentence" id="fs6">
+      <div class="sentence-en" onclick="speakEn('In my free time, I enjoy going for walks, listening to music, and researching new technology.')">7. In my free time, I enjoy going for walks, listening to music, and researching new technology.</div>
+      <div class="sentence-phonetic">In mai fri tai-m, ai en-joi go-ing for wok-z, li-xờ-ning tu diu-zic, ần ri-xơ-ching niu téc-no-lo-gi.</div>
+      <div class="sentence-vi">Vào thời gian rảnh, tôi thích đi dạo, nghe nhạc và tìm hiểu công nghệ mới.</div>
+    </div>
+
+    <div class="full-sentence" id="fs7">
+      <div class="sentence-en" onclick="speakEn('My strengths are strong research skills and creative problem-solving.')">8. My strengths are strong research skills and creative problem-solving.</div>
+      <div class="sentence-phonetic">Mai xtren-ths a xtrong ri-xơ-ch xcil-z ần cri-ê-tiv pro-blờm-xol-ving.</div>
+      <div class="sentence-vi">Điểm mạnh của tôi là kỹ năng nghiên cứu tốt và tư duy giải quyết vấn đề sáng tạo.</div>
+    </div>
+
+    <div class="full-sentence" id="fs8">
+      <div class="sentence-en" onclick="speakEn('My weakness is that my English speaking skill is still limited, but I am actively working to improve it.')">9. My weakness is that my English speaking skill is still limited, but I am actively working to improve it.</div>
+      <div class="sentence-phonetic">Mai uik-nờ-s iz đát mai Ing-lich xpik-ing xcil iz xtil li-mi-tờ-d, bắt ai em ác-tiv-li wơr-king tu im-pruv it.</div>
+      <div class="sentence-vi">Điểm yếu của tôi là kỹ năng nói tiếng Anh vẫn còn hạn chế, nhưng tôi đang tích cực cố gắng cải thiện.</div>
+    </div>
+
+    <div class="full-sentence" id="fs9">
+      <div class="sentence-en" onclick="speakEn('In the future, I hope to start my own business and open 2 to 3 small shops to serve my local community.')">10. In the future, I hope to start my own business and open 2 to 3 small shops to serve my local community.</div>
+      <div class="sentence-phonetic">In đờ fiu-chờ, ai hop tu xta-t mai on biz-nờ-s ần o-pần tu tu tri xmol shóp-z tu xơ-v mai lo-cồl cơ-miu-ni-ti.</div>
+      <div class="sentence-vi">Trong tương lai, tôi hy vọng khởi nghiệp kinh doanh riêng và mở 2 đến 3 cửa hàng nhỏ để phục vụ cộng đồng địa phương.</div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<!-- SPEAK ALL BAR -->
+<div class="speak-all-bar">
+  <div class="speak-all-card">
+    <div class="speak-all-info">
+      <div class="speak-all-title">🎤 Đọc toàn bài giới thiệu (10 câu)</div>
+      <div class="speak-all-sub" id="speak-all-status">Nhấn nút để nghe đọc tự động từng câu</div>
+      <div class="progress-bar-wrap" id="progress-wrap">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+    <div class="speak-all-actions">
+      <button class="btn-full-speak" onclick="speakFullIntro()">▶ Đọc toàn bài</button>
+      <button class="btn-stop" onclick="stopSpeaking()" style="padding:9px 16px;font-size:0.82rem">⏹ Dừng</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>🎓 Luyện tiếng Anh Đầu Ra – Phan Tấn Kiệt | Powered by Web Speech API</p>
+  <p style="margin-top:6px"><a href="index.html" style="color:var(--primary-light);text-decoration:none">← Về trang ôn tập chính</a></p>
+</footer>
+
+<script>
+// ── TTS FUNCTIONS ──
+var synth = window.speechSynthesis;
+var currentUtterance = null;
+var isSpeaking = false;
+
+function speakEn(text) {
+  stopSpeaking();
+  if (!synth) return;
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
+  u.rate = 0.85;
+  u.pitch = 1;
+  currentUtterance = u;
+  synth.speak(u);
+}
+
+function speakVi(text) {
+  stopSpeaking();
+  if (!synth) return;
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'vi-VN';
+  u.rate = 0.9;
+  currentUtterance = u;
+  synth.speak(u);
+}
+
+function stopSpeaking() {
+  if (synth) synth.cancel();
+  isSpeaking = false;
+  document.getElementById('speak-all-status').textContent = 'Đã dừng';
+  var pb = document.getElementById('progress-wrap');
+  if (pb) pb.style.display = 'none';
+  // Remove highlights
+  document.querySelectorAll('.speaking').forEach(function(el) {
+    el.classList.remove('speaking');
+  });
+}
+
+// ── SPEAK ALL Q&A ──
+var qaTexts = [
+  "What is your name?",
+  "My name is Phan Tan Kiet. You can call me Kiet.",
+  "How old are you?",
+  "I am 22 years old.",
+  "Where do you study? What do you major in?",
+  "I am currently a student at Mien Trung University of Science and Technology, majoring in Information Technology. I am in my fourth year.",
+  "Can you tell me about your family?",
+  "My family has 4 members: my parents, my younger brother, and me. My father is a carpenter and my mother is a farmer. We live in Quang Ngai province.",
+  "How would you describe your appearance?",
+  "I am quite tall with a slim build. I think I look fairly good, and I always try to dress neatly and tidily.",
+  "What is your personality like?",
+  "I am gentle, patient, and hard-working. I enjoy helping others and I am quite calm under pressure.",
+  "What are your hobbies?",
+  "I enjoy going for walks, listening to music, and spending quiet time alone to think and recharge. I also love researching new technology trends.",
+  "What are your strengths?",
+  "My strengths are strong research skills and creative thinking. I am good at finding solutions and I always try to approach problems from different angles.",
+  "What are your weaknesses?",
+  "My main weaknesses are that my English speaking skill is still limited, and sometimes I tend to procrastinate when facing complex tasks.",
+  "What are your future plans?",
+  "In the future, I plan to start my own business. I hope to open 2 to 3 small shops or services to help people in my local community."
+];
+
+function speakAllQA() {
+  stopSpeaking();
+  isSpeaking = true;
+  var idx = 0;
+  function next() {
+    if (!isSpeaking || idx >= qaTexts.length) {
+      isSpeaking = false;
+      document.getElementById('speak-all-status').textContent = '✅ Đã đọc xong toàn bộ Q&A';
+      return;
+    }
+    var u = new SpeechSynthesisUtterance(qaTexts[idx]);
+    u.lang = 'en-US';
+    u.rate = 0.85;
+    document.getElementById('speak-all-status').textContent = 'Đang đọc (' + (idx+1) + '/' + qaTexts.length + ')...';
+    u.onend = function() { idx++; setTimeout(next, 400); };
+    u.onerror = function() { idx++; setTimeout(next, 200); };
+    synth.speak(u);
+  }
+  next();
+}
+
+// ── SPEAK FULL INTRO ──
+var fullSentences = [
+  "Hello everyone. My name is Phan Tan Kiet, but you can call me Kiet.",
+  "I am 22 years old.",
+  "I am currently a fourth-year student at Mien Trung University of Science and Technology, majoring in Information Technology.",
+  "My family has 4 members: my parents, my younger brother, and me.",
+  "My father is a carpenter and my mother is a farmer, and they both work very hard to support our family.",
+  "I am gentle, patient, and hard-working.",
+  "In my free time, I enjoy going for walks, listening to music, and researching new technology.",
+  "My strengths are strong research skills and creative problem-solving.",
+  "My weakness is that my English speaking skill is still limited, but I am actively working to improve it.",
+  "In the future, I hope to start my own business and open 2 to 3 small shops to serve my local community."
+];
+
+function speakFullIntro() {
+  stopSpeaking();
+  isSpeaking = true;
+  var pb = document.getElementById('progress-wrap');
+  pb.style.display = 'block';
+  var fill = document.getElementById('progress-fill');
+  var idx = 0;
+  var total = fullSentences.length;
+
+  function next() {
+    if (!isSpeaking || idx >= total) {
+      isSpeaking = false;
+      document.getElementById('speak-all-status').textContent = '✅ Đã đọc xong toàn bộ đoạn giới thiệu!';
+      fill.style.width = '100%';
+      document.querySelectorAll('.full-sentence').forEach(function(el) { el.classList.remove('speaking'); });
+      return;
+    }
+    document.querySelectorAll('.full-sentence').forEach(function(el) { el.classList.remove('speaking'); });
+    var sentEl = document.getElementById('fs' + idx);
+    if (sentEl) {
+      sentEl.classList.add('speaking');
+      sentEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    fill.style.width = ((idx / total) * 100) + '%';
+    document.getElementById('speak-all-status').textContent = 'Câu ' + (idx+1) + '/' + total + ' đang đọc...';
+    var u = new SpeechSynthesisUtterance(fullSentences[idx]);
+    u.lang = 'en-US';
+    u.rate = 0.82;
+    u.onend = function() { idx++; setTimeout(next, 600); };
+    u.onerror = function() { idx++; setTimeout(next, 200); };
+    synth.speak(u);
+  }
+  next();
+}
+</script>
+</body>
+</html>
