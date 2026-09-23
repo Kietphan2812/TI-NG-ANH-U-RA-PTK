@@ -134,6 +134,10 @@ function loadSavedState() {
 
 // Chức năng chuyển đổi Topic
 function switchTopic(newTopicId) {
+  if (newTopicId === 'self-intro') {
+    window.location.href = 'self-intro.html';
+    return;
+  }
   const newData = getTopicData(newTopicId);
   if (!newData) {
     console.warn('switchTopic: Không tìm thấy dữ liệu cho topic:', newTopicId);
