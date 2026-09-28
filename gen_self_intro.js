@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+const fs = require('fs');
+
+const html = `<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -1310,7 +1312,7 @@ function initSelectionToolbar() {
     }
 
     if (previewEl) {
-      var clean = text.replace(/s+/g, ' ').trim();
+      var clean = text.replace(/\s+/g, ' ').trim();
       var snippet = clean.length > 32 ? clean.substring(0, 30) + '...' : clean;
       previewEl.innerText = '"' + snippet + '"';
       previewEl.title = text;
@@ -1441,4 +1443,7 @@ if (document.readyState === 'loading') {
 }
 </script>
 </body>
-</html>
+</html>`;
+
+fs.writeFileSync('self-intro.html', html, 'utf8');
+console.log('✅ self-intro.html created successfully! Size: ' + html.length + ' bytes');

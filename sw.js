@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tieng-anh-dau-ra-v1';
+const CACHE_NAME = 'tieng-anh-dau-ra-v2';
 const ASSETS = [
   '/',
   '/index.html',
@@ -36,13 +36,28 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
+  // Navigation (HTML pages): Network-first để cập nhật tính năng mới ngay lập tức
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request).then(function(res) {
+        var resClone = res.clone();
+        caches.open(CACHE_NAME).then(function(cache) {
+          cache.put(e.request, resClone);
+        });
+        return res;
+      }).catch(function() {
+        return caches.match(e.request).then(function(cached) {
+          return cached || caches.match('/index.html');
+        });
+      })
+    );
+    return;
+  }
+
+  // Tài nguyên tĩnh khác: Cache-first
   e.respondWith(
     caches.match(e.request).then(function(cached) {
-      return cached || fetch(e.request).catch(function() {
-        if (e.request.mode === 'navigate') {
-          return caches.match('/index.html');
-        }
-      });
+      return cached || fetch(e.request).catch(function() {});
     })
   );
 });

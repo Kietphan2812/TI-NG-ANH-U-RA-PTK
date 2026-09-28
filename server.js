@@ -156,7 +156,7 @@ app.get('/api/translate-word', async (req, res) => {
   if (!word) return res.json({ translation: '' });
 
   try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(word.trim())}`;
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=vi&dt=t&q=${encodeURIComponent(word.trim())}`;
     const response = await fetch(url);
     if (!response.ok) throw new Error('Translate service error');
     const data = await response.json();

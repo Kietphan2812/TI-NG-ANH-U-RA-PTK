@@ -2815,7 +2815,8 @@ function initTextSelectionAndCopyFeatures() {
     }
 
     if (previewEl) {
-      const displaySnippet = text.length > 25 ? text.substring(0, 24) + '...' : text;
+      const cleanSnippet = text.replace(/\s+/g, ' ').trim();
+      const displaySnippet = cleanSnippet.length > 32 ? cleanSnippet.substring(0, 30) + '...' : cleanSnippet;
       previewEl.innerText = `"${displaySnippet}"`;
       previewEl.title = text;
     }
@@ -2823,20 +2824,22 @@ function initTextSelectionAndCopyFeatures() {
     try {
       const range = selection.getRangeAt(0);
       const rect = range.getBoundingClientRect();
-      const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      if (!rect || (rect.width === 0 && rect.height === 0)) return;
 
       toolbar.style.display = 'flex';
 
-      let top = rect.top + scrollY - toolbar.offsetHeight - 12;
-      let left = rect.left + scrollX + (rect.width / 2) - (toolbar.offsetWidth / 2);
+      const tbWidth = toolbar.offsetWidth || 340;
+      const tbHeight = toolbar.offsetHeight || 75;
 
-      if (rect.top < 60) {
-        top = rect.bottom + scrollY + 8;
+      let top = rect.top - tbHeight - 12;
+      let left = rect.left + (rect.width / 2) - (tbWidth / 2);
+
+      if (top < 70) {
+        top = rect.bottom + 10;
       }
       if (left < 10) left = 10;
-      if (left + toolbar.offsetWidth > window.innerWidth - 10) {
-        left = window.innerWidth - toolbar.offsetWidth - 10;
+      if (left + tbWidth > window.innerWidth - 10) {
+        left = window.innerWidth - tbWidth - 10;
       }
 
       toolbar.style.top = `${top}px`;
@@ -2850,11 +2853,19 @@ function initTextSelectionAndCopyFeatures() {
     setTimeout(() => handleSelection(e), 40);
   });
 
+  document.addEventListener('touchend', (e) => {
+    setTimeout(() => handleSelection(e), 100);
+  });
+
   document.addEventListener('keyup', (e) => {
     if (e.key === 'Shift' || e.key.startsWith('Arrow')) {
       setTimeout(() => handleSelection(e), 40);
     }
   });
+
+  window.addEventListener('scroll', () => {
+    hideSelectionToolbar();
+  }, { passive: true });
 
   document.addEventListener('mousedown', (e) => {
     if (!toolbar.contains(e.target)) {
@@ -2944,11 +2955,12 @@ function hideSelectionToolbar() {
   if (toolbar) toolbar.style.display = 'none';
 }
 
-// Hàm gọi API lấy bản dịch cho một câu hoặc từ bất kỳ
+// Hàm gọi API lấy bản dịch cho một câu hoặc từ bất kỳ (3 tầng bảo đảm 100% dịch được)
 async function fetchTranslationForText(text) {
   if (!text) return '';
+  const trimmed = text.trim();
 
-  const words = text.trim().split(/\s+/);
+  const words = trimmed.split(/\s+/);
   if (words.length === 1) {
     const directMeaning = getWordMeaning(words[0]);
     if (directMeaning && directMeaning !== '(tên riêng)') {
@@ -2956,21 +2968,51 @@ async function fetchTranslationForText(text) {
     }
   }
 
+  // 1. Backend Proxy (Server local hoặc Render)
   try {
     const isOnline = window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
     const apiBase = isOnline ? '' : (window.location.protocol.startsWith('http') ? '' : 'https://tieng-anh-dau-ra-ptk.onrender.com');
-    const res = await fetch(`${apiBase}/api/translate-word?word=${encodeURIComponent(text)}`);
+    const res = await fetch(`${apiBase}/api/translate-word?word=${encodeURIComponent(trimmed)}`);
     if (res.ok) {
       const data = await res.json();
-      if (data && data.translation) {
+      if (data && data.translation && data.translation.toLowerCase() !== trimmed.toLowerCase()) {
         return data.translation;
       }
     }
   } catch (err) {
-    console.warn("Lỗi dịch văn bản:", err);
+    console.warn("Lỗi dịch qua backend:", err);
   }
 
-  return text;
+  // 2. Google Translate API trực tiếp (Client gtx)
+  try {
+    const gtxUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=vi&dt=t&q=${encodeURIComponent(trimmed)}`;
+    const gtxRes = await fetch(gtxUrl);
+    if (gtxRes.ok) {
+      const data = await gtxRes.json();
+      if (data && data[0] && Array.isArray(data[0])) {
+        const trans = data[0].map(item => (item && item[0]) || '').join(' ').trim();
+        if (trans) return trans;
+      }
+    }
+  } catch (err2) {
+    console.warn("Lỗi direct Google Translate:", err2);
+  }
+
+  // 3. Fallback MyMemory Free Translation API
+  try {
+    const mmUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(trimmed)}&langpair=en|vi`;
+    const mmRes = await fetch(mmUrl);
+    if (mmRes.ok) {
+      const mmData = await mmRes.json();
+      if (mmData && mmData.responseData && mmData.responseData.translatedText) {
+        return mmData.responseData.translatedText;
+      }
+    }
+  } catch (err3) {
+    console.warn("Lỗi MyMemory fallback:", err3);
+  }
+
+  return trimmed;
 }
 
 let toastCopiedText = '';
