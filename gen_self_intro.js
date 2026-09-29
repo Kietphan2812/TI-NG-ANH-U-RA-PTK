@@ -1,6 +1,4 @@
-const fs = require('fs');
-
-const html = `<!DOCTYPE html>
+const fs = require('fs');\n\nconst html = `<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -670,12 +668,12 @@ footer {
       </div>
       <div class="a-block">
         <div class="a-label">A – Trả lời</div>
-        <div class="entry-en" onclick="speakEn('I am currently a student at Mien Trung University of Science and Technology, majoring in Information Technology. I am in my fourth year.')">I'm currently a student at Mien Trung University of Science and Technology, majoring in Information Technology. I'm in my fourth year.</div>
-        <div class="entry-phonetic">Ai-m cơ-rèn-li ơ xtiu-đần at Mi-ên Trung diu-ni-vơ-xi-ti ơv xai-ần và téc-no-lo-gi, mê-giơ-ring in in-for-mê-sần téc-no-lo-gi. Ai-m in mai for-th dia.</div>
-        <div class="entry-vi">Tôi hiện đang là sinh viên tại Trường Đại học Khoa học và Công nghệ Miền Trung, chuyên ngành Công nghệ Thông tin. Tôi đang học năm tư.</div>
+        <div class="entry-en" onclick="speakEn('I am currently a student at Mien Trung University of Civil Engineering, majoring in Information Technology, IT.')">I'm currently a student at Mien Trung University of Civil Engineering, majoring in Information Technology (IT).</div>
+        <div class="entry-phonetic">Ai-m cơ-rần-tli ơ xtiu-đần-t et Miền Trung Diu-ni-vơ-xi-ti ơv Xi-vồ En-gi-nia-rinh, mê-giơ-rinh in In-fơ-mê-sần Tếch-nồ-lơ-gi (ai ti).</div>
+        <div class="entry-vi">Hiện tại tôi là sinh viên trường Đại học Xây dựng Miền Trung, học ngành Công nghệ thông tin.</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('I am currently a student at Mien Trung University of Science and Technology, majoring in Information Technology. I am in my fourth year.')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Tôi hiện đang là sinh viên tại Trường Đại học Khoa học và Công nghệ Miền Trung, chuyên ngành Công nghệ Thông tin. Tôi đang học năm tư.')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('I am currently a student at Mien Trung University of Civil Engineering, majoring in Information Technology, IT.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Hiện tại tôi là sinh viên trường Đại học Xây dựng Miền Trung, học ngành Công nghệ thông tin.')">🗣️ Nghe VI</button>
         </div>
       </div>
     </div>
@@ -695,21 +693,21 @@ footer {
       <div class="q-block">
         <div class="q-label">Q – Câu hỏi</div>
         <div class="entry-en" onclick="speakEn('Can you tell me about your family?')">Can you tell me about your family?</div>
-        <div class="entry-phonetic">Ken diu tel mi ơ-bao dơ fém-li?</div>
-        <div class="entry-vi">Bạn có thể kể về gia đình của bạn không?</div>
+        <div class="entry-phonetic">Ken diu ten mi ơ-bao-t dơ pham-li?</div>
+        <div class="entry-vi">Bạn có thể kể về gia đình mình không?</div>
         <div class="tts-row">
           <button class="tts-btn tts-en" onclick="speakEn('Can you tell me about your family?')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Bạn có thể kể về gia đình của bạn không?')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Bạn có thể kể về gia đình mình không?')">🗣️ Nghe VI</button>
         </div>
       </div>
       <div class="a-block">
         <div class="a-label">A – Trả lời</div>
-        <div class="entry-en" onclick="speakEn('My family has 4 members: my parents, my younger brother, and me. My father is a carpenter and my mother is a farmer. We live in Quang Ngai province.')">My family has 4 members: my parents, my younger brother, and me. My father is a carpenter and my mother is a farmer. We live in Quang Ngai province.</div>
-        <div class="entry-phonetic">Mai fém-li hét-s for mem-bơ-z: mai pé-ren-tz, mai dăng-gờ brơ-đờ, ần mi. Mai fa-đờ iz ơ ca-pen-tờ ần mai mơ-đờ iz ơ fa-mờ. Dui liv in Quảng Ngãi pro-vin-tz.</div>
-        <div class="entry-vi">Gia đình tôi có 4 thành viên: cha mẹ tôi, em trai tôi và tôi. Cha tôi là thợ mộc và mẹ tôi là nông dân. Chúng tôi sống ở tỉnh Quảng Ngãi.</div>
+        <div class="entry-en" onclick="speakEn('There are five people in my family: my father, my mother, my two older brothers and me. My father is a carpenter, and my mother is a farmer. Although their jobs are quite hard, they always work hard to support our family, and I really admire them for that.')">There are five people in my family: my father, my mother, my two older brothers and me. My father is a carpenter, and my mother is a farmer. Although their jobs are quite hard, they always work hard to support our family, and I really admire them for that.</div>
+        <div class="entry-phonetic">Đe-a a phai pi-pồ in mai pham-li: mai pha-đơ, mai mơ-đơ, mai tu ôl-đơ brơ-đơ-z en mi. Mai pha-đơ iz ơ ca-pần-tơ, en mai mơ-đơ iz ơ pha-mơ. Ol-đâu đe-a giốp-x a quai-t hat, đê ôn-guêi-z guơ-k hat tu xơ-pọt aoa pham-li, en ai ri-li ết-mai-ơ đem pho đet.</div>
+        <div class="entry-vi">Gia đình tôi có năm người: ba tôi, mẹ tôi, hai anh trai của tôi và tôi. Ba tôi làm nghề thợ mộc, còn mẹ tôi làm nông. Mặc dù công việc của ba mẹ khá vất vả, nhưng họ luôn cố gắng làm việc chăm chỉ để lo cho gia đình, và tôi thực sự rất ngưỡng mộ họ vì điều đó.</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('My family has 4 members: my parents, my younger brother, and me. My father is a carpenter and my mother is a farmer. We live in Quang Ngai province.')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Gia đình tôi có 4 thành viên: cha mẹ tôi, em trai tôi và tôi. Cha tôi là thợ mộc và mẹ tôi là nông dân. Chúng tôi sống ở tỉnh Quảng Ngãi.')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('There are five people in my family: my father, my mother, my two older brothers and me. My father is a carpenter, and my mother is a farmer. Although their jobs are quite hard, they always work hard to support our family, and I really admire them for that.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Gia đình tôi có năm người: ba tôi, mẹ tôi, hai anh trai của tôi và tôi. Ba tôi làm nghề thợ mộc, còn mẹ tôi làm nông. Mặc dù công việc của ba mẹ khá vất vả, nhưng họ luôn cố gắng làm việc chăm chỉ để lo cho gia đình, và tôi thực sự rất ngưỡng mộ họ vì điều đó.')">🗣️ Nghe VI</button>
         </div>
       </div>
     </div>
@@ -728,22 +726,22 @@ footer {
     <div>
       <div class="q-block">
         <div class="q-label">Q – Câu hỏi</div>
-        <div class="entry-en" onclick="speakEn('How would you describe your appearance?')">How would you describe your appearance?</div>
-        <div class="entry-phonetic">Hao ú-d diu đi-xcrai-b dơ ơ-pia-rần-tz?</div>
-        <div class="entry-vi">Bạn mô tả ngoại hình của bạn thế nào?</div>
+        <div class="entry-en" onclick="speakEn('What do you look like?')">What do you look like?</div>
+        <div class="entry-phonetic">Goát đu diu lúc lai-c?</div>
+        <div class="entry-vi">Bạn trông như thế nào?</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('How would you describe your appearance?')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Bạn mô tả ngoại hình của bạn thế nào?')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('What do you look like?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Bạn trông như thế nào?')">🗣️ Nghe VI</button>
         </div>
       </div>
       <div class="a-block">
         <div class="a-label">A – Trả lời</div>
-        <div class="entry-en" onclick="speakEn('I am quite tall with a slim build. I think I look fairly good, and I always try to dress neatly and tidily.')">I am quite tall with a slim build. I think I look fairly good, and I always try to dress neatly and tidily.</div>
-        <div class="entry-phonetic">Ai em quái tol uýt ơ xlim bild. Ai thinh ai luc fé-li gút, ần ai ol-uây-z trai tu dres nit-li ần tai-đi-li.</div>
-        <div class="entry-vi">Tôi khá cao với vóc dáng mảnh khảnh. Tôi nghĩ mình trông khá ổn, và tôi luôn cố gắng ăn mặc gọn gàng, chỉnh tề.</div>
+        <div class="entry-en" onclick="speakEn('I have a pretty good-looking appearance, people often say I look easy to approach.')">I have a pretty good-looking appearance — people often say I look easy to approach.</div>
+        <div class="entry-phonetic">Ai hev ơ prít-ti gút-lúc-kinh ơ-pia-rần-x — pi-pồ óp-phần xê ai lúc i-zi tu ơ-prôch.</div>
+        <div class="entry-vi">Tôi có ngoại hình khá ưa nhìn — mọi người thường nói tôi trông dễ gần.</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('I am quite tall with a slim build. I think I look fairly good, and I always try to dress neatly and tidily.')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Tôi khá cao với vóc dáng mảnh khảnh. Tôi nghĩ mình trông khá ổn, và tôi luôn cố gắng ăn mặc gọn gàng, chỉnh tề.')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('I have a pretty good-looking appearance, people often say I look easy to approach.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tôi có ngoại hình khá ưa nhìn, mọi người thường nói tôi trông dễ gần.')">🗣️ Nghe VI</button>
         </div>
       </div>
     </div>
@@ -751,22 +749,22 @@ footer {
     <div>
       <div class="q-block">
         <div class="q-label">Q – Câu hỏi</div>
-        <div class="entry-en" onclick="speakEn('What is your personality like?')">What is your personality like?</div>
-        <div class="entry-phonetic">Goát iz dơ pơ-son-ni-ti lai-k?</div>
-        <div class="entry-vi">Tính cách của bạn như thế nào?</div>
+        <div class="entry-en" onclick="speakEn('What is your personality like?')">What's your personality like?</div>
+        <div class="entry-phonetic">Goát-s dơ pơ-xừn-e-lơ-ti lai-c?</div>
+        <div class="entry-vi">Tính cách của bạn thế nào?</div>
         <div class="tts-row">
           <button class="tts-btn tts-en" onclick="speakEn('What is your personality like?')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Tính cách của bạn như thế nào?')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tính cách của bạn thế nào?')">🗣️ Nghe VI</button>
         </div>
       </div>
       <div class="a-block">
         <div class="a-label">A – Trả lời</div>
-        <div class="entry-en" onclick="speakEn('I am gentle, patient, and hard-working. I enjoy helping others and I am quite calm under pressure.')">I am gentle, patient, and hard-working. I enjoy helping others and I am quite calm under pressure.</div>
-        <div class="entry-phonetic">Ai em gen-tồl, pê-shần, ần ha-d-wơr-king. Ai en-joi hel-ping ơ-đờ-z ần ai em quái cam ăn-đờ pre-shờ.</div>
-        <div class="entry-vi">Tôi hiền lành, kiên nhẫn và chăm chỉ. Tôi thích giúp đỡ người khác và khá bình tĩnh khi áp lực.</div>
+        <div class="entry-en" onclick="speakEn('I am a gentle and hard-working person. I do not give up easily, and I always try my best to finish what I start.')">I'm a gentle and hard-working person. I don't give up easily, and I always try my best to finish what I start.</div>
+        <div class="entry-phonetic">Ai-m ơ gien-tồ en hat-guơ-kinh pơ-xừn. Ai đôn-t ghíp ắp i-zi-li, en ai ôn-guêi-z trai mai bét tu phi-nít goát ai xtat.</div>
+        <div class="entry-vi">Tôi là người hiền lành và chịu khó. Tôi không dễ bỏ cuộc, và tôi luôn cố gắng hết sức để hoàn thành những gì mình bắt đầu.</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('I am gentle, patient, and hard-working. I enjoy helping others and I am quite calm under pressure.')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Tôi hiền lành, kiên nhẫn và chăm chỉ. Tôi thích giúp đỡ người khác và khá bình tĩnh khi áp lực.')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('I am a gentle and hard-working person. I do not give up easily, and I always try my best to finish what I start.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tôi là người hiền lành và chịu khó. Tôi không dễ bỏ cuộc, và tôi luôn cố gắng hết sức để hoàn thành những gì mình bắt đầu.')">🗣️ Nghe VI</button>
         </div>
       </div>
     </div>
@@ -787,7 +785,7 @@ footer {
       <div class="q-block">
         <div class="q-label">Q – Câu hỏi</div>
         <div class="entry-en" onclick="speakEn('What are your hobbies?')">What are your hobbies?</div>
-        <div class="entry-phonetic">Goát a dơ hó-bi-z?</div>
+        <div class="entry-phonetic">Goát a dơ hóp-bi-z?</div>
         <div class="entry-vi">Sở thích của bạn là gì?</div>
         <div class="tts-row">
           <button class="tts-btn tts-en" onclick="speakEn('What are your hobbies?')">🔊 Nghe EN</button>
@@ -796,12 +794,12 @@ footer {
       </div>
       <div class="a-block">
         <div class="a-label">A – Trả lời</div>
-        <div class="entry-en" onclick="speakEn('I enjoy going for walks, listening to music, and spending quiet time alone to think and recharge. I also love researching new technology trends.')">I enjoy going for walks, listening to music, and spending quiet time alone to think and recharge. I also love researching new technology trends.</div>
-        <div class="entry-phonetic">Ai en-joi go-ing for wok-z, li-xờ-ning tu diu-zic, ần xpen-ding quái-ờt tai-m ơ-lon tu thinnh ần ri-cha-j. Ai ol-so lắv ri-xơ-ching niu téc-no-lo-gi tren-z.</div>
-        <div class="entry-vi">Tôi thích đi dạo, nghe nhạc và dành thời gian yên tĩnh một mình để suy nghĩ và nạp lại năng lượng. Tôi cũng thích tìm hiểu các xu hướng công nghệ mới.</div>
+        <div class="entry-en" onclick="speakEn('In my free time, I enjoy walking, listening to music, and spending time in quiet places. I also like researching and exploring new things, especially things related to technology.')">In my free time, I enjoy walking, listening to music, and spending time in quiet places. I also like researching and exploring new things, especially things related to technology.</div>
+        <div class="entry-phonetic">In mai phri tai-m, ai en-giôi guo-kinh, lít-xừn-inh tu miu-zic, en xpen-đinh tai-m in quai-ợt plây-xịt. Ai on-xâu lai-c ri-xơ-chinh en ét-xplo-rinh niu thinh-z, ít-xpe-sồ-li thinh-z ri-lây-tịt tu tếch-nồ-lơ-gi.</div>
+        <div class="entry-vi">Trong thời gian rảnh, tôi thích đi bộ, nghe nhạc, và ở những nơi yên tĩnh. Tôi cũng thích tìm tòi, khám phá những điều mới, đặc biệt là những thứ liên quan đến công nghệ.</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('I enjoy going for walks, listening to music, and spending quiet time alone to think and recharge. I also love researching new technology trends.')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Tôi thích đi dạo, nghe nhạc và dành thời gian yên tĩnh một mình để suy nghĩ và nạp lại năng lượng. Tôi cũng thích tìm hiểu các xu hướng công nghệ mới.')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('In my free time, I enjoy walking, listening to music, and spending time in quiet places. I also like researching and exploring new things, especially things related to technology.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Trong thời gian rảnh, tôi thích đi bộ, nghe nhạc, và ở những nơi yên tĩnh. Tôi cũng thích tìm tòi, khám phá những điều mới, đặc biệt là những thứ liên quan đến công nghệ.')">🗣️ Nghe VI</button>
         </div>
       </div>
     </div>
@@ -809,22 +807,22 @@ footer {
     <div>
       <div class="q-block">
         <div class="q-label">Q – Câu hỏi</div>
-        <div class="entry-en" onclick="speakEn('Do you prefer spending time indoors or outdoors?')">Do you prefer spending time indoors or outdoors?</div>
-        <div class="entry-phonetic">Đu diu pri-fờ xpen-ding tai-m in-đo-z o ao-đo-z?</div>
-        <div class="entry-vi">Bạn thích ở trong nhà hay ngoài trời hơn?</div>
+        <div class="entry-en" onclick="speakEn('Why do you like those things?')">Why do you like those things?</div>
+        <div class="entry-phonetic">Guai đu diu lai-c đô-z thinh-z?</div>
+        <div class="entry-vi">Tại sao bạn thích những điều đó?</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('Do you prefer spending time indoors or outdoors?')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Bạn thích ở trong nhà hay ngoài trời hơn?')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('Why do you like those things?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tại sao bạn thích những điều đó?')">🗣️ Nghe VI</button>
         </div>
       </div>
       <div class="a-block">
         <div class="a-label">A – Trả lời</div>
-        <div class="entry-en" onclick="speakEn('I prefer quiet indoor environments where I can focus on reading or working on projects. However, I also enjoy morning walks to clear my mind.')">I prefer quiet indoor environments where I can focus on reading or working on projects. However, I also enjoy morning walks to clear my mind.</div>
-        <div class="entry-phonetic">Ai pri-fờ quái-ờt in-đo in-vai-rờn-mờn-tz guê-a ai ken fo-cơ-z on ri-ding o wơr-king on pro-jec-tz. Hao-ê-vờ, ai ol-so en-joi mo-ning wok-z tu clir mai mai-nd.</div>
-        <div class="entry-vi">Tôi thích môi trường trong nhà yên tĩnh, nơi tôi có thể tập trung đọc sách hoặc làm việc với các dự án. Tuy nhiên, tôi cũng thích đi bộ buổi sáng để xả stress.</div>
+        <div class="entry-en" onclick="speakEn('I like quiet activities like walking and listening to music because they help me relax and think more clearly. I also enjoy researching things because it satisfies my curiosity and helps me learn something new every day.')">I like quiet activities like walking and listening to music because they help me relax and think more clearly. I also enjoy researching things because it satisfies my curiosity and helps me learn something new every day.</div>
+        <div class="entry-phonetic">Ai lai-c quai-ợt éc-ti-vi-ti-z lai-c guo-kinh en lít-xừn-inh tu miu-zic bi-cô-z đê hép mi ri-léc-x en thinh-k mo cli-a-li. Ai on-xâu en-giôi ri-xơ-chinh thinh-z bi-cô-z ít xet-tít-phai-z mai kiu-ri-ọ-xi-ti en hép-x mi lơn xăm-thinh niu ép-ri đây.</div>
+        <div class="entry-vi">Tôi thích những hoạt động yên tĩnh như đi bộ và nghe nhạc vì chúng giúp tôi thư giãn và suy nghĩ rõ ràng hơn. Tôi cũng thích tìm tòi vì nó thỏa mãn sự tò mò của tôi và giúp tôi học được điều gì đó mới mỗi ngày.</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('I prefer quiet indoor environments where I can focus on reading or working on projects. However, I also enjoy morning walks to clear my mind.')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Tôi thích môi trường trong nhà yên tĩnh, nơi tôi có thể tập trung đọc sách hoặc làm việc với các dự án. Tuy nhiên, tôi cũng thích đi bộ buổi sáng để xả stress.')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('I like quiet activities like walking and listening to music because they help me relax and think more clearly. I also enjoy researching things because it satisfies my curiosity and helps me learn something new every day.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Tôi thích những hoạt động yên tĩnh như đi bộ và nghe nhạc vì chúng giúp tôi thư giãn và suy nghĩ rõ ràng hơn. Tôi cũng thích tìm tòi vì nó thỏa mãn sự tò mò của tôi và giúp tôi học được điều gì đó mới mỗi ngày.')">🗣️ Nghe VI</button>
         </div>
       </div>
     </div>
@@ -845,7 +843,7 @@ footer {
       <div class="q-block">
         <div class="q-label">Q – Câu hỏi</div>
         <div class="entry-en" onclick="speakEn('What are your strengths?')">What are your strengths?</div>
-        <div class="entry-phonetic">Goát a dơ xtren-ths?</div>
+        <div class="entry-phonetic">Goát a dơ xtreng-th-x?</div>
         <div class="entry-vi">Điểm mạnh của bạn là gì?</div>
         <div class="tts-row">
           <button class="tts-btn tts-en" onclick="speakEn('What are your strengths?')">🔊 Nghe EN</button>
@@ -854,12 +852,12 @@ footer {
       </div>
       <div class="a-block">
         <div class="a-label">A – Trả lời</div>
-        <div class="entry-en" onclick="speakEn('My strengths are strong research skills and creative thinking. I am good at finding solutions and I always try to approach problems from different angles.')">My strengths are strong research skills and creative thinking. I am good at finding solutions and I always try to approach problems from different angles.</div>
-        <div class="entry-phonetic">Mai xtren-ths a xtrong ri-xơ-ch xcil-z ần cri-ê-tiv thinh-king. Ai em gút at fai-ding so-lu-shần-z ần ai ol-uây-z trai tu ơ-proc pro-blờm-z from di-fờ-ràn-t en-gồl-z.</div>
-        <div class="entry-vi">Điểm mạnh của tôi là kỹ năng nghiên cứu tốt và tư duy sáng tạo. Tôi giỏi tìm kiếm giải pháp và luôn cố tiếp cận vấn đề từ nhiều góc độ khác nhau.</div>
+        <div class="entry-en" onclick="speakEn('My strengths are that I can research and solve problems quickly, and I am quite a creative person.')">My strengths are that I can research and solve problems quickly, and I'm quite a creative person.</div>
+        <div class="entry-phonetic">Mai xtreng-th-x a đet ai ken ri-xơch en xon-v prọ-blờm-z quíc-li, en ai-m quai-t ơ cri-ê-tiv pơ-xừn.</div>
+        <div class="entry-vi">Điểm mạnh của tôi là có thể tìm hiểu và giải quyết vấn đề nhanh chóng, và tôi khá là người sáng tạo.</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('My strengths are strong research skills and creative thinking. I am good at finding solutions and I always try to approach problems from different angles.')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Điểm mạnh của tôi là kỹ năng nghiên cứu tốt và tư duy sáng tạo. Tôi giỏi tìm kiếm giải pháp và luôn cố tiếp cận vấn đề từ nhiều góc độ khác nhau.')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('My strengths are that I can research and solve problems quickly, and I am quite a creative person.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Điểm mạnh của tôi là có thể tìm hiểu và giải quyết vấn đề nhanh chóng, và tôi khá là người sáng tạo.')">🗣️ Nghe VI</button>
         </div>
       </div>
     </div>
@@ -868,7 +866,7 @@ footer {
       <div class="q-block">
         <div class="q-label">Q – Câu hỏi</div>
         <div class="entry-en" onclick="speakEn('What are your weaknesses?')">What are your weaknesses?</div>
-        <div class="entry-phonetic">Goát a dơ uik-nờ-sờ-z?</div>
+        <div class="entry-phonetic">Goát a dơ guy-c-nít-xịt?</div>
         <div class="entry-vi">Điểm yếu của bạn là gì?</div>
         <div class="tts-row">
           <button class="tts-btn tts-en" onclick="speakEn('What are your weaknesses?')">🔊 Nghe EN</button>
@@ -877,12 +875,12 @@ footer {
       </div>
       <div class="a-block">
         <div class="a-label">A – Trả lời</div>
-        <div class="entry-en" onclick="speakEn('My main weaknesses are that my English speaking skill is still limited, and sometimes I tend to procrastinate when facing complex tasks. I am working hard to improve these areas.')">My main weaknesses are that my English speaking skill is still limited, and sometimes I tend to procrastinate when facing complex tasks. I am working hard to improve these areas.</div>
-        <div class="entry-phonetic">Mai mên uik-nờ-sờ-z a đát mai Ing-lich xpik-ing xcil iz xtil li-mi-tờ-d, ần xăm-tai-mz ai ten tu pro-cờ-xtờ-nê-t guèn fê-sing com-plếch tách-tz. Ai em wơr-king ha-d tu im-pruv điz ê-ri-ờ-z.</div>
-        <div class="entry-vi">Điểm yếu chính của tôi là kỹ năng nói tiếng Anh vẫn còn hạn chế, và đôi khi tôi có xu hướng trì hoãn khi đối mặt với các nhiệm vụ phức tạp. Tôi đang cố gắng cải thiện những điều này.</div>
+        <div class="entry-en" onclick="speakEn('My weakness is English, especially listening and speaking skills. I also tend to procrastinate sometimes, which I am trying to improve.')">My weakness is English — especially listening and speaking skills. I also tend to procrastinate sometimes, which I'm trying to improve.</div>
+        <div class="entry-phonetic">Mai guy-c-nít iz Inh-glít — ít-xpe-sồ-li lít-xừn-inh en xpi-kinh xkin-z. Ai on-xâu ten-đ tu prô-cré-x-ti-nêt xăm-tai-m-z, guých ai-m trai-inh tu im-pru-v.</div>
+        <div class="entry-vi">Điểm yếu của tôi là môn tiếng Anh — đặc biệt là kỹ năng nghe và nói. Tôi cũng có xu hướng hay trì hoãn công việc, và tôi đang cố gắng cải thiện điều này.</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('My main weaknesses are that my English speaking skill is still limited, and sometimes I tend to procrastinate when facing complex tasks. I am working hard to improve these areas.')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Điểm yếu chính của tôi là kỹ năng nói tiếng Anh vẫn còn hạn chế, và đôi khi tôi có xu hướng trì hoãn khi đối mặt với các nhiệm vụ phức tạp. Tôi đang cố gắng cải thiện những điều này.')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('My weakness is English, especially listening and speaking skills. I also tend to procrastinate sometimes, which I am trying to improve.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Điểm yếu của tôi là môn tiếng Anh, đặc biệt là kỹ năng nghe và nói. Tôi cũng có xu hướng hay trì hoãn công việc, và tôi đang cố gắng cải thiện điều này.')">🗣️ Nghe VI</button>
         </div>
       </div>
     </div>
@@ -901,22 +899,22 @@ footer {
     <div>
       <div class="q-block">
         <div class="q-label">Q – Câu hỏi</div>
-        <div class="entry-en" onclick="speakEn('What are your future plans or goals?')">What are your future plans or goals?</div>
-        <div class="entry-phonetic">Goát a dơ fiu-chờ plan-z o gol-z?</div>
-        <div class="entry-vi">Kế hoạch hoặc mục tiêu tương lai của bạn là gì?</div>
+        <div class="entry-en" onclick="speakEn('What are your future plans or dreams?')">What are your future plans or dreams?</div>
+        <div class="entry-phonetic">Goát a dơ phiu-chơ plen-z o đrim-z?</div>
+        <div class="entry-vi">Ước mơ hoặc kế hoạch tương lai của bạn là gì?</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('What are your future plans or goals?')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Kế hoạch hoặc mục tiêu tương lai của bạn là gì?')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('What are your future plans or dreams?')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Ước mơ hoặc kế hoạch tương lai của bạn là gì?')">🗣️ Nghe VI</button>
         </div>
       </div>
       <div class="a-block">
         <div class="a-label">A – Trả lời</div>
-        <div class="entry-en" onclick="speakEn('In the future, I plan to start my own business. I hope to open 2 to 3 small shops or services that can help people in my local community. I want to create value and become financially independent.')">In the future, I plan to start my own business. I hope to open 2 to 3 small shops or services that can help people in my local community. I want to create value and become financially independent.</div>
-        <div class="entry-phonetic">In đờ fiu-chờ, ai plan tu xta-t mai on biz-nờ-s. Ai hop tu o-pần tu tu tri xmol shóp-z o xơ-vị-xờ-z đát ken hẹlp pi-pồl in mai lo-cồl cơ-miu-ni-ti. Ai woán tu cri-ê-t va-liu ần bi-căm fai-năn-shồ-li in-đi-pen-dần-t.</div>
-        <div class="entry-vi">Trong tương lai, tôi dự định khởi nghiệp kinh doanh riêng. Tôi hy vọng mở 2 đến 3 cửa hàng nhỏ hoặc dịch vụ có thể giúp ích cho mọi người trong cộng đồng địa phương. Tôi muốn tạo ra giá trị và trở nên độc lập tài chính.</div>
+        <div class="entry-en" onclick="speakEn('In the future, I dream of running my own business. I would like to open two or three stores selling food, or electronic devices and phone accessories.')">In the future, I dream of running my own business — I'd like to open two or three stores selling food, or electronic devices and phone accessories/components.</div>
+        <div class="entry-phonetic">In đơ phiu-chơ, ai đrim ơv rân-inh mai ôn bít-nít — ai-đ lai-c tu ô-pần tu o thri xto-z xe-linh phu-đ, o i-lếc-tro-nic đi-vai-xịt-x en phôn ec-xe-xơ-ri-z/cơm-pô-nần-t-x.</div>
+        <div class="entry-vi">Trong tương lai, tôi ước mơ được kinh doanh riêng — tôi muốn mở hai hoặc ba cửa hàng bán đồ ăn, hoặc bán linh kiện điện tử và phụ kiện điện thoại.</div>
         <div class="tts-row">
-          <button class="tts-btn tts-en" onclick="speakEn('In the future, I plan to start my own business. I hope to open 2 to 3 small shops or services that can help people in my local community. I want to create value and become financially independent.')">🔊 Nghe EN</button>
-          <button class="tts-btn tts-vi" onclick="speakVi('Trong tương lai, tôi dự định khởi nghiệp kinh doanh riêng. Tôi hy vọng mở 2 đến 3 cửa hàng nhỏ hoặc dịch vụ có thể giúp ích cho mọi người trong cộng đồng địa phương. Tôi muốn tạo ra giá trị và trở nên độc lập tài chính.')">🗣️ Nghe VI</button>
+          <button class="tts-btn tts-en" onclick="speakEn('In the future, I dream of running my own business. I would like to open two or three stores selling food, or electronic devices and phone accessories.')">🔊 Nghe EN</button>
+          <button class="tts-btn tts-vi" onclick="speakVi('Trong tương lai, tôi ước mơ được kinh doanh riêng — tôi muốn mở hai hoặc ba cửa hàng bán đồ ăn, hoặc bán linh kiện điện tử và phụ kiện điện thoại.')">🗣️ Nghe VI</button>
         </div>
       </div>
     </div>
@@ -935,63 +933,63 @@ footer {
   <div class="full-body" id="full-body">
 
     <div class="full-sentence" id="fs0">
-      <div class="sentence-en" onclick="speakEn('Hello everyone. My name is Phan Tan Kiet, but you can call me Kiet.')">1. Hello everyone. My name is Phan Tấn Kiệt, but you can call me Kiệt.</div>
-      <div class="sentence-phonetic">He-lo ev-ri-wăn. Mai nêm iz Phan Tấn Kiệt, bắt diu ken col mi Kiệt.</div>
-      <div class="sentence-vi">Xin chào mọi người. Tên tôi là Phan Tấn Kiệt, nhưng bạn có thể gọi tôi là Kiệt.</div>
+      <div class="sentence-en" onclick="speakEn('Hello everyone, my name is Phan Tan Kiet and I am 22 years old.')">1. Hello everyone, my name is Phan Tấn Kiệt and I'm 22 years old.</div>
+      <div class="sentence-phonetic">Hê-lâu ép-ri-guơn, mai nêm iz Phan Tấn Kiệt en ai-m twen-ti-tu ia-z ôld.</div>
+      <div class="sentence-vi">Xin chào mọi người, tên tôi là Phan Tấn Kiệt và tôi 22 tuổi.</div>
     </div>
 
     <div class="full-sentence" id="fs1">
-      <div class="sentence-en" onclick="speakEn('I am 22 years old.')">2. I'm 22 years old.</div>
-      <div class="sentence-phonetic">Ai-m twen-ti-tu ia-z ôld.</div>
-      <div class="sentence-vi">Tôi 22 tuổi.</div>
+      <div class="sentence-en" onclick="speakEn('I am currently a student at Mien Trung University of Civil Engineering, majoring in Information Technology.')">2. I'm currently a student at Mien Trung University of Civil Engineering, majoring in Information Technology.</div>
+      <div class="sentence-phonetic">Ai-m cơ-rần-tli ơ xtiu-đần-t et Miền Trung Diu-ni-vơ-xi-ti ơv Xi-vồ En-gi-nia-rinh, mê-giơ-rinh in In-fơ-mê-sần Tếch-nồ-lơ-gi.</div>
+      <div class="sentence-vi">Hiện tại tôi là sinh viên trường Đại học Xây dựng Miền Trung, học ngành Công nghệ thông tin.</div>
     </div>
 
     <div class="full-sentence" id="fs2">
-      <div class="sentence-en" onclick="speakEn('I am currently a fourth-year student at Mien Trung University of Science and Technology, majoring in Information Technology.')">3. I'm currently a fourth-year student at Mien Trung University of Science and Technology, majoring in Information Technology.</div>
-      <div class="sentence-phonetic">Ai-m cơ-rèn-li ơ for-th-dia xtiu-đần at Mi-ên Trung diu-ni-vơ-xi-ti ơv xai-ần và téc-no-lo-gi, mê-giơ-ring in in-for-mê-shần téc-no-lo-gi.</div>
-      <div class="sentence-vi">Tôi hiện đang là sinh viên năm tư tại Trường Đại học Khoa học và Công nghệ Miền Trung, chuyên ngành Công nghệ Thông tin.</div>
+      <div class="sentence-en" onclick="speakEn('There are five people in my family: my father, who is a carpenter, my mother, who is a farmer, and my two older brothers and me.')">3. There are five people in my family — my father, who is a carpenter, my mother, who is a farmer, and my two older brothers and me.</div>
+      <div class="sentence-phonetic">Đe-a a phai pi-pồ in mai pham-li — mai pha-đơ, hu iz ơ ca-pần-tơ, mai mơ-đơ, hu iz ơ pha-mơ, en mai tu ôl-đơ brơ-đơ-z en mi.</div>
+      <div class="sentence-vi">Gia đình tôi có năm người — ba tôi làm thợ mộc, mẹ tôi làm nông, cùng với hai anh trai của tôi và tôi.</div>
     </div>
 
     <div class="full-sentence" id="fs3">
-      <div class="sentence-en" onclick="speakEn('My family has 4 members: my parents, my younger brother, and me.')">4. My family has 4 members: my parents, my younger brother, and me.</div>
-      <div class="sentence-phonetic">Mai fém-li hét-s for mem-bơ-z: mai pé-ren-tz, mai dăng-gờ brơ-đờ, ần mi.</div>
-      <div class="sentence-vi">Gia đình tôi có 4 thành viên: cha mẹ tôi, em trai tôi và tôi.</div>
+      <div class="sentence-en" onclick="speakEn('I really admire my parents because they always work hard for our family.')">4. I really admire my parents because they always work hard for our family.</div>
+      <div class="sentence-phonetic">Ai ri-li ết-mai-ơ mai pe-rần-t-x bi-cô-z đê ôn-guêi-z guơ-k hat pho aoa pham-li.</div>
+      <div class="sentence-vi">Tôi thực sự rất ngưỡng mộ ba mẹ vì họ luôn làm việc chăm chỉ vì gia đình.</div>
     </div>
 
     <div class="full-sentence" id="fs4">
-      <div class="sentence-en" onclick="speakEn('My father is a carpenter and my mother is a farmer, and they both work very hard to support our family.')">5. My father is a carpenter and my mother is a farmer, and they both work very hard to support our family.</div>
-      <div class="sentence-phonetic">Mai fa-đờ iz ơ ca-pen-tờ ần mai mơ-đờ iz ơ fa-mờ, ần đê bot wơrk ve-ri ha-d tu xờ-po-t ao fém-li.</div>
-      <div class="sentence-vi">Cha tôi là thợ mộc và mẹ tôi là nông dân, và cả hai đều làm việc rất chăm chỉ để nuôi gia đình.</div>
+      <div class="sentence-en" onclick="speakEn('As for myself, I have a pretty good-looking appearance, and I would say I am a gentle and hard-working person.')">5. As for myself, I have a pretty good-looking appearance, and I'd say I'm a gentle and hard-working person.</div>
+      <div class="sentence-phonetic">Ez pho mai-xên-p, ai hev ơ prít-ti gút-lúc-kinh ơ-pia-rần-x, en ai-đ xê ai-m ơ gien-tồ en hat-guơ-kinh pơ-xừn.</div>
+      <div class="sentence-vi">Còn về bản thân, tôi có ngoại hình khá ưa nhìn, và tôi nghĩ mình là người hiền lành, chịu khó.</div>
     </div>
 
     <div class="full-sentence" id="fs5">
-      <div class="sentence-en" onclick="speakEn('I am gentle, patient, and hard-working.')">6. I am gentle, patient, and hard-working.</div>
-      <div class="sentence-phonetic">Ai em gen-tồl, pê-shần, ần ha-d-wơr-king.</div>
-      <div class="sentence-vi">Tôi hiền lành, kiên nhẫn và chăm chỉ.</div>
+      <div class="sentence-en" onclick="speakEn('In my free time, I enjoy walking, listening to music, staying in quiet places, and researching new things.')">6. In my free time, I enjoy walking, listening to music, staying in quiet places, and researching new things.</div>
+      <div class="sentence-phonetic">In mai phri tai-m, ai en-giôi guo-kinh, lít-xừn-inh tu miu-zic, xtê-inh in quai-ợt plây-xịt-x, en ri-xơ-chinh niu thinh-z.</div>
+      <div class="sentence-vi">Trong thời gian rảnh, tôi thích đi bộ, nghe nhạc, ở những nơi yên tĩnh, và tìm tòi những điều mới.</div>
     </div>
 
     <div class="full-sentence" id="fs6">
-      <div class="sentence-en" onclick="speakEn('In my free time, I enjoy going for walks, listening to music, and researching new technology.')">7. In my free time, I enjoy going for walks, listening to music, and researching new technology.</div>
-      <div class="sentence-phonetic">In mai fri tai-m, ai en-joi go-ing for wok-z, li-xờ-ning tu diu-zic, ần ri-xơ-ching niu téc-no-lo-gi.</div>
-      <div class="sentence-vi">Vào thời gian rảnh, tôi thích đi dạo, nghe nhạc và tìm hiểu công nghệ mới.</div>
+      <div class="sentence-en" onclick="speakEn('I think my strengths are being able to research and solve problems quickly, and being creative.')">7. I think my strengths are being able to research and solve problems quickly, and being creative.</div>
+      <div class="sentence-phonetic">Ai think mai xtreng-th-x a bi-inh ê-bồ tu ri-xơch en xon-v prọ-blờm-z quíc-li, en bi-inh cri-ê-tiv.</div>
+      <div class="sentence-vi">Tôi nghĩ điểm mạnh của mình là khả năng tìm hiểu và giải quyết vấn đề nhanh, cùng với sự sáng tạo.</div>
     </div>
 
     <div class="full-sentence" id="fs7">
-      <div class="sentence-en" onclick="speakEn('My strengths are strong research skills and creative problem-solving.')">8. My strengths are strong research skills and creative problem-solving.</div>
-      <div class="sentence-phonetic">Mai xtren-ths a xtrong ri-xơ-ch xcil-z ần cri-ê-tiv pro-blờm-xol-ving.</div>
-      <div class="sentence-vi">Điểm mạnh của tôi là kỹ năng nghiên cứu tốt và tư duy giải quyết vấn đề sáng tạo.</div>
+      <div class="sentence-en" onclick="speakEn('However, my weakness is English, especially listening and speaking, and I sometimes tend to procrastinate, something I am working on improving.')">8. However, my weakness is English, especially listening and speaking, and I sometimes tend to procrastinate — something I'm working on improving.</div>
+      <div class="sentence-phonetic">Hao-e-vơ, mai guy-c-nít iz Inh-glít, ít-xpe-sồ-li lít-xừn-inh en xpi-kinh, en ai xăm-tai-m-z ten-đ tu prô-cré-x-ti-nêt — xăm-thinh ai-m guơ-kinh on im-pru-vinh.</div>
+      <div class="sentence-vi">Tuy nhiên, điểm yếu của tôi là tiếng Anh, đặc biệt là nghe và nói, và tôi cũng hay có xu hướng trì hoãn — điều mà tôi đang cố gắng cải thiện.</div>
     </div>
 
     <div class="full-sentence" id="fs8">
-      <div class="sentence-en" onclick="speakEn('My weakness is that my English speaking skill is still limited, but I am actively working to improve it.')">9. My weakness is that my English speaking skill is still limited, but I am actively working to improve it.</div>
-      <div class="sentence-phonetic">Mai uik-nờ-s iz đát mai Ing-lich xpik-ing xcil iz xtil li-mi-tờ-d, bắt ai em ác-tiv-li wơr-king tu im-pruv it.</div>
-      <div class="sentence-vi">Điểm yếu của tôi là kỹ năng nói tiếng Anh vẫn còn hạn chế, nhưng tôi đang tích cực cố gắng cải thiện.</div>
+      <div class="sentence-en" onclick="speakEn('In the future, I dream of starting my own business, opening two or three stores selling food or electronic devices and phone accessories.')">9. In the future, I dream of starting my own business, opening two or three stores selling food or electronic devices and phone accessories.</div>
+      <div class="sentence-phonetic">In đơ phiu-chơ, ai đrim ơv xta-tinh mai ôn bít-nít, ô-pần-inh tu o thri xto-z xe-linh phu-đ o i-lếc-tro-nic đi-vai-xịt-x en phôn ec-xe-xơ-ri-z.</div>
+      <div class="sentence-vi">Trong tương lai, tôi ước mơ được khởi nghiệp kinh doanh riêng, mở hai hoặc ba cửa hàng bán đồ ăn hoặc linh kiện điện tử, phụ kiện điện thoại.</div>
     </div>
 
     <div class="full-sentence" id="fs9">
-      <div class="sentence-en" onclick="speakEn('In the future, I hope to start my own business and open 2 to 3 small shops to serve my local community.')">10. In the future, I hope to start my own business and open 2 to 3 small shops to serve my local community.</div>
-      <div class="sentence-phonetic">In đờ fiu-chờ, ai hop tu xta-t mai on biz-nờ-s ần o-pần tu tu tri xmol shóp-z tu xơ-v mai lo-cồl cơ-miu-ni-ti.</div>
-      <div class="sentence-vi">Trong tương lai, tôi hy vọng khởi nghiệp kinh doanh riêng và mở 2 đến 3 cửa hàng nhỏ để phục vụ cộng đồng địa phương.</div>
+      <div class="sentence-en" onclick="speakEn('That is a bit about myself. Thank you for listening!')">10. That's a bit about myself. Thank you for listening!</div>
+      <div class="sentence-phonetic">Đet-x ơ bít ơ-bao-t mai-xên-p. Then-k diu pho lít-xừn-inh!</div>
+      <div class="sentence-vi">Đó là đôi nét về bản thân tôi. Cảm ơn mọi người đã lắng nghe!</div>
     </div>
 
   </div>
@@ -1136,21 +1134,23 @@ var qaTexts = [
   "How old are you?",
   "I am 22 years old.",
   "Where do you study? What do you major in?",
-  "I am currently a student at Mien Trung University of Science and Technology, majoring in Information Technology. I am in my fourth year.",
+  "I am currently a student at Mien Trung University of Civil Engineering, majoring in Information Technology, IT.",
   "Can you tell me about your family?",
-  "My family has 4 members: my parents, my younger brother, and me. My father is a carpenter and my mother is a farmer. We live in Quang Ngai province.",
-  "How would you describe your appearance?",
-  "I am quite tall with a slim build. I think I look fairly good, and I always try to dress neatly and tidily.",
+  "There are five people in my family: my father, my mother, my two older brothers and me. My father is a carpenter, and my mother is a farmer. Although their jobs are quite hard, they always work hard to support our family, and I really admire them for that.",
+  "What do you look like?",
+  "I have a pretty good-looking appearance, people often say I look easy to approach.",
   "What is your personality like?",
-  "I am gentle, patient, and hard-working. I enjoy helping others and I am quite calm under pressure.",
+  "I am a gentle and hard-working person. I do not give up easily, and I always try my best to finish what I start.",
   "What are your hobbies?",
-  "I enjoy going for walks, listening to music, and spending quiet time alone to think and recharge. I also love researching new technology trends.",
+  "In my free time, I enjoy walking, listening to music, and spending time in quiet places. I also like researching and exploring new things, especially things related to technology.",
+  "Why do you like those things?",
+  "I like quiet activities like walking and listening to music because they help me relax and think more clearly. I also enjoy researching things because it satisfies my curiosity and helps me learn something new every day.",
   "What are your strengths?",
-  "My strengths are strong research skills and creative thinking. I am good at finding solutions and I always try to approach problems from different angles.",
+  "My strengths are that I can research and solve problems quickly, and I am quite a creative person.",
   "What are your weaknesses?",
-  "My main weaknesses are that my English speaking skill is still limited, and sometimes I tend to procrastinate when facing complex tasks.",
-  "What are your future plans?",
-  "In the future, I plan to start my own business. I hope to open 2 to 3 small shops or services to help people in my local community."
+  "My weakness is English, especially listening and speaking skills. I also tend to procrastinate sometimes, which I am trying to improve.",
+  "What are your future plans or dreams?",
+  "In the future, I dream of running my own business, I would like to open two or three stores selling food, or electronic devices and phone accessories."
 ];
 
 function speakAllQA() {
@@ -1176,16 +1176,16 @@ function speakAllQA() {
 
 // ── SPEAK FULL INTRO ──
 var fullSentences = [
-  "Hello everyone. My name is Phan Tan Kiet, but you can call me Kiet.",
-  "I am 22 years old.",
-  "I am currently a fourth-year student at Mien Trung University of Science and Technology, majoring in Information Technology.",
-  "My family has 4 members: my parents, my younger brother, and me.",
-  "My father is a carpenter and my mother is a farmer, and they both work very hard to support our family.",
-  "I am gentle, patient, and hard-working.",
-  "In my free time, I enjoy going for walks, listening to music, and researching new technology.",
-  "My strengths are strong research skills and creative problem-solving.",
-  "My weakness is that my English speaking skill is still limited, but I am actively working to improve it.",
-  "In the future, I hope to start my own business and open 2 to 3 small shops to serve my local community."
+  "Hello everyone, my name is Phan Tan Kiet and I am 22 years old.",
+  "I am currently a student at Mien Trung University of Civil Engineering, majoring in Information Technology.",
+  "There are five people in my family: my father, who is a carpenter, my mother, who is a farmer, and my two older brothers and me.",
+  "I really admire my parents because they always work hard for our family.",
+  "As for myself, I have a pretty good-looking appearance, and I would say I am a gentle and hard-working person.",
+  "In my free time, I enjoy walking, listening to music, staying in quiet places, and researching new things.",
+  "I think my strengths are being able to research and solve problems quickly, and being creative.",
+  "However, my weakness is English, especially listening and speaking, and I sometimes tend to procrastinate, something I am working on improving.",
+  "In the future, I dream of starting my own business, opening two or three stores selling food or electronic devices and phone accessories.",
+  "That is a bit about myself. Thank you for listening!"
 ];
 
 function speakFullIntro() {
@@ -1312,7 +1312,7 @@ function initSelectionToolbar() {
     }
 
     if (previewEl) {
-      var clean = text.replace(/\s+/g, ' ').trim();
+      var clean = text.replace(/s+/g, ' ').trim();
       var snippet = clean.length > 32 ? clean.substring(0, 30) + '...' : clean;
       previewEl.innerText = '"' + snippet + '"';
       previewEl.title = text;
@@ -1443,7 +1443,4 @@ if (document.readyState === 'loading') {
 }
 </script>
 </body>
-</html>`;
-
-fs.writeFileSync('self-intro.html', html, 'utf8');
-console.log('✅ self-intro.html created successfully! Size: ' + html.length + ' bytes');
+</html>`;\n\nfs.writeFileSync('self-intro.html', html, 'utf8');\nconsole.log('✅ self-intro.html created successfully! Size: ' + html.length + ' bytes');\n
