@@ -10,11 +10,14 @@ function getTopicData(topicId) {
   if (topicId === 'topic2') {
     return window.EXAM_DATA_TOPIC2 || null;
   }
+  if (topicId === 'topic3') {
+    return window.EXAM_DATA_TOPIC3 || null;
+  }
   return null;
 }
 
 // Danh sách topic hợp lệ
-const VALID_TOPICS = ['topic1', 'topic2'];
+const VALID_TOPICS = ['topic1', 'topic2', 'topic3'];
 
 let currentTopicId = 'topic1';
 try {
@@ -184,7 +187,9 @@ function updateTopicUIInfo() {
 
   const bannerDesc = document.getElementById('banner-topic-desc');
   if (bannerDesc) {
-    if (EXAM_DATA.topicId === 'topic2') {
+    if (EXAM_DATA.topicId === 'topic3') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 41 từ vựng chủ đề Thể thao (Sports), 10 câu trắc nghiệm từ vựng & thì quá khứ, 20 câu đọc hiểu (biển báo, thảm họa thể thao My Sport Disasters, điền từ Choose Your Sport), 5 câu viết lại tương đương và bài viết thư 120 từ.';
+    } else if (EXAM_DATA.topicId === 'topic2') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 36 từ vựng chủ đề Thời gian rảnh & Sở thích, 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, Jack & Gloria, điền từ Drawing), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 53 từ vựng miêu tả ngoại hình & tính cách, 10 câu trắc nghiệm từ vựng, 20 câu đọc hiểu (biển báo, đoạn văn Tony, điền từ Anna), 5 câu viết lại tương đương và bài viết thư 120 từ.';

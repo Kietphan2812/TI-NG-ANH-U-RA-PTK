@@ -1721,7 +1721,611 @@ const WORD_PRONUNCIATION_DB = {
               "desc": "đọc là \"cuýt-z\", dứt khoát"
           }
       ]
-  }
+  },
+
+  // --- TOPIC 3: SPORTS ---
+  "extreme sports": {
+    "ipa": "/ɪkˈstriːm spɔːts/",
+    "vi": "íc-S-TRIM SPO-ts",
+    "notes": "Nhấn mạnh vào âm 'TRIM', 'sports' xì s và bật nhẹ ts.",
+    "syllables": [
+        {
+            "part": "ex-treme",
+            "desc": "đọc là 'íc-strim', nhấn mạnh strim"
+        },
+        {
+            "part": "sports",
+            "desc": "đọc là 'spo-ts', tròn môi và kết thúc bằng ts"
+        }
+    ]
+},
+  "motor racing": {
+    "ipa": "/ˈməʊtə(r) ˈreɪsɪŋ/",
+    "vi": "MÂU-tơ RÂY-xinh",
+    "notes": "Nhấn âm 1 ở cả hai từ: 'MÂU' và 'RÂY'.",
+    "syllables": [
+        {
+            "part": "mo-tor",
+            "desc": "đọc là 'mâu-tơ', âm mâu nhấn mạnh"
+        },
+        {
+            "part": "ra-cing",
+            "desc": "đọc là 'rây-xinh', âm rây nhấn mạnh"
+        }
+    ]
+},
+  "surfing": {
+    "ipa": "/ˈsɜːrfɪŋ/",
+    "vi": "SƠ-fình",
+    "notes": "Âm 'ơ' cong lưỡi nhẹ (âm r), âm cuối 'fình'.",
+    "syllables": [
+        {
+            "part": "sur-",
+            "desc": "đọc là 'sơ', cong lưỡi"
+        },
+        {
+            "part": "-fing",
+            "desc": "đọc nhẹ 'fình'"
+        }
+    ]
+},
+  "gymnastics": {
+    "ipa": "/dʒɪmˈnæstɪks/",
+    "vi": "dim-NÁT-s-tícs",
+    "notes": "Nhấn mạnh vào âm hai 'NÁT', âm cuối bật xì 'ks'.",
+    "syllables": [
+        {
+            "part": "gym-",
+            "desc": "đọc là 'dim' nhẹ"
+        },
+        {
+            "part": "-nas-",
+            "desc": "nhấn mạnh 'nát', xì nhẹ s"
+        },
+        {
+            "part": "-tics",
+            "desc": "đọc 'tícs', bật âm k-s"
+        }
+    ]
+},
+  "high jump": {
+    "ipa": "/haɪ dʒʌmp/",
+    "vi": "HAI dăm-p",
+    "notes": "Nhấn 'HAI', từ 'jump' đọc âm dăm và bật nhẹ p ở cuối.",
+    "syllables": [
+        {
+            "part": "high",
+            "desc": "đọc kéo dài 'hai'"
+        },
+        {
+            "part": "jump",
+            "desc": "đọc là 'dăm-p', bật p nhẹ"
+        }
+    ]
+},
+  "long jump": {
+    "ipa": "/lɒŋ dʒʌmp/",
+    "vi": "LOONG dăm-p",
+    "notes": "Âm 'long' mở rộng miệng, 'jump' bật p nhẹ ở cuối.",
+    "syllables": [
+        {
+            "part": "long",
+            "desc": "đọc tròn môi 'loong'"
+        },
+        {
+            "part": "jump",
+            "desc": "đọc là 'dăm-p'"
+        }
+    ]
+},
+  "snowboarding": {
+    "ipa": "/ˈsnəʊbɔːrdɪŋ/",
+    "vi": "S-NÂU-bo-đình",
+    "notes": "Nhấn vào 'S-NÂU', âm 'bo' kéo dài.",
+    "syllables": [
+        {
+            "part": "snow-",
+            "desc": "đọc nối 's-nâu'"
+        },
+        {
+            "part": "-board-",
+            "desc": "đọc 'bo' kéo dài"
+        },
+        {
+            "part": "-ing",
+            "desc": "đọc nhẹ 'đình'"
+        }
+    ]
+},
+  "rugby": {
+    "ipa": "/ˈrʌɡbi/",
+    "vi": "RẮC-bi",
+    "notes": "Nhấn vào âm đầu 'RẮC'.",
+    "syllables": [
+        {
+            "part": "rug-",
+            "desc": "đọc là 'rắc'"
+        },
+        {
+            "part": "-by",
+            "desc": "đọc nhẹ 'bi'"
+        }
+    ]
+},
+  "horse riding": {
+    "ipa": "/hɔːrs ˈraɪdɪŋ/",
+    "vi": "HO-s RAI-đình",
+    "notes": "Từ 'horse' xì nhẹ âm s, 'riding' nhấn âm 'RAI'.",
+    "syllables": [
+        {
+            "part": "horse",
+            "desc": "đọc 'ho-s', xì nhẹ s"
+        },
+        {
+            "part": "ri-ding",
+            "desc": "nhấn 'rai-đình'"
+        }
+    ]
+},
+  "ice hockey": {
+    "ipa": "/aɪs ˈhɒki/",
+    "vi": "AI-s HÓC-ki",
+    "notes": "Từ 'ice' xì s ở giữa, 'hockey' nhấn 'HÓC'.",
+    "syllables": [
+        {
+            "part": "ice",
+            "desc": "đọc là 'ai-s', xì s"
+        },
+        {
+            "part": "hoc-key",
+            "desc": "nhấn mạnh 'hóc-ki'"
+        }
+    ]
+},
+  "golf": {
+    "ipa": "/ɡɒlf/",
+    "vi": "GÓP-f",
+    "notes": "Phát âm tròn miệng, uốn lưỡi nhẹ kết thúc bằng âm 'f'.",
+    "syllables": [
+        {
+            "part": "golf",
+            "desc": "đọc là 'góp-f', uốn lưỡi âm l và kết thúc bằng f"
+        }
+    ]
+},
+  "sailing": {
+    "ipa": "/ˈseɪlɪŋ/",
+    "vi": "SÂY-lình",
+    "notes": "Nhấn âm đầu 'SÂY'.",
+    "syllables": [
+        {
+            "part": "sail-",
+            "desc": "đọc là 'sây'"
+        },
+        {
+            "part": "-ing",
+            "desc": "đọc nhẹ 'lình'"
+        }
+    ]
+},
+  "ice skating": {
+    "ipa": "/aɪs ˈskeɪtɪŋ/",
+    "vi": "AI-s S-KÂY-tình",
+    "notes": "Từ 'ice' xì s, 'skating' nhấn 'KÂY'.",
+    "syllables": [
+        {
+            "part": "ice",
+            "desc": "đọc là 'ai-s'"
+        },
+        {
+            "part": "ska-ting",
+            "desc": "đọc nối 's-kây-tình'"
+        }
+    ]
+},
+  "cycling": {
+    "ipa": "/ˈsaɪklɪŋ/",
+    "vi": "SAI-clình",
+    "notes": "Nhấn âm đầu 'SAI'.",
+    "syllables": [
+        {
+            "part": "cy-",
+            "desc": "nhấn mạnh 'sai'"
+        },
+        {
+            "part": "-cling",
+            "desc": "đọc nhẹ 'clình'"
+        }
+    ]
+},
+  "cricket": {
+    "ipa": "/ˈkrɪkɪt/",
+    "vi": "CRÍC-kịt",
+    "notes": "Nhấn âm đầu 'CRÍC', kết thúc bằng âm 't' nhẹ.",
+    "syllables": [
+        {
+            "part": "crick-",
+            "desc": "đọc nối 'críc'"
+        },
+        {
+            "part": "-et",
+            "desc": "đọc nhẹ 'kịt', bật t"
+        }
+    ]
+},
+  "athlete": {
+    "ipa": "/ˈæθliːt/",
+    "vi": "ÁTH-lít",
+    "notes": "Âm 'th' kẹp lưỡi giữa hai hàm răng thổi hơi, nhấn 'ÁTH'.",
+    "syllables": [
+        {
+            "part": "ath-",
+            "desc": "đọc là 'áth', kẹp lưỡi nhẹ"
+        },
+        {
+            "part": "-lete",
+            "desc": "đọc 'lít', bật âm t ở cuối"
+        }
+    ]
+},
+  "cyclist": {
+    "ipa": "/ˈsaɪklɪst/",
+    "vi": "SAI-clít-st",
+    "notes": "Nhấn âm đầu 'SAI', đuôi kết thúc bật 'st'.",
+    "syllables": [
+        {
+            "part": "cy-",
+            "desc": "nhấn mạnh 'sai'"
+        },
+        {
+            "part": "-clist",
+            "desc": "đọc 'clít', xì s và bật t"
+        }
+    ]
+},
+  "court": {
+    "ipa": "/kɔːt/",
+    "vi": "CO-t",
+    "notes": "Kéo dài âm o và bật âm 't' ở cuối.",
+    "syllables": [
+        {
+            "part": "court",
+            "desc": "đọc là 'co-t', bật t dứt khoát"
+        }
+    ]
+},
+  "racquet": {
+    "ipa": "/ˈrækɪt/",
+    "vi": "RẮC-kịt",
+    "notes": "Nhấn âm đầu 'RẮC', đuôi bật t.",
+    "syllables": [
+        {
+            "part": "rac-",
+            "desc": "nhấn mạnh 'rắc'"
+        },
+        {
+            "part": "-quet",
+            "desc": "đọc nhẹ 'kịt', bật t"
+        }
+    ]
+},
+  "racket": {
+    "ipa": "/ˈrækɪt/",
+    "vi": "RẮC-kịt",
+    "notes": "Đồng âm với racquet, nhấn 'RẮC'.",
+    "syllables": [
+        {
+            "part": "rack-",
+            "desc": "nhấn 'rắc'"
+        },
+        {
+            "part": "-et",
+            "desc": "đọc nhẹ 'kịt'"
+        }
+    ]
+},
+  "race track": {
+    "ipa": "/reɪs træk/",
+    "vi": "RÂY-s TRÁC-k",
+    "notes": "Xì s ở 'race', 'track' bật âm k ở cuối.",
+    "syllables": [
+        {
+            "part": "race",
+            "desc": "đọc là 'rây-s', xì nhẹ s"
+        },
+        {
+            "part": "track",
+            "desc": "đọc là 'trác-k', bật k"
+        }
+    ]
+},
+  "match": {
+    "ipa": "/mætʃ/",
+    "vi": "MÁT-ch",
+    "notes": "Bật âm 'ch' (tʃ) dứt khoát ở cuối.",
+    "syllables": [
+        {
+            "part": "match",
+            "desc": "đọc là 'mát-ch', bật ch mạnh"
+        }
+    ]
+},
+  "stadium": {
+    "ipa": "/ˈsteɪdiəm/",
+    "vi": "S-TÂY-đi-ờm",
+    "notes": "Nhấn vào âm 'TÂY'.",
+    "syllables": [
+        {
+            "part": "sta-",
+            "desc": "đọc nối 's-tây', nhấn mạnh tây"
+        },
+        {
+            "part": "-di-",
+            "desc": "đọc nhẹ 'đi'"
+        },
+        {
+            "part": "-um",
+            "desc": "đọc nhẹ 'ờm'"
+        }
+    ]
+},
+  "coach": {
+    "ipa": "/kəʊtʃ/",
+    "vi": "CÂU-ch",
+    "notes": "Âm đôi 'âu', kết thúc bật 'ch'.",
+    "syllables": [
+        {
+            "part": "coach",
+            "desc": "đọc là 'câu-ch', bật ch ở cuối"
+        }
+    ]
+},
+  "prize": {
+    "ipa": "/praɪz/",
+    "vi": "P-RAI-z",
+    "notes": "Bật tổ hợp 'pr', đuôi rung z.",
+    "syllables": [
+        {
+            "part": "prize",
+            "desc": "đọc nối 'p-rai-z', kết thúc bằng âm rung z"
+        }
+    ]
+},
+  "helmet": {
+    "ipa": "/ˈhelmɪt/",
+    "vi": "HÉL-mịt",
+    "notes": "Nhấn 'HÉL', kết thúc bằng âm 't' nhẹ.",
+    "syllables": [
+        {
+            "part": "hel-",
+            "desc": "nhấn mạnh 'hél'"
+        },
+        {
+            "part": "-met",
+            "desc": "đọc nhẹ 'mịt', bật t"
+        }
+    ]
+},
+  "swimsuit": {
+    "ipa": "/ˈswɪmsuːt/",
+    "vi": "S-UÝM-sút",
+    "notes": "Nhấn âm đầu 'S-UÝM', đuôi kết thúc bật t.",
+    "syllables": [
+        {
+            "part": "swim-",
+            "desc": "đọc nối 's-uým'"
+        },
+        {
+            "part": "-suit",
+            "desc": "đọc 'sút', bật âm t ở cuối"
+        }
+    ]
+},
+  "championship": {
+    "ipa": "/ˈtʃæmpiənʃɪp/",
+    "vi": "T-TRĂM-pi-ơn-síp",
+    "notes": "Nhấn âm 1 'TRĂM', 'ship' chu môi bật p.",
+    "syllables": [
+        {
+            "part": "cham-",
+            "desc": "nhấn mạnh 'trăm'"
+        },
+        {
+            "part": "-pi-on-",
+            "desc": "đọc nhẹ 'pi-ơn'"
+        },
+        {
+            "part": "-ship",
+            "desc": "đọc 'síp', chu môi bật p"
+        }
+    ]
+},
+  "changing room": {
+    "ipa": "/ˈtʃeɪndʒɪŋ ruːm/",
+    "vi": "TRÂY-n-dinh RUM",
+    "notes": "Nhấn vào 'TRÂY', 'room' âm u dài.",
+    "syllables": [
+        {
+            "part": "chan-ging",
+            "desc": "đọc là 'trêy-n-dinh'"
+        },
+        {
+            "part": "room",
+            "desc": "đọc kéo dài 'rum'"
+        }
+    ]
+},
+  "compete": {
+    "ipa": "/kəmˈpiːt/",
+    "vi": "cơm-PÍT",
+    "notes": "Nhấn âm 2 'PÍT', bật âm t ở cuối.",
+    "syllables": [
+        {
+            "part": "com-",
+            "desc": "đọc nhẹ 'cơm'"
+        },
+        {
+            "part": "-pete",
+            "desc": "nhấn mạnh 'pít', bật t"
+        }
+    ]
+},
+  "competition": {
+    "ipa": "/ˌkɒmpəˈtɪʃn/",
+    "vi": "cơm-pơ-TÍ-sừn",
+    "notes": "Trọng âm chính rơi vào 'TÍ', âm 'sh' chu môi.",
+    "syllables": [
+        {
+            "part": "com-pe-",
+            "desc": "đọc nhẹ 'cơm-pơ'"
+        },
+        {
+            "part": "-ti-",
+            "desc": "nhấn mạnh 'tí'"
+        },
+        {
+            "part": "-tion",
+            "desc": "đọc 'sừn', chu môi"
+        }
+    ]
+},
+  "competitor": {
+    "ipa": "/kəmˈpetɪtə(r)/",
+    "vi": "cơm-PE-ti-tơ",
+    "notes": "Nhấn âm 2 'PE'.",
+    "syllables": [
+        {
+            "part": "com-",
+            "desc": "đọc nhẹ 'cơm'"
+        },
+        {
+            "part": "-pet-",
+            "desc": "nhấn mạnh 'pe'"
+        },
+        {
+            "part": "-i-tor",
+            "desc": "đọc nhẹ 'ti-tơ'"
+        }
+    ]
+},
+  "versus": {
+    "ipa": "/ˈvɜːsəs/",
+    "vi": "VƠ-sợt-s",
+    "notes": "Nhấn âm 1 'VƠ', âm cuối xì s.",
+    "syllables": [
+        {
+            "part": "ver-",
+            "desc": "nhấn mạnh 'vơ'"
+        },
+        {
+            "part": "-sus",
+            "desc": "đọc nhẹ 'sợt-s', xì s"
+        }
+    ]
+},
+  "score": {
+    "ipa": "/skɔː(r)/",
+    "vi": "S-CO",
+    "notes": "Bắt đầu bằng s nhẹ rồi đến âm 'co' kéo dài.",
+    "syllables": [
+        {
+            "part": "score",
+            "desc": "đọc nối 's-co', mở rộng môi"
+        }
+    ]
+},
+  "win": {
+    "ipa": "/wɪn/",
+    "vi": "U-IN",
+    "notes": "Đọc gọn, dứt khoát.",
+    "syllables": [
+        {
+            "part": "win",
+            "desc": "đọc là 'u-in' dứt khoát"
+        }
+    ]
+},
+  "lose": {
+    "ipa": "/luːz/",
+    "vi": "LU-z",
+    "notes": "Âm 'u' kéo dài, kết thúc bằng rung z.",
+    "syllables": [
+        {
+            "part": "lose",
+            "desc": "đọc kéo dài 'lu' và kết thúc rung z"
+        }
+    ]
+},
+  "draw": {
+    "ipa": "/drɔː/",
+    "vi": "Đ-RO",
+    "notes": "Âm tròn miệng kéo dài.",
+    "syllables": [
+        {
+            "part": "draw",
+            "desc": "đọc nối 'đ-ro', tròn môi"
+        }
+    ]
+},
+  "support": {
+    "ipa": "/səˈpɔːt/",
+    "vi": "sơ-POT",
+    "notes": "Nhấn âm 2 'POT', bật t ở cuối.",
+    "syllables": [
+        {
+            "part": "sup-",
+            "desc": "đọc nhẹ 'sơ'"
+        },
+        {
+            "part": "-port",
+            "desc": "nhấn mạnh 'pot', bật t"
+        }
+    ]
+},
+  "catch": {
+    "ipa": "/kætʃ/",
+    "vi": "CÁT-ch",
+    "notes": "Bật âm 'ch' dứt khoát.",
+    "syllables": [
+        {
+            "part": "catch",
+            "desc": "đọc là 'cát-ch', bật ch"
+        }
+    ]
+},
+  "hit": {
+    "ipa": "/hɪt/",
+    "vi": "HÍT",
+    "notes": "Âm i ngắn, bật t dứt khoát.",
+    "syllables": [
+        {
+            "part": "hit",
+            "desc": "đọc là 'hít', bật t"
+        }
+    ]
+},
+  "throw": {
+    "ipa": "/θrəʊ/",
+    "vi": "T-TH-RÂU",
+    "notes": "Âm 'th' kẹp lưỡi, kết thúc bằng âm đôi 'âu'.",
+    "syllables": [
+        {
+            "part": "throw",
+            "desc": "kẹp lưỡi đọc 'th-râu'"
+        }
+    ]
+},
+  "kick": {
+    "ipa": "/kɪk/",
+    "vi": "KÍC-k",
+    "notes": "Âm i ngắn, bật k ở cuối.",
+    "syllables": [
+        {
+            "part": "kick",
+            "desc": "đọc là 'kíc', bật k dứt khoát"
+        }
+    ]
+}
 };
 
 // ============================================================================
@@ -1740,6 +2344,41 @@ function generateVietnamesePhonetics(rawWord) {
       word: rawWord,
       readingVi: item.readingVi || item.vi || ''
     };
+  }
+
+  // 1b. Kiểm tra sau khi lược bỏ các tiền tố thể thao: (play), play, (go), go, (do the), do the, (do), do
+  const strippedPrefix = lower.replace(/^(\(play\)|play|\(go\)|go|\(do the\)|do the|\(do\)|do)\s+/, '').trim();
+  if (WORD_PRONUNCIATION_DB[strippedPrefix]) {
+    const item = WORD_PRONUNCIATION_DB[strippedPrefix];
+    return {
+      ...item,
+      word: rawWord,
+      readingVi: item.readingVi || item.vi || ''
+    };
+  }
+
+  // 1c. Kiểm tra sau khi bỏ ngoặc đơn hoặc phần mở rộng
+  const noParens = lower.replace(/\([^)]*\)/g, '').trim();
+  if (noParens && WORD_PRONUNCIATION_DB[noParens]) {
+    const item = WORD_PRONUNCIATION_DB[noParens];
+    return {
+      ...item,
+      word: rawWord,
+      readingVi: item.readingVi || item.vi || ''
+    };
+  }
+
+  // 1d. Kiểm tra nếu có dấu gạch chéo lựa chọn (ví dụ: racquet / racket)
+  if (lower.includes('/')) {
+    const firstChoice = lower.split('/')[0].trim();
+    if (WORD_PRONUNCIATION_DB[firstChoice]) {
+      const item = WORD_PRONUNCIATION_DB[firstChoice];
+      return {
+        ...item,
+        word: rawWord,
+        readingVi: item.readingVi || item.vi || ''
+      };
+    }
   }
 
   // 2. Xử lý các từ biến thể: số nhiều (-s, -es), quá khứ (-ed), tiếp diễn (-ing)
