@@ -1,12 +1,11 @@
 @echo off
 chcp 65001 >nul
 echo ========================================================
-echo   ĐANG ĐẨY CẬP NHẬT TÍNH NĂNG MỚI LÊN GITHUB & RENDER
-echo   (Tính năng đọc Tiếng Anh, Dịch Tiếng Việt & Đọc Tiếng Việt)
+echo   ĐANG ĐẨY CẬP NHẬT 15 CÂU & INTRODUCE MYSELF LÊN GITHUB
 echo ========================================================
 
 git add .
-git commit -m "feat: add English audio speech, Vietnamese translation toggle and Vietnamese voice reader"
+git commit -m "feat: cap nhat 15 cau hoi dap va 7 cau gioi thieu ban than Phan Tan Kiet"
 git push origin main
 
 echo.
