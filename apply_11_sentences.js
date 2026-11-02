@@ -437,3 +437,4 @@ console.log('✅ Updated self-intro.html with 11-sentence section! New size:', h
 const genContent = `const fs = require('fs');\n\nconst htmlContent = ${JSON.stringify(html)};\n\nfs.writeFileSync('self-intro.html', htmlContent, 'utf8');\nconsole.log('✅ Updated self-intro.html successfully! Size: ' + htmlContent.length + ' bytes');\n`;
 fs.writeFileSync('gen_self_intro.js', genContent, 'utf8');
 console.log('✅ Synced gen_self_intro.js!');
+

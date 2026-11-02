@@ -13,11 +13,17 @@ function getTopicData(topicId) {
   if (topicId === 'topic3') {
     return window.EXAM_DATA_TOPIC3 || null;
   }
+  if (topicId === 'thacsi1') {
+    return window.EXAM_DATA_THACSI1 || null;
+  }
+  if (topicId === 'thacsi2') {
+    return window.EXAM_DATA_THACSI2 || null;
+  }
   return null;
 }
 
 // Danh sách topic hợp lệ
-const VALID_TOPICS = ['topic1', 'topic2', 'topic3'];
+const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'thacsi1', 'thacsi2'];
 
 let currentTopicId = 'topic1';
 try {
@@ -187,7 +193,11 @@ function updateTopicUIInfo() {
 
   const bannerDesc = document.getElementById('banner-topic-desc');
   if (bannerDesc) {
-    if (EXAM_DATA.topicId === 'topic3') {
+    if (EXAM_DATA.topicId === 'thacsi1') {
+      bannerDesc.innerText = 'Đề thi chính thức Đánh giá năng lực Ngoại ngữ đầu vào Trình độ Thạc sĩ năm 2025 (Đợt 2) – Mã đề 01: Gồm 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, Cake Designer, ngôi nhà tròn Ford Duncan), 5 câu viết lại tương đương và bài viết thư 120 từ về sở thích.';
+    } else if (EXAM_DATA.topicId === 'thacsi2') {
+      bannerDesc.innerText = 'Đề thi chính thức Đánh giá năng lực Tiếng Anh đầu vào Trình độ Thạc sĩ năm 2025 – Mã đề 02: Gồm 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, nhà sàn Indonesia, quy tắc lớp học tại Mỹ), 5 câu viết lại tương đương và bài viết thư 120 từ về thể thao.';
+    } else if (EXAM_DATA.topicId === 'topic3') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 41 từ vựng chủ đề Thể thao (Sports), 10 câu trắc nghiệm từ vựng & thì quá khứ, 20 câu đọc hiểu (biển báo, thảm họa thể thao My Sport Disasters, điền từ Choose Your Sport), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic2') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 36 từ vựng chủ đề Thời gian rảnh & Sở thích, 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, Jack & Gloria, điền từ Drawing), 5 câu viết lại tương đương và bài viết thư 120 từ.';
