@@ -49,12 +49,12 @@ const thacsi1Data = {
       vietnameseTranslation: 'Mỗi người trong phòng đều quay đầu về phía trước khi giáo viên bước vào lớp.',
       options: [
         { key: 'A', text: 'me', vietnameseSub: 'tôi (đại từ tân ngữ)' },
-        { key: 'B', text: 'their', vietnameseSub: 'của họ (đại từ sở hữu số ít trung tính về giới)' },
-        { key: 'C', text: 'his', vietnameseSub: 'của anh ấy (đại từ sở hữu giống đực truyền thống)' },
+        { key: 'B', text: 'their', vietnameseSub: 'của họ (văn nói / hiện đại)' },
+        { key: 'C', text: 'his', vietnameseSub: 'của người đó (chuẩn ngữ pháp số ít theo đề thi)' },
         { key: 'D', text: 'our', vietnameseSub: 'của chúng tôi' }
       ],
-      correctAnswer: 'B',
-      explanation: 'Đáp án B. their. Trong tiếng Anh hiện đại, "their" được dùng phổ biến như đại từ sở hữu số ít trung tính về giới tính (singular they/their) để thay thế cho các đại từ bất định như "Each person / Everyone / Somebody". (Lưu ý: trong ngữ pháp truyền thống cổ điển có thể chấp nhận C. his; đáp án chính thức theo biểu điểm chấm là B).'
+      correctAnswer: 'C',
+      explanation: 'Chính xác, đáp án chuẩn của đề thi là C. his! Vì "Each person" (mỗi người) là chủ ngữ số ít (singular). Theo quy tắc ngữ pháp tiếng Anh học thuật chuẩn mực trong các bài thi đại học/thạc sĩ, khi thay thế cho chủ ngữ số ít chưa rõ giới tính (Each person, Everyone, Somebody...), ta dùng tính từ sở hữu số ít là "his" (hoặc "his or her"). (Trong văn nói giao tiếp thân mật hiện đại người ta hay dùng "their", nhưng trong các đề thi ngữ pháp chuẩn thì "his" là đáp án chính thức chính xác).'
     },
     {
       id: 'ts1_q2',
@@ -783,3 +783,4 @@ if (typeof module !== "undefined" && module.exports) {
 
 fs.writeFileSync('data_thacsi1.js', output, 'utf8');
 console.log('✅ Đã tạo thành công file data_thacsi1.js! Độ dài:', output.length);
+

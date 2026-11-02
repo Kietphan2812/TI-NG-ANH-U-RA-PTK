@@ -784,3 +784,4 @@ if (typeof module !== "undefined" && module.exports) {
 
 fs.writeFileSync('data_thacsi2.js', output, 'utf8');
 console.log('✅ Đã tạo thành công file data_thacsi2.js! Độ dài:', output.length);
+
