@@ -28,6 +28,12 @@ function getTopicData(topicId) {
   if (topicId === 'topic8') {
     return window.EXAM_DATA_TOPIC8 || null;
   }
+  if (topicId === 'topic9') {
+    return window.EXAM_DATA_TOPIC9 || null;
+  }
+  if (topicId === 'topic10') {
+    return window.EXAM_DATA_TOPIC10 || null;
+  }
   if (topicId === 'thacsi1') {
     return window.EXAM_DATA_THACSI1 || null;
   }
@@ -38,7 +44,7 @@ function getTopicData(topicId) {
 }
 
 // Danh sách topic hợp lệ
-const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'topic4', 'topic5', 'topic6', 'topic7', 'topic8', 'thacsi1', 'thacsi2'];
+const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'topic4', 'topic5', 'topic6', 'topic7', 'topic8', 'topic9', 'topic10', 'thacsi1', 'thacsi2'];
 
 let currentTopicId = 'topic1';
 try {
@@ -216,6 +222,10 @@ function updateTopicUIInfo() {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 25 từ vựng chủ đề Ẩm thực & Đồ uống (Food and Drinks), 10 câu trắc nghiệm từ vựng & lượng từ, 20 câu đọc hiểu (biển báo, Thành phố Newcastle, điền từ Khởi nghiệp hoa tươi Fresh Bouquets), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic8') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 20 từ vựng chủ đề Thời tiết & Khí hậu (Weather), 10 câu trắc nghiệm so sánh hơn/nhất & liên từ, 20 câu đọc hiểu (biển báo, Bốn mùa nước Anh, điền từ Quan hệ Thầy trò tại Mỹ), 5 câu viết lại tương đương và bài viết thư 120 từ.';
+    } else if (EXAM_DATA.topicId === 'topic9') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 26 từ vựng chủ đề Du lịch & Giao thông (Travel and Transport), 10 câu trắc nghiệm phương tiện & giới từ, 20 câu đọc hiểu (biển báo, Phòng ngừa bệnh khi du lịch, điền từ Lựa chọn hình thức du lịch), 5 câu viết lại tương đương và bài viết thư 120 từ.';
+    } else if (EXAM_DATA.topicId === 'topic10') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 27 từ vựng chủ đề Sức khỏe (Health), 10 câu trắc nghiệm câu điều kiện loại 1/2 & liên từ unless, 20 câu đọc hiểu (biển báo, Yoga cười Laughter Yoga, điền từ Kỳ nghỉ tai nạn Almara Beach), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic5') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 55 từ vựng chủ đề Nhà ở & Đời sống (House and Home), 10 câu trắc nghiệm từ vựng & thì quá khứ hoàn thành, 20 câu đọc hiểu (biển báo, Nhà sàn truyền thống Indonesia, điền từ Ngôi nhà tròn Ford Duncan), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic6') {

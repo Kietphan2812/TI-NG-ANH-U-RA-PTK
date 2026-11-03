@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tieng-anh-dau-ra-v12';
+const CACHE_NAME = 'tieng-anh-dau-ra-v13';
 const ASSETS = [
   '/',
   '/index.html',
@@ -12,6 +12,8 @@ const ASSETS = [
   '/data_topic6.js',
   '/data_topic7.js',
   '/data_topic8.js',
+  '/data_topic9.js',
+  '/data_topic10.js',
   '/data_thacsi1.js',
   '/data_thacsi2.js',
   '/pronunciation.js',
