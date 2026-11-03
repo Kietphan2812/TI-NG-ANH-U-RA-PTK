@@ -13,6 +13,9 @@ function getTopicData(topicId) {
   if (topicId === 'topic3') {
     return window.EXAM_DATA_TOPIC3 || null;
   }
+  if (topicId === 'topic4') {
+    return window.EXAM_DATA_TOPIC4 || null;
+  }
   if (topicId === 'thacsi1') {
     return window.EXAM_DATA_THACSI1 || null;
   }
@@ -23,7 +26,7 @@ function getTopicData(topicId) {
 }
 
 // Danh sách topic hợp lệ
-const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'thacsi1', 'thacsi2'];
+const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'topic4', 'thacsi1', 'thacsi2'];
 
 let currentTopicId = 'topic1';
 try {
@@ -197,6 +200,8 @@ function updateTopicUIInfo() {
       bannerDesc.innerText = 'Đề thi chính thức Đánh giá năng lực Ngoại ngữ đầu vào Trình độ Thạc sĩ năm 2025 (Đợt 2) – Mã đề 01: Gồm 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, Cake Designer, ngôi nhà tròn Ford Duncan), 5 câu viết lại tương đương và bài viết thư 120 từ về sở thích.';
     } else if (EXAM_DATA.topicId === 'thacsi2') {
       bannerDesc.innerText = 'Đề thi chính thức Đánh giá năng lực Tiếng Anh đầu vào Trình độ Thạc sĩ năm 2025 – Mã đề 02: Gồm 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, nhà sàn Indonesia, quy tắc lớp học tại Mỹ), 5 câu viết lại tương đương và bài viết thư 120 từ về thể thao.';
+    } else if (EXAM_DATA.topicId === 'topic4') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 54 từ vựng chủ đề Nghề nghiệp & Công việc (Jobs and Work), 10 câu trắc nghiệm từ vựng & thì tương lai, 20 câu đọc hiểu (biển báo, Đổi nghề sang Thiết kế bánh Cake Designer, điền từ Sự nghiệp của ông My Grandpa Had A Long Career), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic3') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 41 từ vựng chủ đề Thể thao (Sports), 10 câu trắc nghiệm từ vựng & thì quá khứ, 20 câu đọc hiểu (biển báo, thảm họa thể thao My Sport Disasters, điền từ Choose Your Sport), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic2') {
