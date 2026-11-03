@@ -73,13 +73,13 @@ var EXAM_DATA = {
       question: "Each person in the room turned _____ head to the front when the teacher entered.",
       vietnameseTranslation: "Mỗi người trong phòng đều quay đầu về phía trước khi giáo viên bước vào lớp.",
       options: [
-        { key: "A", text: "me" },
-        { key: "B", text: "their" },
-        { key: "C", text: "his" },
-        { key: "D", text: "our" }
+        { key: "A", text: "me", vietnameseSub: "tôi (đại từ tân ngữ)" },
+        { key: "B", text: "their", vietnameseSub: "của họ (văn nói / hiện đại)" },
+        { key: "C", text: "his", vietnameseSub: "của người đó (chuẩn ngữ pháp số ít theo đề thi)" },
+        { key: "D", text: "our", vietnameseSub: "của chúng tôi" }
       ],
-      correctAnswer: "B",
-      explanation: "Đáp án B. 'their' được dùng phổ biến trong tiếng Anh hiện đại như đại từ sở hữu số ít trung tính đại diện cho 'Each person'. (Lưu ý: trong một số giáo trình truyền thống có thể chọn C. his hoặc D. our tuỳ ngữ cảnh, đáp án chuẩn ở đây là B)."
+      correctAnswer: "C",
+      explanation: "Chính xác, đáp án chuẩn của đề thi là C. his! Vì 'Each person' là chủ ngữ số ít và 'head' (cái đầu) cũng là danh từ số ít, nên trong các bài thi ngữ pháp học thuật chuẩn mực bắt buộc dùng đại từ sở hữu số ít 'his' (hoặc his or her). Đáp án B. their là cách dùng văn nói / tiếng Anh hiện đại trung tính, nhưng trong bài thi chuẩn tắc thì C là đáp án đúng nhất."
     },
     {
       id: "v2",

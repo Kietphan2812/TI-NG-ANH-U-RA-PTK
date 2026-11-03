@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tieng-anh-dau-ra-v14';
+const CACHE_NAME = 'tieng-anh-dau-ra-v15';
 const ASSETS = [
   '/',
   '/index.html',
