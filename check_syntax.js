@@ -6,16 +6,18 @@ function checkFile(file) {
     const code = fs.readFileSync(file, 'utf8');
     const ctx = { window: {} };
     vm.runInNewContext(code, ctx);
-    // Check for EXAM_DATA, EXAM_DATA_TOPIC2..10, EXAM_DATA_THACSI1, or EXAM_DATA_THACSI2
+    // Check for EXAM_DATA, EXAM_DATA_TOPIC2..12, EXAM_DATA_THACSI1, or EXAM_DATA_THACSI2
     const examData = ctx.EXAM_DATA || 
       ctx.EXAM_DATA_TOPIC2 || ctx.EXAM_DATA_TOPIC3 || ctx.EXAM_DATA_TOPIC4 || 
       ctx.EXAM_DATA_TOPIC5 || ctx.EXAM_DATA_TOPIC6 || ctx.EXAM_DATA_TOPIC7 || 
       ctx.EXAM_DATA_TOPIC8 || ctx.EXAM_DATA_TOPIC9 || ctx.EXAM_DATA_TOPIC10 || 
+      ctx.EXAM_DATA_TOPIC11 || ctx.EXAM_DATA_TOPIC12 || 
       ctx.EXAM_DATA_THACSI1 || ctx.EXAM_DATA_THACSI2 || 
       ctx.window.EXAM_DATA || ctx.window.EXAM_DATA_TOP1 || ctx.window.EXAM_DATA_TOPIC1 || 
       ctx.window.EXAM_DATA_TOPIC2 || ctx.window.EXAM_DATA_TOPIC3 || ctx.window.EXAM_DATA_TOPIC4 || 
       ctx.window.EXAM_DATA_TOPIC5 || ctx.window.EXAM_DATA_TOPIC6 || ctx.window.EXAM_DATA_TOPIC7 || 
       ctx.window.EXAM_DATA_TOPIC8 || ctx.window.EXAM_DATA_TOPIC9 || ctx.window.EXAM_DATA_TOPIC10 || 
+      ctx.window.EXAM_DATA_TOPIC11 || ctx.window.EXAM_DATA_TOPIC12 || 
       ctx.window.EXAM_DATA_THACSI1 || ctx.window.EXAM_DATA_THACSI2;
       
     if (examData) {
@@ -38,5 +40,7 @@ checkFile('data_topic7.js');
 checkFile('data_topic8.js');
 checkFile('data_topic9.js');
 checkFile('data_topic10.js');
+checkFile('data_topic11.js');
+checkFile('data_topic12.js');
 checkFile('data_thacsi1.js');
 checkFile('data_thacsi2.js');

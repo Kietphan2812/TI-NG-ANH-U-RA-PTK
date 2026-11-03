@@ -34,6 +34,12 @@ function getTopicData(topicId) {
   if (topicId === 'topic10') {
     return window.EXAM_DATA_TOPIC10 || null;
   }
+  if (topicId === 'topic11') {
+    return window.EXAM_DATA_TOPIC11 || null;
+  }
+  if (topicId === 'topic12') {
+    return window.EXAM_DATA_TOPIC12 || null;
+  }
   if (topicId === 'thacsi1') {
     return window.EXAM_DATA_THACSI1 || null;
   }
@@ -44,7 +50,7 @@ function getTopicData(topicId) {
 }
 
 // Danh sách topic hợp lệ
-const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'topic4', 'topic5', 'topic6', 'topic7', 'topic8', 'topic9', 'topic10', 'thacsi1', 'thacsi2'];
+const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'topic4', 'topic5', 'topic6', 'topic7', 'topic8', 'topic9', 'topic10', 'topic11', 'topic12', 'thacsi1', 'thacsi2'];
 
 let currentTopicId = 'topic1';
 try {
@@ -226,6 +232,10 @@ function updateTopicUIInfo() {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 26 từ vựng chủ đề Du lịch & Giao thông (Travel and Transport), 10 câu trắc nghiệm phương tiện & giới từ, 20 câu đọc hiểu (biển báo, Phòng ngừa bệnh khi du lịch, điền từ Lựa chọn hình thức du lịch), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic10') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 27 từ vựng chủ đề Sức khỏe (Health), 10 câu trắc nghiệm câu điều kiện loại 1/2 & liên từ unless, 20 câu đọc hiểu (biển báo, Yoga cười Laughter Yoga, điền từ Kỳ nghỉ tai nạn Almara Beach), 5 câu viết lại tương đương và bài viết thư 120 từ.';
+    } else if (EXAM_DATA.topicId === 'topic11') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 24 từ vựng chủ đề Môi trường & Biến đổi khí hậu (Environment), 10 câu trắc nghiệm liên từ & từ vựng, 20 câu đọc hiểu (biển báo, Các dạng ô nhiễm môi trường, điền từ Cấm xe cá nhân tại trung tâm), 5 câu viết lại tương đương và bài viết thư 120 từ.';
+    } else if (EXAM_DATA.topicId === 'topic12') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 22 từ vựng chủ đề Công nghệ & Thiết bị hiện đại (Technology), 10 câu trắc nghiệm câu điều kiện loại 3 & câu ước wish quá khứ, 20 câu đọc hiểu (biển báo, Công nghệ trong thương mại kinh doanh, điền từ Tương lai máy tính xách tay), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic5') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 55 từ vựng chủ đề Nhà ở & Đời sống (House and Home), 10 câu trắc nghiệm từ vựng & thì quá khứ hoàn thành, 20 câu đọc hiểu (biển báo, Nhà sàn truyền thống Indonesia, điền từ Ngôi nhà tròn Ford Duncan), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic6') {
