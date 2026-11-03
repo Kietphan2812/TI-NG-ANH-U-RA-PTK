@@ -16,6 +16,12 @@ function getTopicData(topicId) {
   if (topicId === 'topic4') {
     return window.EXAM_DATA_TOPIC4 || null;
   }
+  if (topicId === 'topic5') {
+    return window.EXAM_DATA_TOPIC5 || null;
+  }
+  if (topicId === 'topic6') {
+    return window.EXAM_DATA_TOPIC6 || null;
+  }
   if (topicId === 'thacsi1') {
     return window.EXAM_DATA_THACSI1 || null;
   }
@@ -26,7 +32,7 @@ function getTopicData(topicId) {
 }
 
 // Danh sách topic hợp lệ
-const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'topic4', 'thacsi1', 'thacsi2'];
+const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'topic4', 'topic5', 'topic6', 'thacsi1', 'thacsi2'];
 
 let currentTopicId = 'topic1';
 try {
@@ -200,6 +206,10 @@ function updateTopicUIInfo() {
       bannerDesc.innerText = 'Đề thi chính thức Đánh giá năng lực Ngoại ngữ đầu vào Trình độ Thạc sĩ năm 2025 (Đợt 2) – Mã đề 01: Gồm 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, Cake Designer, ngôi nhà tròn Ford Duncan), 5 câu viết lại tương đương và bài viết thư 120 từ về sở thích.';
     } else if (EXAM_DATA.topicId === 'thacsi2') {
       bannerDesc.innerText = 'Đề thi chính thức Đánh giá năng lực Tiếng Anh đầu vào Trình độ Thạc sĩ năm 2025 – Mã đề 02: Gồm 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, nhà sàn Indonesia, quy tắc lớp học tại Mỹ), 5 câu viết lại tương đương và bài viết thư 120 từ về thể thao.';
+    } else if (EXAM_DATA.topicId === 'topic5') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 55 từ vựng chủ đề Nhà ở & Đời sống (House and Home), 10 câu trắc nghiệm từ vựng & thì quá khứ hoàn thành, 20 câu đọc hiểu (biển báo, Nhà sàn truyền thống Indonesia, điền từ Ngôi nhà tròn Ford Duncan), 5 câu viết lại tương đương và bài viết thư 120 từ.';
+    } else if (EXAM_DATA.topicId === 'topic6') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 35 từ vựng chủ đề Mua sắm & Tiêu dùng (Shopping), 10 câu trắc nghiệm từ vựng & danh động từ, 20 câu đọc hiểu (biển báo, Khám phá thủ đô Brussels, điền từ Ngày hội mua sắm Black Friday), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic4') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 54 từ vựng chủ đề Nghề nghiệp & Công việc (Jobs and Work), 10 câu trắc nghiệm từ vựng & thì tương lai, 20 câu đọc hiểu (biển báo, Đổi nghề sang Thiết kế bánh Cake Designer, điền từ Sự nghiệp của ông My Grandpa Had A Long Career), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic3') {
