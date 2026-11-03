@@ -22,6 +22,12 @@ function getTopicData(topicId) {
   if (topicId === 'topic6') {
     return window.EXAM_DATA_TOPIC6 || null;
   }
+  if (topicId === 'topic7') {
+    return window.EXAM_DATA_TOPIC7 || null;
+  }
+  if (topicId === 'topic8') {
+    return window.EXAM_DATA_TOPIC8 || null;
+  }
   if (topicId === 'thacsi1') {
     return window.EXAM_DATA_THACSI1 || null;
   }
@@ -32,7 +38,7 @@ function getTopicData(topicId) {
 }
 
 // Danh sách topic hợp lệ
-const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'topic4', 'topic5', 'topic6', 'thacsi1', 'thacsi2'];
+const VALID_TOPICS = ['topic1', 'topic2', 'topic3', 'topic4', 'topic5', 'topic6', 'topic7', 'topic8', 'thacsi1', 'thacsi2'];
 
 let currentTopicId = 'topic1';
 try {
@@ -206,6 +212,10 @@ function updateTopicUIInfo() {
       bannerDesc.innerText = 'Đề thi chính thức Đánh giá năng lực Ngoại ngữ đầu vào Trình độ Thạc sĩ năm 2025 (Đợt 2) – Mã đề 01: Gồm 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, Cake Designer, ngôi nhà tròn Ford Duncan), 5 câu viết lại tương đương và bài viết thư 120 từ về sở thích.';
     } else if (EXAM_DATA.topicId === 'thacsi2') {
       bannerDesc.innerText = 'Đề thi chính thức Đánh giá năng lực Tiếng Anh đầu vào Trình độ Thạc sĩ năm 2025 – Mã đề 02: Gồm 10 câu trắc nghiệm từ vựng & ngữ pháp, 20 câu đọc hiểu (biển báo, nhà sàn Indonesia, quy tắc lớp học tại Mỹ), 5 câu viết lại tương đương và bài viết thư 120 từ về thể thao.';
+    } else if (EXAM_DATA.topicId === 'topic7') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 25 từ vựng chủ đề Ẩm thực & Đồ uống (Food and Drinks), 10 câu trắc nghiệm từ vựng & lượng từ, 20 câu đọc hiểu (biển báo, Thành phố Newcastle, điền từ Khởi nghiệp hoa tươi Fresh Bouquets), 5 câu viết lại tương đương và bài viết thư 120 từ.';
+    } else if (EXAM_DATA.topicId === 'topic8') {
+      bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 20 từ vựng chủ đề Thời tiết & Khí hậu (Weather), 10 câu trắc nghiệm so sánh hơn/nhất & liên từ, 20 câu đọc hiểu (biển báo, Bốn mùa nước Anh, điền từ Quan hệ Thầy trò tại Mỹ), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic5') {
       bannerDesc.innerText = 'Hệ thống ôn thi toàn diện gồm: 55 từ vựng chủ đề Nhà ở & Đời sống (House and Home), 10 câu trắc nghiệm từ vựng & thì quá khứ hoàn thành, 20 câu đọc hiểu (biển báo, Nhà sàn truyền thống Indonesia, điền từ Ngôi nhà tròn Ford Duncan), 5 câu viết lại tương đương và bài viết thư 120 từ.';
     } else if (EXAM_DATA.topicId === 'topic6') {
